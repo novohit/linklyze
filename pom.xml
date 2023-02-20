@@ -30,6 +30,7 @@
         <commons.codec.version>1.15</commons.codec.version>
 
         <jwt.version>0.9.1</jwt.version>
+        <fastjson.version>2.0.15</fastjson.version>
 
         <aliyun.oss.version>3.10.2</aliyun.oss.version>
 
@@ -87,8 +88,6 @@
                 <!--<scope>provided</scope>-->
             </dependency>
 
-
-
             <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
             <dependency>
                 <groupId>org.apache.commons</groupId>
@@ -102,6 +101,13 @@
                 <groupId>commons-codec</groupId>
                 <artifactId>commons-codec</artifactId>
                 <version>${commons.codec.version}</version>
+            </dependency>
+
+            <!-- 阿里JSON解析器 -->
+            <dependency>
+                <groupId>com.alibaba.fastjson2</groupId>
+                <artifactId>fastjson2</artifactId>
+                <version>${fastjson.version}</version>
             </dependency>
 
 
