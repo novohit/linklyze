@@ -20,6 +20,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <!--数据校验validation新版的要自己导入包，spring boot 版本是2.3.1或者更高，此时的spring boot 已经不在starter-web内置验证-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
 
         <!--SpringCloud组件-->
         <!--nacos客户端-->
