@@ -24,7 +24,8 @@
         <spring.cloud.version>2021.0.5</spring.cloud.version>
         <alibaba.cloud.version>2021.0.4.0</alibaba.cloud.version>
 
-        <mybatisplus.boot.starter.version>3.4.0</mybatisplus.boot.starter.version>
+        <mybatis-plus.version>3.4.0</mybatis-plus.version>
+        <freemarker.version>2.3.28</freemarker.version>
         <lombok.version>1.18.24</lombok.version>
         <commons.lang3.version>3.9</commons.lang3.version>
         <commons.codec.version>1.15</commons.codec.version>
@@ -76,7 +77,18 @@
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
-                <version>${mybatisplus.boot.starter.version}</version>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-generator</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.freemarker</groupId>
+                <artifactId>freemarker</artifactId>
+                <version>${freemarker.version}</version>
             </dependency>
 
             <!--https://mvnrepository.com/artifact/org.projectlombok/lombok/1.18.16-->

@@ -1,4 +1,4 @@
-package com.wyu.enums;
+package com.wyu.common.enums;
 
 import lombok.Getter;
 

@@ -1,7 +1,7 @@
-package com.wyu.exception;
+package com.wyu.common.exception;
 
-import com.wyu.enums.BizCodeEnum;
-import com.wyu.util.Resp;
+import com.wyu.common.enums.BizCodeEnum;
+import com.wyu.common.util.Resp;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

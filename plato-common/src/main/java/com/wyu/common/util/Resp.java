@@ -1,9 +1,9 @@
-package com.wyu.util;
+package com.wyu.common.util;
 
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.TypeReference;
-import com.wyu.enums.BizCodeEnum;
+import com.wyu.common.enums.BizCodeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

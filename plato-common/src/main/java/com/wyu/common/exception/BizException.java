@@ -1,9 +1,7 @@
-package com.wyu.exception;
+package com.wyu.common.exception;
 
-import com.wyu.enums.BizCodeEnum;
+import com.wyu.common.enums.BizCodeEnum;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver;
 
 /**
  * @author novo
