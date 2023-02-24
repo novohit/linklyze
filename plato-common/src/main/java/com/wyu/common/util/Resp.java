@@ -3,6 +3,7 @@ package com.wyu.common.util;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.TypeReference;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.wyu.common.enums.BizCodeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,6 +16,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonInclude(value = JsonInclude.Include.NON_NULL) //如果json的data为null 不返回给前端
 public class Resp {
 
     /**

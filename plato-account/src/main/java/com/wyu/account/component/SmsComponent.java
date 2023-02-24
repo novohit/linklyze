@@ -1,7 +1,9 @@
 package com.wyu.account.component;
 
+import com.wyu.common.util.CommonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -11,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
  * @since 2023-02-22 21:50
  */
 @Component
+@EnableConfigurationProperties(value = SmsProperties.class)
 @Slf4j
 public class SmsComponent {
     private static final String URL_PATTERN = "https://jmsms.market.alicloudapi.com/sms/send?mobile=%s&templateId=%s&value=%s";
@@ -19,15 +22,17 @@ public class SmsComponent {
     private RestTemplate restTemplate;
 
     @Autowired
-    private SmsConfig smsConfig;
+    private SmsProperties smsProperties;
 
     public void send(String to, String templateId, String value) {
+        long beginTime = CommonUtil.getCurrentTimestamp();
         String url = String.format(URL_PATTERN, to, templateId, value);
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "APPCODE " + smsConfig.getAppCode());
+        headers.set("Authorization", "APPCODE " + smsProperties.getAppCode());
         HttpEntity<Object> entity = new HttpEntity<>(headers);
         ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
-        log.info("url:[{}],body:[{}]", url, response.getBody());
+        long endTime = CommonUtil.getCurrentTimestamp();
+        log.info("耗时:[{}ms], url:[{}],body:[{}]", endTime - beginTime, url, response.getBody());
         if (response.getStatusCode() == HttpStatus.OK) {
             log.info("发送短信成功");
         } else {
