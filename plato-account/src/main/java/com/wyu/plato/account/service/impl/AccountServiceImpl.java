@@ -1,8 +1,8 @@
-package com.wyu.account.service.impl;
+package com.wyu.plato.account.service.impl;
 
-import com.wyu.account.model.AccountDO;
-import com.wyu.account.mapper.AccountMapper;
-import com.wyu.account.service.AccountService;
+import com.wyu.plato.account.model.AccountDO;
+import com.wyu.plato.account.mapper.AccountMapper;
+import com.wyu.plato.account.service.AccountService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 

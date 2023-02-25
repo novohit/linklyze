@@ -1,6 +1,6 @@
-package com.wyu.account.component;
+package com.wyu.plato.account.component;
 
-import com.wyu.common.util.CommonUtil;
+import com.wyu.plato.common.util.CommonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

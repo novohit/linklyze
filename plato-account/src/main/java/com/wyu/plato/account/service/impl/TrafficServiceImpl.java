@@ -1,8 +1,8 @@
-package com.wyu.account.service.impl;
+package com.wyu.plato.account.service.impl;
 
-import com.wyu.account.model.TrafficDO;
-import com.wyu.account.mapper.TrafficMapper;
-import com.wyu.account.service.TrafficService;
+import com.wyu.plato.account.model.TrafficDO;
+import com.wyu.plato.account.mapper.TrafficMapper;
+import com.wyu.plato.account.service.TrafficService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 

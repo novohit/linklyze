@@ -1,6 +1,6 @@
-package com.wyu.account.service;
+package com.wyu.plato.account.service;
 
-import com.wyu.account.model.TrafficDO;
+import com.wyu.plato.account.model.TrafficDO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

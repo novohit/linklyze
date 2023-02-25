@@ -1,6 +1,6 @@
-package com.wyu.account.mapper;
+package com.wyu.plato.account.mapper;
 
-import com.wyu.account.model.TrafficDO;
+import com.wyu.plato.account.model.TrafficDO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

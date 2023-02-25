@@ -22,5 +22,11 @@
             <artifactId>plato-common</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+
+        <!--kaptcha验证码-->
+        <dependency>
+            <groupId>com.github.penggle</groupId>
+            <artifactId>kaptcha</artifactId>
+        </dependency>
     </dependencies>
 </project>

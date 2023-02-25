@@ -1,4 +1,4 @@
-package com.wyu.account.service;
+package com.wyu.plato.account.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class NotifyService {
 
     /**
      * @Async失效情况：
-     *
+     * TODO 异步发送方案OOM问题
      */
     @Async
     public void testSend() {
