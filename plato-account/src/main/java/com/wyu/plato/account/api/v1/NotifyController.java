@@ -1,6 +1,7 @@
 package com.wyu.plato.account.api.v1;
 
 import com.google.code.kaptcha.impl.DefaultKaptcha;
+import com.wyu.plato.account.api.v1.request.SendCodeRequest;
 import com.wyu.plato.account.service.NotifyService;
 import com.wyu.plato.common.constant.CacheConstants;
 import com.wyu.plato.common.util.RedisCache;
@@ -10,9 +11,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.util.Base64Utils;
 import org.springframework.util.FastByteArrayOutputStream;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -49,26 +50,26 @@ public class NotifyController {
      * @return
      */
     @GetMapping("/send-code")
-    public Resp sendCode() {
-        notifyService.testSend();
+    public Resp sendCode(@RequestBody SendCodeRequest sendCodeRequest) throws Exception {
+        //notifyService.testSend();
+        notifyService.send(sendCodeRequest);
         return Resp.success();
     }
 
     @GetMapping("/captcha")
     public Resp getCaptcha(HttpServletResponse response) {
         // 生成验证码
-        String code = defaultKaptcha.createText();
-        BufferedImage image = defaultKaptcha.createImage(code);
-        // TODO 存入redis并设置过期时间
-        // 保存验证码信息
+        String captcha = defaultKaptcha.createText();
+        BufferedImage image = defaultKaptcha.createImage(captcha);
+        // 存入redis并设置过期时间
         String captchaId = IdUtils.simpleUUID();
         String captchaKey = CacheConstants.CAPTCHA_CODE_KEY + captchaId;
 
         if (log.isDebugEnabled()) {
-            log.debug("captchaId:[{}],code:[{}]", captchaId, code);
+            log.debug("captchaId:[{}],captcha:[{}]", captchaId, captcha);
         }
 
-        redisCache.setCacheObject(captchaKey, code, CacheConstants.CAPTCHA_EXPIRATION, TimeUnit.MINUTES);
+        redisCache.setCacheObject(captchaKey, captcha, CacheConstants.CAPTCHA_EXPIRATION, TimeUnit.MINUTES);
         // 转换流信息写出
         FastByteArrayOutputStream os = new FastByteArrayOutputStream();
         try {
