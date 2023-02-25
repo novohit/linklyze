@@ -1,4 +1,4 @@
-package com.wyu.common.util;
+package com.wyu.plato.common.util;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonParser;

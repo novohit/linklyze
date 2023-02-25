@@ -1,10 +1,10 @@
-package com.wyu.common.util;
+package com.wyu.plato.common.util;
 
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.TypeReference;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.wyu.common.enums.BizCodeEnum;
+import com.wyu.plato.common.enums.BizCodeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -70,7 +70,7 @@ public class Resp {
      * @return
      */
     public static Resp error(String msg) {
-        return new Resp(-1, null, msg);
+        return new Resp(1, null, msg);
     }
 
 

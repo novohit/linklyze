@@ -1,7 +1,7 @@
-package com.wyu.common.exception;
+package com.wyu.plato.common.exception;
 
-import com.wyu.common.enums.BizCodeEnum;
-import com.wyu.common.util.Resp;
+import com.wyu.plato.common.enums.BizCodeEnum;
+import com.wyu.plato.common.util.Resp;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -39,7 +39,7 @@ public class GlobalExceptionHandler {
         String requestUrl = request.getRequestURI();
         String method = request.getMethod();
         log.error("[系统异常] url:[{}]", requestUrl, e);
-        return Resp.buildResult(BizCodeEnum.CODE_ERROR);
+        return Resp.buildResult(BizCodeEnum.SERVER_ERROR);
     }
 
     /**

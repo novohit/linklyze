@@ -1,4 +1,4 @@
-package com.wyu.common.config;
+package com.wyu.plato.common.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

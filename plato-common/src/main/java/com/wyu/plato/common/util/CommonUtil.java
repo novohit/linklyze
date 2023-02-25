@@ -1,4 +1,4 @@
-package com.wyu.common.util;
+package com.wyu.plato.common.util;
 
 import lombok.extern.slf4j.Slf4j;
 

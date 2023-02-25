@@ -1,4 +1,4 @@
-package com.wyu.common.model;
+package com.wyu.plato.common.model;
 
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.fasterxml.jackson.annotation.JsonIgnore;

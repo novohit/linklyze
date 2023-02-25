@@ -1,6 +1,6 @@
-package com.wyu.common.exception;
+package com.wyu.plato.common.exception;
 
-import com.wyu.common.enums.BizCodeEnum;
+import com.wyu.plato.common.enums.BizCodeEnum;
 import lombok.Data;
 
 /**

@@ -1,4 +1,4 @@
-package com.wyu.common.enums;
+package com.wyu.plato.common.enums;
 
 import lombok.Getter;
 
@@ -9,6 +9,8 @@ import lombok.Getter;
  * 比如 商品服务210,购物车是220、用户服务230，403代表权限
  */
 public enum BizCodeEnum {
+
+    SERVER_ERROR(1, "系统异常"),
 
     /**
      * 短链分组
