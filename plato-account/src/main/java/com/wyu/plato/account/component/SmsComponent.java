@@ -28,9 +28,9 @@ public class SmsComponent {
         long beginTime = CommonUtil.getCurrentTimestamp();
         String url = String.format(URL_PATTERN, to, templateId, value);
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "APPCODE " + smsProperties.getAppCode());
+        headers.set("Authorization", "APPCODE " + this.smsProperties.getAppCode());
         HttpEntity<Object> entity = new HttpEntity<>(headers);
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
+        ResponseEntity<String> response = this.restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
         long endTime = CommonUtil.getCurrentTimestamp();
         log.info("耗时:[{}ms], url:[{}],body:[{}]", endTime - beginTime, url, response.getBody());
         if (response.getStatusCode() == HttpStatus.OK) {

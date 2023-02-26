@@ -8,20 +8,12 @@ import org.springframework.stereotype.Component;
 
 /**
  * @author novo
- * @since 2023-02-25 22:28
+ * @since 2023-02-26 11:35
  */
-@Component
-public class SendPhoneStrategy implements VerifyStrategy {
-
-    @Autowired
-    private SmsComponent smsComponent;
-
-    @Autowired
-    private SmsProperties smsProperties;
+public class SendEmailStrategy implements VerifyStrategy{
 
     @Override
     public void send(String to) {
-        String code = CommonUtil.getRandomCode(6);
-        this.smsComponent.send(to, this.smsProperties.getTemplateId(), code);
+        // TODO
     }
 }

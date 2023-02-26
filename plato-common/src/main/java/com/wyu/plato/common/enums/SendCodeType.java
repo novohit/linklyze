@@ -13,16 +13,21 @@ import java.util.stream.Stream;
 @Getter
 @AllArgsConstructor
 public enum SendCodeType {
+
     USER_REGISTER_PHONE,
 
     USER_LOGIN_PHONE,
+
+    USER_REGISTER_EMAIl,
+
+    USER_LOGIN_EMAIl,
 
     ;
 
 
     public static SendCodeType toType(Integer code) {
         return Stream.of(values())
-                .filter(sendCodeType-> Objects.equals(sendCodeType.name(), code))
+                .filter(sendCodeType-> Objects.equals(sendCodeType.ordinal(), code))
                 .findAny()
                 .orElse(null);
     }

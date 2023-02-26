@@ -59,7 +59,7 @@ public class GlobalExceptionHandler {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpStatus httpStatus = HttpStatus.resolve(e.getHttpStatusCode());
-        log.error("[系统异常] url:[{}]", requestUrl, e);
+        log.error("[业务异常] url:[{}]", requestUrl, e);
         return new ResponseEntity<>(unifyResponse, headers, httpStatus);
     }
 
@@ -79,7 +79,7 @@ public class GlobalExceptionHandler {
 
         List<ObjectError> errors = e.getBindingResult().getAllErrors();
         String errorMsg = this.formatAllErrorMessages(errors);
-        log.error("[参数异常] url:[{}]", requestUrl, e);
+        log.error("[参数异常] url:[{}],msg:[{}]", requestUrl, errorMsg);
         return Resp.error(errorMsg);
     }
 
