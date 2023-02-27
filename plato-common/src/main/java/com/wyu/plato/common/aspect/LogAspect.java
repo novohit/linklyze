@@ -1,11 +1,10 @@
 package com.wyu.plato.common.aspect;
 
-import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -25,6 +24,10 @@ import javax.servlet.http.HttpServletRequest;
 public class LogAspect {
 
     private final static Logger logger = LoggerFactory.getLogger(LogAspect.class);
+
+    //private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+    private final Gson gson = new Gson();
 
     /**
      * execution(<修饰符模式>?<返回类型模式><方法名模式>(<参数模式>)<异常模式>?)
@@ -63,7 +66,11 @@ public class LogAspect {
             // 打印请求的 IP
             logger.debug("IP             : {}", request.getRemoteAddr());
             // 打印请求入参
-            logger.debug("Request Args   : {}", JSONArray.toJSONString(proceedingJoinPoint.getArgs()));
+
+            //logger.debug("Request Args   : {}", JSONArray.toJSONString(proceedingJoinPoint.getArgs()));
+            //logger.debug("Request Args   : \n{}", gson.toJson(proceedingJoinPoint.getArgs()));
+            // 这里用Gson序列化 其他解析不了文件类型
+            logger.debug("Request Args   : {}", gson.toJson(proceedingJoinPoint.getArgs()));
         }
 
         long startTime = System.currentTimeMillis();
@@ -71,7 +78,9 @@ public class LogAspect {
 
         if (logger.isDebugEnabled()) {
             // 打印出参
-            logger.debug("Response Args  : {}", JSONObject.toJSONString(result));
+            logger.debug("Response Args  : {}", gson.toJson(result));
+            //logger.debug("Response Args  : \n{}", gson.toJson(result));
+            //logger.debug("Response Args  : {}", JSONObject.toJSONString(result));
             // 执行耗时
             logger.debug("Time-Consuming : {} ms", System.currentTimeMillis() - startTime);
             logger.debug("=========================================== End ===========================================");
@@ -80,5 +89,14 @@ public class LogAspect {
         }
 
         return result;
+    }
+
+    @AfterThrowing("webLog()")
+    public void doAfterThrowing() {
+        if (logger.isDebugEnabled()) {
+            logger.debug("=========================================== End ===========================================");
+            // 每个请求之间空一行
+            logger.debug("");
+        }
     }
 }

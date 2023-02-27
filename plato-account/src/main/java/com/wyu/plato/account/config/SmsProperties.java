@@ -1,4 +1,4 @@
-package com.wyu.plato.account.component;
+package com.wyu.plato.account.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

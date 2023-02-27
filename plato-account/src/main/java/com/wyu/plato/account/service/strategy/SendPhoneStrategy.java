@@ -1,7 +1,7 @@
 package com.wyu.plato.account.service.strategy;
 
 import com.wyu.plato.account.component.SmsComponent;
-import com.wyu.plato.account.component.SmsProperties;
+import com.wyu.plato.account.config.SmsProperties;
 import com.wyu.plato.common.constant.CacheConstants;
 import com.wyu.plato.common.enums.BizCodeEnum;
 import com.wyu.plato.common.exception.BizException;

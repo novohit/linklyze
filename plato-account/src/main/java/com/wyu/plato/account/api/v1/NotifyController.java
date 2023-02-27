@@ -30,22 +30,11 @@ import java.util.concurrent.TimeUnit;
  * @since 2023-02-23 17:09
  */
 @RestController
-@RequestMapping("/v1")
-@Slf4j
+@RequestMapping("/notify/v1")
 public class NotifyController {
 
     @Autowired
     private NotifyService notifyService;
-
-    @Autowired
-    @Qualifier("captchaProducer")
-    private DefaultKaptcha defaultKaptcha;
-
-    @Autowired
-    private RedisCache redisCache;
-
-    @Autowired
-    private SmsComponent smsComponent;
 
     /**
      * 验证码发送压测接口
@@ -61,31 +50,7 @@ public class NotifyController {
 
     @GetMapping("/captcha")
     public Resp getCaptcha() {
-        // 生成图形验证码
-        String captcha = this.defaultKaptcha.createText();
-        BufferedImage image = this.defaultKaptcha.createImage(captcha);
-        // 存入redis并设置过期时间
-        String captchaId = IdUtils.simpleUUID();
-        String captchaKey = CacheConstants.CAPTCHA_CODE_KEY + captchaId;
-
-        if (log.isDebugEnabled()) {
-            log.debug("captchaId:[{}],captcha:[{}]", captchaId, captcha);
-        }
-
-        this.redisCache.setCacheObject(captchaKey, captcha, CacheConstants.CAPTCHA_EXPIRATION, TimeUnit.MINUTES);
-        // 转换流信息写出
-        FastByteArrayOutputStream os = new FastByteArrayOutputStream();
-        try {
-            ImageIO.write(image, "jpg", os);
-        } catch (IOException e) {
-            log.error("获取流出错:", e);
-            return Resp.error(e.getMessage());
-        }
-
-        String img = Base64.encodeBase64String(os.toByteArray());
-        Map<Object, Object> map = new HashMap<>();
-        map.put("img", img);
-        map.put("captchaId", captchaId);
+        Map<String, Object> map = this.notifyService.getCaptcha();
         return Resp.success(map);
     }
 

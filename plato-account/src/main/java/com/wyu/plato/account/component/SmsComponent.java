@@ -1,5 +1,6 @@
 package com.wyu.plato.account.component;
 
+import com.wyu.plato.account.config.SmsProperties;
 import com.wyu.plato.common.util.CommonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
