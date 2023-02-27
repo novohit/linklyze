@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 public class SendEmailStrategy implements VerifyStrategy{
 
     @Override
-    public void send(String to) {
+    public void send(String to, String type) {
         // TODO
     }
 }

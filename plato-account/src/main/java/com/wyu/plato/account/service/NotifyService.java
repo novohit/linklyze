@@ -62,7 +62,7 @@ public class NotifyService {
             this.redisCache.deleteObject(captchaKey);
             // 发送业务验证码
             VerifyStrategy verifyStrategy = MapSendStrategyFactory.getChargeStrategy(sendCodeRequest.getType());
-            verifyStrategy.send(sendCodeRequest.getTo());
+            verifyStrategy.send(sendCodeRequest.getTo(), sendCodeRequest.getType().name());
         } else {
             // 图形验证码不存在或匹配失败
             throw new BizException(BizCodeEnum.CODE_CAPTCHA_ERROR);

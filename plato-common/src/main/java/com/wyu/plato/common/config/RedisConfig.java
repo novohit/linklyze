@@ -20,7 +20,6 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 public class RedisConfig {
 
     @Bean
-    @ConditionalOnSingleCandidate
     public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
         RedisTemplate<Object, Object> redisTemplate = new RedisTemplate<>();
         //设置string key和value序列器
@@ -49,7 +48,6 @@ public class RedisConfig {
     }
 
 //    @Bean
-//    @ConditionalOnSingleCandidate
 //    public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
 //        RedisTemplate<Object, Object> redisTemplate = new RedisTemplate<>();
 //        //设置string key和value序列器
@@ -63,7 +61,6 @@ public class RedisConfig {
 //        //设置hash key和value序列器
 //        redisTemplate.setHashKeySerializer(new StringRedisSerializer());
 //        redisTemplate.setHashValueSerializer(genericJackson2JsonRedisSerializer);
-//
 //        //设置 RedisConnection 工厂 它就是实现多种 Java Redis 客户端接入的工厂
 //        redisTemplate.setConnectionFactory(connectionFactory);
 //        return redisTemplate;

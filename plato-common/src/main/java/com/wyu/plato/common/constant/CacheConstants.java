@@ -11,9 +11,29 @@ public class CacheConstants {
     public static final String LOGIN_TOKEN_KEY = "login_tokens:";
 
     /**
-     * 验证码 redis key
+     * 图形验证码 redis key
      */
     public static final String CAPTCHA_CODE_KEY = "account-service:captcha:";
+
+    /**
+     * 图形验证码过期时间
+     */
+    public static final Integer CAPTCHA_EXPIRATION = 10;
+
+    /**
+     * 业务验证码 redis key
+     */
+    public static final String CHECK_CODE_KEY = "account-service:code:%s:%s";
+
+    /**
+     * 业务验证码过期时间min
+     */
+    public static final Integer CHECK_CODE_EXPIRATION = 5;
+
+    /**
+     * 业务验证码重复发送间隔60s
+     */
+    public static final Integer CHECK_CODE_REPEAT = 60 * 1000;
 
     /**
      * 参数管理 cache key
@@ -40,5 +60,4 @@ public class CacheConstants {
      */
     public static final String PWD_ERR_CNT_KEY = "pwd_err_cnt:";
 
-    public static final Integer CAPTCHA_EXPIRATION = 10;
 }

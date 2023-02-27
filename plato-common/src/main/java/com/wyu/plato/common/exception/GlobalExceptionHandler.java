@@ -59,7 +59,7 @@ public class GlobalExceptionHandler {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpStatus httpStatus = HttpStatus.resolve(e.getHttpStatusCode());
-        log.error("[业务异常] url:[{}]", requestUrl, e);
+        log.error("[业务异常] url:[{}],msg:[{}]", requestUrl, e.getMessage());
         return new ResponseEntity<>(unifyResponse, headers, httpStatus);
     }
 

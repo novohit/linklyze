@@ -2,9 +2,10 @@ package com.wyu.plato.common.aspect;
 
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
-import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.*;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * 开发环境日志
+ *
  * @author novo
  * @since 2023-02-26 22:19
  */
@@ -33,14 +35,18 @@ public class LogAspect {
      * .*(..)，表示任何方法名，括号表示参数，两个点表示任何参数类型
      */
     @Pointcut("execution(public * com.wyu.plato.*.api..*.*(..))")
-    public void webLog() {}
+    public void webLog() {
+    }
 
     /**
-     * 在切点之前织入
-     * @param joinPoint
+     * 环绕
+     *
+     * @param proceedingJoinPoint
+     * @return
+     * @throws Throwable
      */
-    @Before("webLog()")
-    public void doBefore(JoinPoint joinPoint) {
+    @Around("webLog()")
+    public Object doAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         // 开始打印请求日志
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
@@ -53,24 +59,16 @@ public class LogAspect {
             // 打印 Http method
             logger.debug("HTTP Method    : {}", request.getMethod());
             // 打印调用 controller 的全路径以及执行方法
-            logger.debug("Class Method   : {}.{}", joinPoint.getSignature().getDeclaringTypeName(), joinPoint.getSignature().getName());
+            logger.debug("Class Method   : {}.{}", proceedingJoinPoint.getSignature().getDeclaringTypeName(), proceedingJoinPoint.getSignature().getName());
             // 打印请求的 IP
             logger.debug("IP             : {}", request.getRemoteAddr());
             // 打印请求入参
-            logger.debug("Request Args   : {}", JSONArray.toJSONString(joinPoint.getArgs()));
+            logger.debug("Request Args   : {}", JSONArray.toJSONString(proceedingJoinPoint.getArgs()));
         }
-    }
 
-    /**
-     * 环绕
-     * @param proceedingJoinPoint
-     * @return
-     * @throws Throwable
-     */
-    @Around("webLog()")
-    public Object doAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         long startTime = System.currentTimeMillis();
         Object result = proceedingJoinPoint.proceed();
+
         if (logger.isDebugEnabled()) {
             // 打印出参
             logger.debug("Response Args  : {}", JSONObject.toJSONString(result));
@@ -80,6 +78,7 @@ public class LogAspect {
             // 每个请求之间空一行
             logger.debug("");
         }
+
         return result;
     }
 }
