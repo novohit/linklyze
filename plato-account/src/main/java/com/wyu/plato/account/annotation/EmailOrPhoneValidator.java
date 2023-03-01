@@ -22,7 +22,6 @@ public class EmailOrPhoneValidator implements ConstraintValidator<EmailOrPhone, 
         this.min = constraintAnnotation.min();
         this.max = constraintAnnotation.max();
         ConstraintValidator.super.initialize(constraintAnnotation);
-        ConstraintValidator.super.initialize(constraintAnnotation);
     }
 
     @Override

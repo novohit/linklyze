@@ -1,10 +1,12 @@
 package com.wyu.plato.account.api.v1;
 
+import com.wyu.plato.account.api.v1.request.LoginRequest;
 import com.wyu.plato.account.api.v1.request.RegisterRequest;
 import com.wyu.plato.account.service.AccountService;
 import com.wyu.plato.account.service.FileService;
 import com.wyu.plato.common.util.Resp;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -35,6 +37,19 @@ public class AccountController {
         return Resp.success(imageUrl);
     }
 
+
+    /**
+     * 用户登录
+     *
+     * @param loginRequest
+     * @return
+     */
+    @PostMapping("/login")
+    public Resp login(@RequestBody @Validated LoginRequest loginRequest) {
+        this.accountService.login(loginRequest);
+        return Resp.success();
+    }
+
     /**
      * 用户注册
      *
@@ -42,7 +57,7 @@ public class AccountController {
      * @return
      */
     @PostMapping("/register")
-    public Resp register(@RequestBody RegisterRequest registerRequest) {
+    public Resp register(@RequestBody @Validated RegisterRequest registerRequest) {
         this.accountService.register(registerRequest);
         return Resp.success();
     }

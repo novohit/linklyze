@@ -1,5 +1,7 @@
 package com.wyu.plato.account.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.wyu.plato.account.api.v1.request.LoginRequest;
 import com.wyu.plato.account.api.v1.request.RegisterRequest;
 import com.wyu.plato.account.model.AccountDO;
 import com.wyu.plato.account.mapper.AccountMapper;
@@ -7,13 +9,18 @@ import com.wyu.plato.account.service.AccountService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wyu.plato.account.service.NotifyService;
 import com.wyu.plato.common.enums.AccountAuthType;
+import com.wyu.plato.common.enums.BizCodeEnum;
 import com.wyu.plato.common.enums.SendCodeType;
+import com.wyu.plato.common.exception.BizException;
 import com.wyu.plato.common.util.CommonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.Md5Crypt;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 /**
  * @author novo
@@ -54,5 +61,27 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, AccountDO> im
         int row = this.accountMapper.insert(accountDO);
         log.info("row:[{}],注册成功:[{}]", row, accountDO);
         // 3 发放新用户福利 TODO
+    }
+
+    @Override
+    public String login(LoginRequest loginRequest) {
+        // 1 根据手机号查询db
+        String phone = loginRequest.getPhone();
+        List<AccountDO> accounts = this.accountMapper
+                .selectList(new QueryWrapper<AccountDO>().lambda().eq(AccountDO::getPhone, phone));
+        if (accounts.size() != 1) {
+            if (accounts.size() > 1) {
+                log.error("同一手机存在多个账号 phone:[{}], accounts:[{}]", phone, accounts);
+            }
+            throw new BizException(BizCodeEnum.ACCOUNT_UNREGISTER);
+        }
+        // 2 核对密码
+        String cryptPassword = Md5Crypt.md5Crypt(loginRequest.getPassword().getBytes(), accounts.get(0).getSecret());
+        if (!cryptPassword.equals(loginRequest.getPassword())) {
+            throw new BizException(BizCodeEnum.ACCOUNT_PWD_ERROR);
+        }
+        // 3 将登陆用户信息存入上下文 TODO
+        // 4 生成token返回
+        return null;
     }
 }
