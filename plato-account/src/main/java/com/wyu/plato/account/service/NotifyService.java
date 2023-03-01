@@ -7,7 +7,9 @@ import com.wyu.plato.account.service.strategy.MapSendStrategyFactory;
 import com.wyu.plato.account.service.strategy.VerifyStrategy;
 import com.wyu.plato.common.enums.BizCodeEnum;
 import com.wyu.plato.common.constant.CacheConstants;
+import com.wyu.plato.common.enums.SendCodeType;
 import com.wyu.plato.common.exception.BizException;
+import com.wyu.plato.common.util.CommonUtil;
 import com.wyu.plato.common.util.RedisCache;
 import com.wyu.plato.common.util.Resp;
 import com.wyu.plato.common.util.uuid.IdUtils;
@@ -113,5 +115,21 @@ public class NotifyService {
         }
 
         return null;
+    }
+
+    public void verify(SendCodeType type, String to, String code) {
+        // key account-service:code:register:to
+        String codeKey = String.format(CacheConstants.CHECK_CODE_KEY, type.name(), to);
+        // value code_timestamp
+        String codeCache = this.redisCache.getCacheObject(codeKey);
+
+        if (StringUtils.hasText(codeCache)) {
+            String value = codeCache.split("_")[0];
+            // 验证码匹配
+            if (code.equalsIgnoreCase(value)) {
+                this.redisCache.deleteObject(codeKey);
+            }
+        }
+        throw new BizException(BizCodeEnum.CODE_ERROR);
     }
 }

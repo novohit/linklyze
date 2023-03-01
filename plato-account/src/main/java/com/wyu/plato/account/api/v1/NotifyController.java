@@ -37,7 +37,7 @@ public class NotifyController {
     private NotifyService notifyService;
 
     /**
-     * 验证码发送压测接口
+     * 发送短信验证码
      *
      * @return
      */
@@ -48,6 +48,11 @@ public class NotifyController {
         return Resp.success();
     }
 
+    /**
+     * 获取图形验证码
+     *
+     * @return
+     */
     @GetMapping("/captcha")
     public Resp getCaptcha() {
         Map<String, Object> map = this.notifyService.getCaptcha();

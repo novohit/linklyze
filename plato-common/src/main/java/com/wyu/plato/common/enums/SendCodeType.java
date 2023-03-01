@@ -10,8 +10,6 @@ import java.util.stream.Stream;
  * @author novo
  * @since 2023-02-25 22:29
  */
-@Getter
-@AllArgsConstructor
 public enum SendCodeType {
 
     USER_REGISTER_PHONE,
