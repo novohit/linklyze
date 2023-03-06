@@ -5,6 +5,8 @@ import com.wyu.plato.account.api.v1.request.RegisterRequest;
 import com.wyu.plato.account.service.AccountService;
 import com.wyu.plato.account.service.FileService;
 import com.wyu.plato.common.util.Resp;
+import com.wyu.plato.common.util.TokenUtil;
+import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -47,6 +49,19 @@ public class AccountController {
     @PostMapping("/login")
     public Resp login(@RequestBody @Validated LoginRequest loginRequest) {
         this.accountService.login(loginRequest);
+        return Resp.success();
+    }
+
+    @PostMapping("/token-test")
+    public Resp token() {
+        String token = TokenUtil.generateAccessToken(1L);
+        return Resp.success(token);
+    }
+
+    @PostMapping("/token-verify")
+    public Resp tokenVerify(String token) {
+        Claims claims = TokenUtil.verifyToken(token);
+        System.out.println(claims);
         return Resp.success();
     }
 
