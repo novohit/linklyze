@@ -57,7 +57,6 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Resp> httpExceptionHandler(HttpServletRequest request, BizException e) {
         String requestUrl = request.getRequestURI();
         String method = request.getMethod();
-
         Resp unifyResponse = new Resp(e.getCode(), e.getMessage(), method + " " + requestUrl);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -79,9 +78,7 @@ public class GlobalExceptionHandler {
     public Resp methodArgumentNotValidExceptionHandler(HttpServletRequest request, MethodArgumentNotValidException e) {
         String requestUrl = request.getRequestURI();
         String method = request.getMethod();
-
         List<ObjectError> errors = e.getBindingResult().getAllErrors();
-
         String errorMsg = this.formatAllErrorsMessages(errors);
         log.error("[参数异常] url:[{}],msg:[{}]", requestUrl, errorMsg);
         return Resp.error(errorMsg);

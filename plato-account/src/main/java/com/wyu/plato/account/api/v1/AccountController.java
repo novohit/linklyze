@@ -52,13 +52,13 @@ public class AccountController {
         return Resp.success();
     }
 
-    @PostMapping("/token-test")
+    @PostMapping("/test-token")
     public Resp token() {
         String token = TokenUtil.generateAccessToken(1L);
         return Resp.success(token);
     }
 
-    @PostMapping("/token-verify")
+    @PostMapping("/test-token-verify")
     public Resp tokenVerify(String token) {
         Claims claims = TokenUtil.verifyToken(token);
         System.out.println(claims);
