@@ -13,11 +13,13 @@ import com.wyu.plato.common.enums.BizCodeEnum;
 import com.wyu.plato.common.enums.SendCodeType;
 import com.wyu.plato.common.exception.BizException;
 import com.wyu.plato.common.util.CommonUtil;
+import com.wyu.plato.common.util.TokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.Md5Crypt;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -46,8 +48,20 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, AccountDO> im
      */
     @Override
     public void register(RegisterRequest registerRequest) {
+        String phone = registerRequest.getPhone();
         // 1 校验验证码
-        this.notifyService.verify(SendCodeType.USER_REGISTER_PHONE, registerRequest.getPhone(), registerRequest.getCode());
+        boolean verify = this.notifyService.verify(SendCodeType.USER_REGISTER_PHONE, phone, registerRequest.getCode());
+        if (!verify) {
+            throw new BizException(BizCodeEnum.CODE_ERROR);
+        }
+        log.info("注册验证码校验成功");
+
+        List<AccountDO> accounts = this.accountMapper
+                .selectList(new QueryWrapper<AccountDO>().lambda().eq(AccountDO::getPhone, phone));
+        if (!CollectionUtils.isEmpty(accounts)) {
+            log.info("账户已存在,[{}]", phone);
+            throw new BizException(BizCodeEnum.ACCOUNT_REPEAT);
+        }
         // 2 构造入库对象
         AccountDO accountDO = new AccountDO();
         BeanUtils.copyProperties(registerRequest, accountDO);
@@ -73,15 +87,18 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, AccountDO> im
             if (accounts.size() > 1) {
                 log.error("同一手机存在多个账号 phone:[{}], accounts:[{}]", phone, accounts);
             }
-            throw new BizException(BizCodeEnum.ACCOUNT_UNREGISTER);
+            log.info("账户不存在,[{}]", phone);
+            throw new BizException(BizCodeEnum.ACCOUNT_PWD_ERROR);
         }
+        AccountDO dbAccount = accounts.get(0);
+        log.info("账户:[{}]", dbAccount);
         // 2 核对密码
-        String cryptPassword = Md5Crypt.md5Crypt(loginRequest.getPassword().getBytes(), accounts.get(0).getSecret());
-        if (!cryptPassword.equals(loginRequest.getPassword())) {
+        String cryptPassword = Md5Crypt.md5Crypt(loginRequest.getPassword().getBytes(), dbAccount.getSecret());
+        if (!cryptPassword.equals(dbAccount.getPassword())) {
             throw new BizException(BizCodeEnum.ACCOUNT_PWD_ERROR);
         }
         // 3 将登陆用户信息存入上下文 TODO
         // 4 生成token返回
-        return null;
+        return TokenUtil.generateAccessToken(dbAccount.getAccountNo());
     }
 }

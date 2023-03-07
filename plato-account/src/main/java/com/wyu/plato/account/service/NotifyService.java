@@ -117,19 +117,20 @@ public class NotifyService {
         return null;
     }
 
-    public void verify(SendCodeType type, String to, String code) {
+    public boolean verify(SendCodeType type, String to, String code) {
         // key account-service:code:register:to
         String codeKey = String.format(CacheConstants.CHECK_CODE_KEY, type.name(), to);
         // value code_timestamp
         String codeCache = this.redisCache.getCacheObject(codeKey);
-
+        log.info("get redis [{}]", codeCache);
         if (StringUtils.hasText(codeCache)) {
             String value = codeCache.split("_")[0];
             // 验证码匹配
             if (code.equalsIgnoreCase(value)) {
                 this.redisCache.deleteObject(codeKey);
+                return true;
             }
         }
-        throw new BizException(BizCodeEnum.CODE_ERROR);
+        return false;
     }
 }

@@ -19,7 +19,7 @@ public class BaseModel {
     @JsonIgnore
     private Date updateTime;
 
-    @TableLogic
+    @TableLogic(value = "null", delval = "now()")
     @JsonIgnore
     private Date deleteTime;
 }

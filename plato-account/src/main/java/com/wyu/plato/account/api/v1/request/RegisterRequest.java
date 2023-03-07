@@ -1,7 +1,6 @@
 package com.wyu.plato.account.api.v1.request;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.wyu.plato.account.annotation.PasswordEqual;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;

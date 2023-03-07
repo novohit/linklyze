@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author novo
@@ -78,7 +81,8 @@ public class GlobalExceptionHandler {
         String method = request.getMethod();
 
         List<ObjectError> errors = e.getBindingResult().getAllErrors();
-        String errorMsg = this.formatAllErrorMessages(errors);
+
+        String errorMsg = this.formatAllErrorsMessages(errors);
         log.error("[参数异常] url:[{}],msg:[{}]", requestUrl, errorMsg);
         return Resp.error(errorMsg);
     }
@@ -98,12 +102,10 @@ public class GlobalExceptionHandler {
         String method = request.getMethod();
 
         // ConstraintViolationException自带的getMessage()也是可以用的，如果对错误信息没有严格的格式要求可以不用通过这种循环来自定义拼接
-        StringBuilder errorMsg = new StringBuilder();
-        for (ConstraintViolation<?> error : e.getConstraintViolations()) {
-            errorMsg.append(error.getMessage()).append(";");
-        }
+        Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
+        String message = violations.stream().map(ConstraintViolation::getMessage).collect(Collectors.joining(";"));
         log.error("[参数异常] url:[{}]", requestUrl, e);
-        return Resp.error(errorMsg.toString());
+        return Resp.error(message);
     }
 
     /**
@@ -119,7 +121,8 @@ public class GlobalExceptionHandler {
     public Resp bindExceptionExceptionHandler(HttpServletRequest request, BindException e) {
         String requestUrl = request.getRequestURI();
         String method = request.getMethod();
-        String errorMsg = formatAllErrorMessages(e.getAllErrors());
+        List<ObjectError> errors = e.getBindingResult().getAllErrors();
+        String errorMsg = this.formatAllErrorsMessages(errors);
         log.error("[参数异常] url:[{}]", requestUrl, e);
         return Resp.error(errorMsg);
     }
@@ -131,11 +134,17 @@ public class GlobalExceptionHandler {
      * @param errors
      * @return
      */
-    private String formatAllErrorMessages(List<ObjectError> errors) {
-        StringBuilder errorMsg = new StringBuilder();
-        errors.forEach(objectError ->
-                errorMsg.append(objectError.getDefaultMessage()).append(";")
-        );
-        return errorMsg.toString();
+    private String formatAllErrorsMessages(List<ObjectError> errors) {
+        String message = errors.stream()
+                .map(objectError -> {
+                    if (objectError instanceof FieldError) {
+                        FieldError fieldError = (FieldError) objectError;
+                        return fieldError.getField() + fieldError.getDefaultMessage();
+                    } else {
+                        return objectError.getDefaultMessage();
+                    }
+                })
+                .collect(Collectors.joining(";"));
+        return message;
     }
 }

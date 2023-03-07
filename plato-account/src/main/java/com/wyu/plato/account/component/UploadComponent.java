@@ -76,7 +76,8 @@ public class UploadComponent {
             PutObjectResult result = ossClient.putObject(putObjectRequest);
             // 如果上传成功，则返回200。
             if (result.getResponse().getStatusCode() == HttpStatus.OK.value()) {
-                imageUrl = result.getResponse().getUri();
+                //imageUrl = result.getResponse().getUri();
+                imageUrl = String.format("http://%s.%s/%s", bucketName, endpoint, finalName);
                 log.info("文件上传成功 url:[{}]", imageUrl);
             } else {
                 log.info("文件上传失败:[{}]", result.getResponse());

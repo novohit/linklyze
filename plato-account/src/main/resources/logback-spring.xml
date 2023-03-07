@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+    <!--
+    ⽇志输出格式:
+    %-5level
+    %d{yyyy-MM-dd HH:mm:ss.SSS}⽇期
+    %c类的完整名称
+    %M为method
+    %L为⾏号
+    %thread线程名称
+    %m或者%msg为信息
+    %n换⾏
+    -->
+    <!--
+    格式化输出:
+    %d表示⽇期，
+    %thread表示线程名，
+    %-5level:级别从左显示5个字符宽度
+    %msg:⽇志消息
+    %n是换⾏符
+    -->
+
+    <!--配置集中管理属性, 可以直接使⽤该属性的值，格式：${name}-->
+    <property name="pattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} -%5p ${PID:-} [%15.15t] %-40.40logger{39} %L : %m%n"/>
+
+    <!--定义⽇志⽂件保存路径-->
+    <property name="log_dir" value="./log"/>
+    <!--这个获取到的是“解析配置文件的时间”，这个服务一旦启动后，这个时间就不会变动了-->
+    <timestamp key="datetime" datePattern="yyyy-MM-dd"/>
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <!--控制输出流对象 默认是 System.out 可以改为 System.err 区别在于：字体颜⾊不同-->
+        <target>System.out</target>
+        <!--⽇志消息格式配置-->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+<!--            <pattern>${CONSOLE_LOG_PATTERN}</pattern>-->
+            <pattern>${pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <!--输出INFO及以上-->
+    <appender name="file" class="ch.qos.logback.core.FileAppender">
+        <!--需要配置过滤项目只输出error信息 ThresholdFilter： 临界值过滤器，过滤掉低于指定临界值的日志。 不配置error和info都会输出-->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <!--过滤INFO级别以下的信息-->
+            <level>INFO</level>
+        </filter>
+        <!--⽇志⽂件保存路径-->
+        <file>${log_dir}/info/${datetime}/web.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <!--只输出error-->
+    <appender name="error" class="ch.qos.logback.core.FileAppender">
+        <!--LevelFilter： 日志级别过滤器，根据日志级别进行过滤。如果日志级别等于配置级别，过滤器会根据onMath 和 onMismatch接收或拒绝日志。-->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <!--⽇志⽂件保存路径-->
+        <file>${log_dir}/error/error.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- html格式⽇志⽂件输出Appender -->
+    <appender name="html" class="ch.qos.logback.core.FileAppender">
+        <file>${log_dir}/logback.html</file>
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="ch.qos.logback.classic.html.HTMLLayout">
+                <pattern>%-5level%d{yyyy-MM-dd HH:mm:ss.SSS}%c %M%L %thread %m</pattern>
+            </layout>
+        </encoder>
+    </appender>
+
+    <!-- ⽇志拆分和归档压缩 -->
+    <appender name="rollFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- ⽇志⽂件保存的路径 -->
+        <file>${log_dir}/roll_logback.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${pattern}</pattern>
+        </encoder>
+        <!-- 拆分规则 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- 按照时间和压缩格式声明拆分的⽂件名 -->
+            <fileNamePattern>${log_dir}/rolling.%d{yyyy-MM-dd}.log%i.gz</fileNamePattern>
+            <maxFileSize>10MB</maxFileSize>
+        </rollingPolicy>
+    </appender>
+
+
+    <!-- 滚动策略 按时间滚动 -->
+    <appender name="daily" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${pattern}</pattern>
+        </encoder>
+        <!--滚动策略 按照时间滚动-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--日志文件路径-->
+            <fileNamePattern>${log_dir}/day/%d{yyyy-MM-dd, aux}/info.%d.log</fileNamePattern>
+            <!-- 日志文件保留天数，超过默认删除 -->
+            <MaxHistory>365</MaxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <!-- 异步⽇志 -->
+    <appender name="asyncInfo" class="ch.qos.logback.classic.AsyncAppender">
+        <!-- 默认不丢失⽇志，如果队列的80%已满，则会丢失TRACT、DEBUG、INFO级别的⽇志 -->
+        <discardingThreshold>0</discardingThreshold>
+        <!-- 默认256 队列⼤⼩ -->
+        <queueSize>256</queueSize>
+        <!-- 绑定异步的appender只能添加⼀个 如果需要多个异步则要多个appender -->
+        <appender-ref ref="rollFile"/>
+    </appender>
+
+
+    <!-- 开发环境:打印控制台 -->
+    <springProfile name="dev">
+        <logger name="com.wyu.plato" level="DEBUG" additivity="false">
+            <!-- additivity 不要继承root的logger 否则会重复打印日志 -->
+            <appender-ref ref="console"/>
+        </logger>
+        <root level="INFO">
+            <appender-ref ref="console" />
+        </root>
+    </springProfile>
+    <!-- ⽣产环境 -->
+<!--    <springProfile name="prod">-->
+<!--        <root level="ALL">-->
+<!--            <appender-ref ref="console"/>-->
+<!--            <appender-ref ref="file"/>-->
+<!--            <appender-ref ref="error"/>-->
+<!--            <appender-ref ref="html"/>-->
+<!--            &lt;!&ndash;<appender-ref ref="rollFile"/>&ndash;&gt;-->
+<!--            <appender-ref ref="daily"/>-->
+<!--            <appender-ref ref="asyncInfo"/>-->
+<!--        </root>-->
+<!--    </springProfile>-->
+
+</configuration>

@@ -7,6 +7,7 @@ import com.wyu.plato.common.enums.BizCodeEnum;
 import com.wyu.plato.common.exception.BizException;
 import com.wyu.plato.common.util.CommonUtil;
 import com.wyu.plato.common.util.RedisCache;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -18,6 +19,7 @@ import java.util.concurrent.TimeUnit;
  * @since 2023-02-25 22:28
  */
 @Component
+@Slf4j
 public class SendPhoneStrategy implements VerifyStrategy {
 
     @Autowired
@@ -49,6 +51,7 @@ public class SendPhoneStrategy implements VerifyStrategy {
         String value = code + "_" + CommonUtil.getCurrentTimestamp();
         // 存入redis并发送验证码
         this.redisCache.setCacheObject(codeKey, value, CacheConstants.CHECK_CODE_EXPIRATION, TimeUnit.MINUTES);
+        log.info("set redis [{}]", value);
         this.smsComponent.send(to, this.smsProperties.getTemplateId(), code);
     }
 }
