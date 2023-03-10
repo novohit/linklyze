@@ -84,6 +84,20 @@
             <artifactId>jedis</artifactId>
         </dependency>
 
+        <!--sharding-jdbc-->
+        <dependency>
+            <groupId>org.apache.shardingsphere</groupId>
+            <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
+            <exclusions>
+                <!--和nacos client中的guava版本冲突-->
+                <exclusion>
+                    <groupId>com.google.guava</groupId>
+                    <artifactId>guava</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+
         <!--mybatis plus-->
         <dependency>
             <groupId>com.baomidou</groupId>

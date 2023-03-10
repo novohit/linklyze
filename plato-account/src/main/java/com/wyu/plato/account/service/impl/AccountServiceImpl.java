@@ -97,8 +97,7 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, AccountDO> im
         if (!cryptPassword.equals(dbAccount.getPassword())) {
             throw new BizException(BizCodeEnum.ACCOUNT_PWD_ERROR);
         }
-        // 3 将登陆用户信息存入上下文 TODO
-        // 4 生成token返回
+        // 3 生成token返回
         return TokenUtil.generateAccessToken(dbAccount.getAccountNo());
     }
 }

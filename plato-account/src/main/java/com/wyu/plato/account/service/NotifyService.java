@@ -96,9 +96,7 @@ public class NotifyService {
         String captchaId = IdUtils.simpleUUID();
         String captchaKey = CacheConstants.CAPTCHA_CODE_KEY + captchaId;
 
-        if (log.isDebugEnabled()) {
-            log.debug("captchaId:[{}],captcha:[{}]", captchaId, captcha);
-        }
+        log.info("captchaId:[{}],captcha:[{}]", captchaId, captcha);
 
         this.redisCache.setCacheObject(captchaKey, captcha, CacheConstants.CAPTCHA_EXPIRATION, TimeUnit.MINUTES);
         // 转换流信息写出
