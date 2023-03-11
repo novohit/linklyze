@@ -14,6 +14,7 @@ import com.wyu.plato.common.enums.SendCodeType;
 import com.wyu.plato.common.exception.BizException;
 import com.wyu.plato.common.util.CommonUtil;
 import com.wyu.plato.common.util.TokenUtil;
+import com.wyu.plato.common.util.uuid.IDUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.Md5Crypt;
 import org.springframework.beans.BeanUtils;
@@ -69,8 +70,8 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, AccountDO> im
         accountDO.setSecret("$1$" + CommonUtil.getRandomCode(8));
         String cryptPassword = Md5Crypt.md5Crypt(registerRequest.getPassword().getBytes(), accountDO.getSecret());
         accountDO.setPassword(cryptPassword);
-        // TODO 唯一账号怎么生成
-        accountDO.setAccountNo(CommonUtil.getCurrentTimestamp());
+        // 使用雪花算法生成唯一账号
+        accountDO.setAccountNo(IDUtil.snowflakeID());
 
         int row = this.accountMapper.insert(accountDO);
         log.info("row:[{}],注册成功:[{}]", row, accountDO);

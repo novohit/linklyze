@@ -1,12 +1,26 @@
 package com.wyu.plato.common.util.uuid;
 
+import org.apache.shardingsphere.core.strategy.keygen.SnowflakeShardingKeyGenerator;
+
 /**
  * ID生成器工具类
  *
  * @author novo
  * @since 2023-02-25 16:22
  */
-public class IdUtils {
+public class IDUtil {
+
+    private static final SnowflakeShardingKeyGenerator shardingKeyGenerator = new SnowflakeShardingKeyGenerator();
+
+    /**
+     * 生成雪花ID
+     *
+     * @return
+     */
+    public static Long snowflakeID() {
+        return Long.valueOf(shardingKeyGenerator.generateKey().toString());
+    }
+
     /**
      * 获取随机UUID
      *

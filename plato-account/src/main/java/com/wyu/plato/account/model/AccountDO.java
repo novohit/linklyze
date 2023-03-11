@@ -18,10 +18,6 @@ import lombok.experimental.Accessors;
 @TableName("account")
 public class AccountDO extends BaseModel {
 
-
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
-
     private Long accountNo;
 
     /**

@@ -24,7 +24,7 @@ public class TrafficDO extends BaseModel {
 
     // @TableId(value = "id", type = IdType.AUTO)
     // mybatis-plus也可以设置雪花ID，type = ASSIGN_ID 但是不常用，我们直接通过sharding-jdbc的配置
-    private Long id;
+    // private Long id;
 
     /**
      * 每天限制多少条短链

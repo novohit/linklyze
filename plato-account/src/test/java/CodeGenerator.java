@@ -37,7 +37,8 @@ public class CodeGenerator {
         DataSourceConfig dataSourceConfig = new DataSourceConfig();
         dataSourceConfig
                 //.setUrl("jdbc:mysql://localhost:3308/z-mall?allowPublicKeyRetrieval=true&useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai")
-                .setUrl("jdbc:mysql://localhost:3308/plato_account?allowPublicKeyRetrieval=true&useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai")
+                //.setUrl("jdbc:mysql://localhost:3308/plato_account?allowPublicKeyRetrieval=true&useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai")
+                .setUrl("jdbc:mysql://localhost:3308/plato_link?allowPublicKeyRetrieval=true&useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai")
                 .setDriverName("com.mysql.cj.jdbc.Driver")
                 .setUsername("root")
                 .setPassword("root");
@@ -46,7 +47,7 @@ public class CodeGenerator {
         // 包名配置
         PackageConfig packageConfig = new PackageConfig();
         packageConfig
-                .setParent("com.wyu.plato.common")
+                .setParent("com.wyu.plato.link")
                 .setPathInfo(getPathInfo())
                 .setEntity("model")
                 .setController("api.v1")
@@ -73,8 +74,8 @@ public class CodeGenerator {
                 .setEntitySerialVersionUID(false)
                 .setEntityLombokModel(true)
                 .setRestControllerStyle(true)
-                //.setSuperEntityColumns("id", "create_time", "update_time", "delete_time")
-                .setSuperEntityColumns("create_time", "update_time", "delete_time")
+                .setSuperEntityColumns("id", "create_time", "update_time", "delete_time")
+                //.setSuperEntityColumns("create_time", "update_time", "delete_time")
                 .setInclude(scanner("表名，多个英文逗号分割").split(","))
                 .setControllerMappingHyphenStyle(true);
         mpg.setStrategy(strategyConfig);
@@ -100,12 +101,12 @@ public class CodeGenerator {
     private static Map<String, String> getPathInfo() {
         Map<String, String> pathInfo = new HashMap<>();
         // 在哪个包下生成路径
-        String module = "/plato-account";
-        pathInfo.put(ConstVal.ENTITY_PATH, System.getProperty("user.dir") + module + "/src/main/java/com/wyu/plato/account/model");
-        pathInfo.put(ConstVal.MAPPER_PATH, System.getProperty("user.dir") + module + "/src/main/java/com/wyu/plato/account/mapper");
-        pathInfo.put(ConstVal.SERVICE_PATH, System.getProperty("user.dir") + module + "/src/main/java/com/wyu/plato/account/service");
-        pathInfo.put(ConstVal.SERVICE_IMPL_PATH, System.getProperty("user.dir") + module + "/src/main/java/com/wyu/plato/account/service/impl");
-        pathInfo.put(ConstVal.CONTROLLER_PATH, System.getProperty("user.dir") + module + "/src/main/java/com/wyu/plato/account/api/v1");
+        String module = "/plato-link";
+        pathInfo.put(ConstVal.ENTITY_PATH, System.getProperty("user.dir") + module + "/src/main/java/com/wyu/plato/link/model");
+        pathInfo.put(ConstVal.MAPPER_PATH, System.getProperty("user.dir") + module + "/src/main/java/com/wyu/plato/link/mapper");
+        pathInfo.put(ConstVal.SERVICE_PATH, System.getProperty("user.dir") + module + "/src/main/java/com/wyu/plato/link/service");
+        pathInfo.put(ConstVal.SERVICE_IMPL_PATH, System.getProperty("user.dir") + module + "/src/main/java/com/wyu/plato/link/service/impl");
+        pathInfo.put(ConstVal.CONTROLLER_PATH, System.getProperty("user.dir") + module + "/src/main/java/com/wyu/plato/link/api/v1");
         pathInfo.put(ConstVal.XML_PATH, System.getProperty("user.dir") + module + "/src/main/resources/mapper");
         return pathInfo;
     }

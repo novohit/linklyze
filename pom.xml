@@ -12,6 +12,7 @@
         <module>plato-common</module>
         <module>plato-account</module>
         <module>plato-gateway</module>
+        <module>plato-link</module>
     </modules>
 
     <properties>

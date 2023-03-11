@@ -9,10 +9,8 @@ import com.wyu.plato.common.enums.BizCodeEnum;
 import com.wyu.plato.common.constant.CacheConstants;
 import com.wyu.plato.common.enums.SendCodeType;
 import com.wyu.plato.common.exception.BizException;
-import com.wyu.plato.common.util.CommonUtil;
 import com.wyu.plato.common.util.RedisCache;
-import com.wyu.plato.common.util.Resp;
-import com.wyu.plato.common.util.uuid.IdUtils;
+import com.wyu.plato.common.util.uuid.IDUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,7 +91,7 @@ public class NotifyService {
         String captcha = this.defaultKaptcha.createText();
         BufferedImage image = this.defaultKaptcha.createImage(captcha);
         // 存入redis并设置过期时间
-        String captchaId = IdUtils.simpleUUID();
+        String captchaId = IDUtil.simpleUUID();
         String captchaKey = CacheConstants.CAPTCHA_CODE_KEY + captchaId;
 
         log.info("captchaId:[{}],captcha:[{}]", captchaId, captcha);

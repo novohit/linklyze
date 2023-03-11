@@ -1,4 +1,4 @@
-package com.wyu.link;
+package com.wyu.plato.link;
 
 import com.google.common.hash.Hashing;
 import com.wyu.plato.common.util.CommonUtil;
@@ -25,15 +25,19 @@ public class MurmurHashTest {
     @Test
     public void testMurmurHash() {
         for (int i = 0; i < 10; i++) {
-            String originalUrl = "https://www.baidu.com?id="+ CommonUtil.getCurrentTimestamp() + "&name="+CommonUtil.getCurrentTimestamp();
+            String originalUrl = "https://www.baidu.com?id=" + CommonUtil.getCurrentTimestamp() + "&name=" + CommonUtil.getCurrentTimestamp();
             long murmur3_32 = Hashing.murmur3_32().hashUnencodedChars(originalUrl).padToLong();
-            log.info("[{}]",murmur3_32);
+            log.info("[{}]", murmur3_32);
         }
     }
 
     @Test
     public void testCreateShortLink() {
-        this.shortLinkComponent.encodeToBase62(201314L);
-        this.shortLinkComponent.encodeToBase622(201314L);
+        for (int i = 0; i < 100000; i++) {
+            String value = CommonUtil.getStringNumRandom(5);
+            String originalUrl = "https://www.baidu.com?id=" + value + "&name=" +value;
+            String shortLink = this.shortLinkComponent.createShortLink(value);
+            log.info("origin_url:[{}], short_link:[{}]", originalUrl, shortLink);
+        }
     }
 }

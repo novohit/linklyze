@@ -13,7 +13,7 @@ import java.net.UnknownHostException;
  */
 @Configuration
 @Slf4j
-public class SnowflakeWorkIdConfig {
+public class SnowflakeWorkerIdConfig {
 
     /**
      * 动态指定sharding-jdbc的雪花算法中的word.id属性
@@ -27,9 +27,9 @@ public class SnowflakeWorkIdConfig {
             InetAddress host = Inet4Address.getLocalHost();
             String hostAddress = host.getHostAddress();
             // 对机器ip进行哈希取模 哈希可能为负 先取绝对值 workId极小概率会重复
-            String wordId = String.valueOf(Math.abs((hostAddress.hashCode()) % 1024));
-            System.setProperty("system.snowflake.work-id", wordId);
-            log.info("workId:[{}]", wordId);
+            String workerId = String.valueOf(Math.abs((hostAddress.hashCode()) % 1024));
+            System.setProperty("system.snowflake.worker-id", workerId);
+            log.info("snowflake worker id:[{}]", workerId);
         } catch (UnknownHostException e) {
             throw new RuntimeException(e);
         }

@@ -1,5 +1,6 @@
 package com.wyu.plato.common.util;
 
+import com.google.common.hash.Hashing;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.http.HttpServletRequest;
@@ -177,5 +178,17 @@ public class CommonUtil {
         } catch (IOException e) {
             log.warn("响应json数据给前端异常:", e);
         }
+    }
+
+    /**
+     * google murmurhash算法
+     *
+     * @param value
+     * @return
+     */
+    @SuppressWarnings(value = {"all"})
+    public static long murmurHash32(String value) {
+        long murmurHash32 = Hashing.murmur3_32().hashUnencodedChars(value).padToLong();
+        return murmurHash32;
     }
 }

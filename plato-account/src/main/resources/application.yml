@@ -51,7 +51,7 @@ spring:
             column: id
             props:
               worker:
-                id: 0
+                id: ${system.snowflake.worker-id}
             #id生成策略
             type: SNOWFLAKE
   redis:
