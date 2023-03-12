@@ -13,4 +13,6 @@ public interface LinkGroupService extends IService<LinkGroupDO> {
     void create(LinkGroupCreateRequest createRequest);
 
     void delete(Long groupId);
+
+    LinkGroupDO findOne(Long groupId);
 }

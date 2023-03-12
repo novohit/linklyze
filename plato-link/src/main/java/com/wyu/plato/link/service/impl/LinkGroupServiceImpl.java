@@ -39,9 +39,16 @@ public class LinkGroupServiceImpl extends ServiceImpl<LinkGroupMapper, LinkGroup
     public void delete(Long groupId) {
         Long accountNo = LocalUserThreadHolder.getLocalUserNo();
         int rows = this.linkGroupMapper.deleteGroup(groupId, accountNo);
-                //.delete(new QueryWrapper<LinkGroupDO>().lambda().eq(LinkGroupDO::getAccountNo, accountNo).eq(LinkGroupDO::getId, groupId));
+        //.delete(new QueryWrapper<LinkGroupDO>().lambda().eq(LinkGroupDO::getAccountNo, accountNo).eq(LinkGroupDO::getId, groupId));
         if (rows <= 0) {
             throw new BizException(BizCodeEnum.GROUP_DELETE_ERROR);
         }
+    }
+
+    @Override
+    public LinkGroupDO findOne(Long groupId) {
+        Long accountNo = LocalUserThreadHolder.getLocalUserNo();
+        return this.linkGroupMapper
+                .selectOne(new QueryWrapper<LinkGroupDO>().lambda().eq(LinkGroupDO::getAccountNo, accountNo).eq(LinkGroupDO::getId, groupId));
     }
 }

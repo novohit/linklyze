@@ -3,6 +3,7 @@ package com.wyu.plato.link.api.v1;
 
 import com.wyu.plato.common.util.Resp;
 import com.wyu.plato.link.api.v1.request.LinkGroupCreateRequest;
+import com.wyu.plato.link.model.LinkGroupDO;
 import com.wyu.plato.link.service.LinkGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -35,5 +36,10 @@ public class LinkGroupController {
     public Resp delete(@PathVariable("group_id") Long groupId) {
         this.linkGroupService.delete(groupId);
         return Resp.success();
+    }
+
+    @GetMapping("/{group_id}")
+    public Resp findOne(@PathVariable("group_id") Long groupId) {
+        return Resp.success(this.linkGroupService.findOne(groupId));
     }
 }
