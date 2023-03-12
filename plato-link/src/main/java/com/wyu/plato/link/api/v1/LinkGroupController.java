@@ -6,10 +6,7 @@ import com.wyu.plato.link.api.v1.request.LinkGroupCreateRequest;
 import com.wyu.plato.link.service.LinkGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author novo
@@ -28,9 +25,15 @@ public class LinkGroupController {
      * @param createRequest
      * @return
      */
-    @PostMapping("/create")
+    @PostMapping
     public Resp create(@RequestBody @Validated LinkGroupCreateRequest createRequest) {
         this.linkGroupService.create(createRequest);
+        return Resp.success();
+    }
+
+    @DeleteMapping("/{group_id}")
+    public Resp delete(@PathVariable("group_id") Long groupId) {
+        this.linkGroupService.delete(groupId);
         return Resp.success();
     }
 }

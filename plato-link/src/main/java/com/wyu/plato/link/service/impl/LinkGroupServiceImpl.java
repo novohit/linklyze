@@ -1,5 +1,7 @@
 package com.wyu.plato.link.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.conditions.query.QueryChainWrapper;
 import com.wyu.plato.common.LocalUserThreadHolder;
 import com.wyu.plato.common.enums.BizCodeEnum;
 import com.wyu.plato.common.exception.BizException;
@@ -20,6 +22,7 @@ public class LinkGroupServiceImpl extends ServiceImpl<LinkGroupMapper, LinkGroup
 
     @Autowired
     private LinkGroupMapper linkGroupMapper;
+
     @Override
     public void create(LinkGroupCreateRequest createRequest) {
         Long accountNo = LocalUserThreadHolder.getLocalUserNo();
@@ -29,6 +32,16 @@ public class LinkGroupServiceImpl extends ServiceImpl<LinkGroupMapper, LinkGroup
         int rows = linkGroupMapper.insert(linkGroupDO);
         if (rows <= 0) {
             throw new BizException(BizCodeEnum.GROUP_CREATE_ERROR);
+        }
+    }
+
+    @Override
+    public void delete(Long groupId) {
+        Long accountNo = LocalUserThreadHolder.getLocalUserNo();
+        int rows = this.linkGroupMapper.deleteGroup(groupId, accountNo);
+                //.delete(new QueryWrapper<LinkGroupDO>().lambda().eq(LinkGroupDO::getAccountNo, accountNo).eq(LinkGroupDO::getId, groupId));
+        if (rows <= 0) {
+            throw new BizException(BizCodeEnum.GROUP_DELETE_ERROR);
         }
     }
 }

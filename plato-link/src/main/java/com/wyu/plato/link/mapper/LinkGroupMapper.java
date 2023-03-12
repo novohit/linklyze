@@ -2,6 +2,7 @@ package com.wyu.plato.link.mapper;
 
 import com.wyu.plato.link.model.LinkGroupDO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * @author novo
@@ -9,4 +10,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface LinkGroupMapper extends BaseMapper<LinkGroupDO> {
 
+    int deleteGroup(@Param("groupId") Long groupId, @Param("accountNo") Long accountNo);
 }

@@ -11,4 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface LinkGroupService extends IService<LinkGroupDO> {
 
     void create(LinkGroupCreateRequest createRequest);
+
+    void delete(Long groupId);
 }

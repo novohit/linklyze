@@ -21,6 +21,7 @@ public enum BizCodeEnum {
     GROUP_OPER_ERROR(23503,"分组名操作失败"),
     GROUP_NOT_EXIST(23404,"分组不存在"),
     GROUP_CREATE_ERROR(23405,"分组创建失败"),
+    GROUP_DELETE_ERROR(23406,"分组删除失败"),
 
 
 

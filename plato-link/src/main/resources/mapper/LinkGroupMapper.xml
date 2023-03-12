@@ -4,12 +4,18 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.wyu.plato.link.model.LinkGroupDO">
-        <id column="id" property="id" />
-        <result column="create_time" property="createTime" />
-        <result column="update_time" property="updateTime" />
-        <result column="delete_time" property="deleteTime" />
-        <result column="title" property="title" />
-        <result column="account_no" property="accountNo" />
+        <id column="id" property="id"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="delete_time" property="deleteTime"/>
+        <result column="title" property="title"/>
+        <result column="account_no" property="accountNo"/>
     </resultMap>
 
+    <delete id="deleteGroup" parameterType="java.lang.Long">
+        delete
+        from link_group
+        where id = #{groupId,jdbcType=BIGINT}
+          and account_no = #{accountNo,jdbcType=BIGINT}
+    </delete>
 </mapper>
