@@ -48,8 +48,8 @@ public class AccountController {
      */
     @PostMapping("/login")
     public Resp login(@RequestBody @Validated LoginRequest loginRequest) {
-        this.accountService.login(loginRequest);
-        return Resp.success();
+        String token = this.accountService.login(loginRequest);
+        return Resp.success(token);
     }
 
     @PostMapping("/test-token")

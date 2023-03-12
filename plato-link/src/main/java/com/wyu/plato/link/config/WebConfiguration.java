@@ -1,4 +1,4 @@
-package com.wyu.plato.account.config;
+package com.wyu.plato.link.config;
 
 import com.wyu.plato.common.interceptor.LoginInterceptor;
 import org.springframework.context.annotation.Bean;
@@ -28,10 +28,6 @@ public class WebConfiguration implements WebMvcConfigurer {
         //  因为LoginInterceptor里我们用到了容器中的AccountService
         registry.addInterceptor(loginInterceptor())
                 // servlet.context-path会自动添加上去
-                .excludePathPatterns("/account/*/register",
-                        "/account/*/login",
-                        "/notify/*/captcha",
-                        "/notify/*/send-code",
-                        "/**/test*");
+                .excludePathPatterns("/**/test*");
     }
 }

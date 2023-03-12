@@ -57,7 +57,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Resp> httpExceptionHandler(HttpServletRequest request, BizException e) {
         String requestUrl = request.getRequestURI();
         String method = request.getMethod();
-        Resp unifyResponse = new Resp(e.getCode(), e.getMessage(), method + " " + requestUrl);
+        Resp unifyResponse = new Resp(e.getCode(), null, e.getMessage());
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpStatus httpStatus = HttpStatus.resolve(e.getHttpStatusCode());

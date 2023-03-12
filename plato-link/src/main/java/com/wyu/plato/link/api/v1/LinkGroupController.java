@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 * @since 2023-03-11
 */
 @RestController
-@RequestMapping("/link-group/v1")
+@RequestMapping("/group/v1")
 public class LinkGroupController {
 
 //    @PostMapping("")

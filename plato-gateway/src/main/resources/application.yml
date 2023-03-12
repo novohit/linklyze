@@ -1,16 +1,31 @@
-server:
-  port: 8888
-
 spring:
   application:
     name: plato-gateway
+  profiles:
+    active: dev
   cloud:
     nacos:
       discovery:
-        server-addr: localhost:8848 # default url
-        cluster-name: GZ
-        username: nacos
-        password: nacos
+        server-addr: ${plato.cloud.nacos.host}:${plato.cloud.nacos.port} # default url
+        cluster-name: ${plato.cloud.nacos.cluster-name}
+        username: ${plato.cloud.nacos.username}
+        password: ${plato.cloud.nacos.password}
     loadbalancer:
       nacos:
         enabled: true # 启用nacos负载均衡配置同集群优先 同一集群下是随机策略 @LoadBalancerClient无效
+    # gateway config
+    gateway:
+      routes:
+        - id: plato-account # 路由id，自定义 唯一即可
+          uri: lb://plato-account # lb://服务名称 loadbalance服务均衡
+          # 路由断言 判断请求是否符合当前路由规则的条件 不符合访问404
+          # 官方文档 https://docs.spring.io/spring-cloud-gateway/docs/current/reference/html/#gateway-request-predicates-factories
+          predicates:
+            - Path=/api/account/**,/api/notify/** # 符合该路由条件的就代理到user-service
+            - After=2013-01-20T17:42:47.789-07:00[Asia/Shanghai] # 只有访问时间在配置时间之后才能访问
+          filters: # 过滤器
+            - AddRequestHeader=X-key, hello
+        - id: plato-link
+          uri: lb://plato-link
+          predicates:
+            - Path=/link/**
