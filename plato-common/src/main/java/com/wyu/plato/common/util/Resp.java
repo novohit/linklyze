@@ -61,7 +61,7 @@ public class Resp {
      * @return
      */
     public static Resp success(Object data) {
-        return new Resp(0, data, null);
+        return new Resp(BizCodeEnum.SUCCESS.getCode(), data, BizCodeEnum.SUCCESS.getMessage());
     }
 
     /**
@@ -70,7 +70,7 @@ public class Resp {
      * @return
      */
     public static Resp error(String msg) {
-        return new Resp(1, null, msg);
+        return new Resp(BizCodeEnum.SERVER_ERROR.getCode(), null, msg);
     }
 
 
