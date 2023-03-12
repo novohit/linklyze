@@ -1,8 +1,6 @@
 package com.wyu.plato.common.util;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -40,7 +38,26 @@ public class TokenUtil {
 //        TokenUtil.refreshExpiredTime = refreshExpiredTime;
 //    }
 
-    public static String generateToken(String tokenType, Long userId, Integer expiredTime) {
+    private static String generateToken(String tokenType, Map<String, Object> claims, Integer expiredTime) {
+        Date now = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(now);
+        // 当前时间加上过期时间就是过期的时间点
+        calendar.add(Calendar.SECOND, expiredTime);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("token_type", tokenType);
+        map.put("account", claims);
+        return Jwts.builder()
+                .setClaims(map) // setClaims要第一步执行否则会覆盖掉其他属性
+                .setIssuer(ISSUER)
+                .setSubject(SUBJECT)
+                .setIssuedAt(now)
+                .setExpiration(calendar.getTime())
+                .signWith(SignatureAlgorithm.RS256, RSAUtil.getPrivateKey())
+                .compact();
+    }
+
+    private static String generateToken(String tokenType, Long userId, Integer expiredTime) {
         Date now = new Date();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(now);
@@ -63,8 +80,16 @@ public class TokenUtil {
         return TokenUtil.generateToken("access", userId, TokenUtil.accessExpiredTime);
     }
 
+    public static String generateAccessToken(Map<String, Object> claims) {
+        return TokenUtil.generateToken("access", claims, TokenUtil.accessExpiredTime);
+    }
+
     public static String generateRefreshToken(Long userId) {
         return TokenUtil.generateToken("refresh", userId, TokenUtil.refreshExpiredTime);
+    }
+
+    public static String generateRefreshToken(Map<String, Object> claims) {
+        return TokenUtil.generateToken("refresh", claims, TokenUtil.refreshExpiredTime);
     }
 
 //    public static Tokens generateDoubleToken(Long userId) throws Exception {
@@ -79,6 +104,9 @@ public class TokenUtil {
                     .setSigningKey(RSAUtil.getPublicKey())
                     .parseClaimsJws(token)
                     .getBody();
+        } catch (ExpiredJwtException e) {
+            logger.error("jwt过期:", e);
+            return null;
         } catch (Exception e) {
             logger.error("jwt解析异常:", e);
             return null;

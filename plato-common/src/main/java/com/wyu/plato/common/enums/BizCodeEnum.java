@@ -10,14 +10,17 @@ import lombok.Getter;
  */
 public enum BizCodeEnum {
 
+    SUCCESS(0, "操作成功"),
+
     SERVER_ERROR(1, "系统异常"),
 
     /**
      * 短链分组
      */
     GROUP_REPEAT(23001,"分组名重复"),
-    GROUP_OPER_FAIL(23503,"分组名操作失败"),
+    GROUP_OPER_ERROR(23503,"分组名操作失败"),
     GROUP_NOT_EXIST(23404,"分组不存在"),
+    GROUP_CREATE_ERROR(23405,"分组创建失败"),
 
 
 

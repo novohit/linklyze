@@ -1,5 +1,6 @@
 package com.wyu.plato.account.service.impl;
 
+import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.wyu.plato.account.api.v1.request.LoginRequest;
 import com.wyu.plato.account.api.v1.request.RegisterRequest;
@@ -12,9 +13,12 @@ import com.wyu.plato.common.enums.AccountAuthType;
 import com.wyu.plato.common.enums.BizCodeEnum;
 import com.wyu.plato.common.enums.SendCodeType;
 import com.wyu.plato.common.exception.BizException;
+import com.wyu.plato.common.model.LocalUser;
 import com.wyu.plato.common.util.CommonUtil;
 import com.wyu.plato.common.util.TokenUtil;
 import com.wyu.plato.common.util.uuid.IDUtil;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.impl.DefaultClaims;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.Md5Crypt;
 import org.springframework.beans.BeanUtils;
@@ -23,7 +27,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author novo
@@ -98,7 +104,16 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, AccountDO> im
         if (!cryptPassword.equals(dbAccount.getPassword())) {
             throw new BizException(BizCodeEnum.ACCOUNT_PWD_ERROR);
         }
+        LocalUser localUser = new LocalUser();
+        BeanUtils.copyProperties(dbAccount, localUser);
+        HashMap account = JSONObject.parseObject(JSONObject.toJSONString(localUser), HashMap.class);
+
         // 3 生成token返回
-        return TokenUtil.generateAccessToken(dbAccount.getAccountNo());
+        return TokenUtil.generateAccessToken(account);
+    }
+
+    @Override
+    public AccountDO findByAccountNo(Long accountNo) {
+        return this.accountMapper.selectOne(new QueryWrapper<AccountDO>().lambda().eq(AccountDO::getAccountNo, accountNo));
     }
 }

@@ -25,16 +25,6 @@ public class LocalUser {
     private String phone;
 
     /**
-     * 密码
-     */
-    private String password;
-
-    /**
-     * 盐，用于个人敏感信息处理
-     */
-    private String secret;
-
-    /**
      * 邮箱
      */
     private String mail;

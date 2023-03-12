@@ -15,4 +15,6 @@ public interface AccountService extends IService<AccountDO> {
     void register(RegisterRequest registerRequest);
 
     String login(LoginRequest loginRequest);
+
+    AccountDO findByAccountNo(Long accountNo);
 }

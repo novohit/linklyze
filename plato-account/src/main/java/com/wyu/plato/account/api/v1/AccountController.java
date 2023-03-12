@@ -2,6 +2,7 @@ package com.wyu.plato.account.api.v1;
 
 import com.wyu.plato.account.api.v1.request.LoginRequest;
 import com.wyu.plato.account.api.v1.request.RegisterRequest;
+import com.wyu.plato.account.model.AccountDO;
 import com.wyu.plato.account.service.AccountService;
 import com.wyu.plato.account.service.FileService;
 import com.wyu.plato.common.util.Resp;
@@ -75,5 +76,12 @@ public class AccountController {
     public Resp register(@RequestBody @Validated RegisterRequest registerRequest) {
         this.accountService.register(registerRequest);
         return Resp.success();
+    }
+
+
+    @PostMapping("/{account_no}")
+    public Resp findByAccountNo(@PathVariable("account_no") Long accountNo) {
+        AccountDO account = this.accountService.findByAccountNo(accountNo);
+        return Resp.success(account);
     }
 }

@@ -26,6 +26,10 @@ public class LocalUserThreadHolder {
         return LocalUserThreadHolder.threadLocal.get().getId();
     }
 
+    public static Long getLocalUserNo() {
+        return LocalUserThreadHolder.threadLocal.get().getAccountNo();
+    }
+
     public static void clear() {
         LocalUserThreadHolder.threadLocal.remove();
     }

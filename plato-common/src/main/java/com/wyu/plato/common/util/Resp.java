@@ -52,7 +52,7 @@ public class Resp {
      * @return
      */
     public static Resp success() {
-        return new Resp(0, null, null);
+        return new Resp(BizCodeEnum.SUCCESS.getCode(), null, BizCodeEnum.SUCCESS.getMessage());
     }
 
     /**
