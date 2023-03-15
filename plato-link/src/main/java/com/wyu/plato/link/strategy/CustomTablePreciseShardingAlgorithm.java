@@ -13,7 +13,7 @@ import java.util.Collection;
  * @since 2023-03-15
  */
 @Slf4j
-public class CustomDBPreciseShardingAlgorithm implements PreciseShardingAlgorithm<String> {
+public class CustomTablePreciseShardingAlgorithm implements PreciseShardingAlgorithm<String> {
 
     /**
      * @param availableTargetNames 数据源集合 在分库时值为所有分片库的集合 配置文件的databaseNames 分表时为对应分片库中所有分片表的集合 tablesNames
@@ -22,19 +22,17 @@ public class CustomDBPreciseShardingAlgorithm implements PreciseShardingAlgorith
      */
     @Override
     public String doSharding(Collection<String> availableTargetNames, PreciseShardingValue<String> shardingValue) {
+        // 获取的是配置文件中actual-data-nodes:ds0.short_link的逻辑表名short_link
+        // actual-data-nodes也可以配置成真实库.真实表:ds0.short_link_0,ds0.short_link_a,... 然后循环截取最后一位与短链码表位进行匹配
+        // 只需要获取其中一个逻辑表名 因为配置的逻辑表名都相同
+        String targetName = availableTargetNames.iterator().next();
+        log.info("targetName:[{}]", targetName);
         // 短链码规则 首位:库位 末位:表位
-        String codeDBNo = String.valueOf(shardingValue.getValue().charAt(0));
-        for (String targetName : availableTargetNames) {
-            log.info("targetName:[{}]", targetName);
-            // ds0,ds1,dsa
-            // 获取databaseName最后一位 0,1,a
-            String DBNo = String.valueOf(targetName.charAt(targetName.length() - 1));
-            // 匹配一致
-            if (codeDBNo.equalsIgnoreCase(DBNo)) {
-                return targetName;
-            }
-        }
+        String code = shardingValue.getValue();
+        String codeTableNo = String.valueOf(code.charAt(code.length() - 1));
+        // 拼接Actual table short_link_a
+        return targetName + "_" + codeTableNo;
         // TODO 可以返回默认数据源
-        throw new BizException(BizCodeEnum.UNKNOWN_DB_ROUTE);
+        //throw new BizException(BizCodeEnum.UNKNOWN_DB_ROUTE);
     }
 }
