@@ -1,6 +1,10 @@
 package com.wyu.plato.link.api.v1;
 
 
+import com.wyu.plato.common.util.Resp;
+import com.wyu.plato.link.service.ShortLinkService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,37 +27,15 @@ import org.springframework.web.bind.annotation.RestController;
 */
 @RestController
 @RequestMapping("/link/v1")
+@Validated
 public class ShortLinkController {
 
-//    @PostMapping("")
-//    public CreatedVO create() {
-//        return new CreatedVO();
-//    }
-//
-//    @PutMapping("/{id}")
-//    public UpdatedVO update(@PathVariable @Positive(message = "{id.positive}") Long id) {
-//        return new UpdatedVO();
-//    }
-//
-//    @DeleteMapping("/{id}")
-//    public DeletedVO delete(@PathVariable @Positive(message = "{id.positive}") Long id) {
-//        return new DeletedVO();
-//    }
-//
-//    @GetMapping("/{id}")
-//    public ShortLinkDO get(@PathVariable(value = "id") @Positive(message = "{id.positive}") Long id) {
-//        return null;
-//    }
-//
-//    @GetMapping("/page")
-//    public PageResponseVO<ShortLinkDO> page(
-//            @RequestParam(name = "count", required = false, defaultValue = "10")
-//            @Min(value = 1, message = "{page.count.min}")
-//            @Max(value = 30, message = "{page.count.max}") Long count,
-//            @RequestParam(name = "page", required = false, defaultValue = "0")
-//            @Min(value = 0, message = "{page.number.min}") Long page
-//    ) {
-//        return null;
-//    }
+    @Autowired
+    private ShortLinkService shortLinkService;
+
+    @PostMapping
+    public Resp create() {
+        return null;
+    }
 
 }

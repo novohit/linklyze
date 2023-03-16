@@ -29,6 +29,7 @@
         <freemarker.version>2.3.28</freemarker.version>
         <lombok.version>1.18.24</lombok.version>
         <commons.lang3.version>3.9</commons.lang3.version>
+        <commons.math3.version>3.6.1</commons.math3.version>
         <commons.codec.version>1.15</commons.codec.version>
 
 
@@ -109,6 +110,12 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
                 <version>${commons.lang3.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-math3</artifactId>
+                <version>${commons.math3.version}</version>
             </dependency>
 
             <!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
