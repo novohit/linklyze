@@ -1,6 +1,7 @@
 package com.wyu.plato.link.component;
 
 import com.wyu.plato.common.util.CommonUtil;
+import com.wyu.plato.link.strategy.ShardingConfig;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
@@ -20,13 +21,14 @@ public class ShortLinkComponent {
     //private static final String CHARS = "S7sX1x4tI8iVDdb0PcTWnyRzCApYeFhlrNk6UQKBE2G5ZfgoaOmuJ3vLqMHw9j";
 
     public static void main(String[] args) {
-        List<String> list= Arrays.asList(CHARS.split(""));
+        List<String> list = Arrays.asList(CHARS.split(""));
         //list.forEach(System.out::println);
         Collections.shuffle(list);
         //list.forEach(System.out::println);
         String join = StringUtils.join(list.toArray(), "");
         System.out.println(join);
     }
+
     /**
      * 生成短链
      *
@@ -36,7 +38,12 @@ public class ShortLinkComponent {
     public String createShortLink(String url) {
         long murmurHash32 = CommonUtil.murmurHash32(url);
         // 62进制转换
-        return encodeToBase62(murmurHash32);
+        String code62 = encodeToBase62(murmurHash32);
+        String randomDBNo = ShardingConfig.getRandomDBNo();
+        String randomTableNo = ShardingConfig.getRandomTableNo();
+        // 分库分表入库配置：首位添加库位 末位添加表位
+        String linkCode = randomDBNo + code62 + randomTableNo;
+        return linkCode;
     }
 
     public String encodeToBase62(long num) {
