@@ -9,4 +9,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ShortLinkService extends IService<ShortLinkDO> {
 
+    ShortLinkDO findOneByCode(String code);
 }

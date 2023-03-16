@@ -16,6 +16,7 @@ import java.util.TreeMap;
  * @since 2023-03-16
  */
 public class WeightRandom<K, V extends Number> {
+    // TODO 对比O(N)和O(logN)的算法
     private final TreeMap<Double, K> weightMap = new TreeMap<>();
     private static final Logger logger = LoggerFactory.getLogger(WeightRandom.class);
 
