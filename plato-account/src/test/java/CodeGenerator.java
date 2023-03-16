@@ -29,6 +29,7 @@ public class CodeGenerator {
                 .setFileOverride(false)
                 .setIdType(IdType.AUTO)
                 .setBaseResultMap(true)
+                .setBaseColumnList(true)
                 .setEntityName("%sDO")
                 .setServiceName("%sService");
         mpg.setGlobalConfig(globalConfig);
@@ -38,7 +39,8 @@ public class CodeGenerator {
         dataSourceConfig
                 //.setUrl("jdbc:mysql://localhost:3308/z-mall?allowPublicKeyRetrieval=true&useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai")
                 //.setUrl("jdbc:mysql://localhost:3308/plato_account?allowPublicKeyRetrieval=true&useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai")
-                .setUrl("jdbc:mysql://localhost:3308/plato_link?allowPublicKeyRetrieval=true&useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai")
+                //.setUrl("jdbc:mysql://localhost:3308/plato_link?allowPublicKeyRetrieval=true&useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai")
+                .setUrl("jdbc:mysql://localhost:3308/plato_link_0?allowPublicKeyRetrieval=true&useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai")
                 .setDriverName("com.mysql.cj.jdbc.Driver")
                 .setUsername("root")
                 .setPassword("root");
