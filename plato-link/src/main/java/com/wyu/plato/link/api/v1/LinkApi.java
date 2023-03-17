@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletResponse;
 
 /**
+ * C端短链解析接口
+ *
  * @author novo
  * @since 2023-03-16
  */
