@@ -1,7 +1,9 @@
 package com.wyu.plato.link.service;
 
-import com.wyu.plato.link.model.DomainDO;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.wyu.plato.link.model.DomainDO;
+
+import java.util.List;
 
 /**
  * @author novo
@@ -9,4 +11,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface DomainService extends IService<DomainDO> {
 
+    List<DomainDO> findAll();
 }
