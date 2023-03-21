@@ -1,8 +1,7 @@
 package com.wyu.plato.link;
 
-import com.alibaba.nacos.shaded.io.opencensus.trace.Link;
-import com.wyu.plato.link.mapper.ShortLinkMapper;
-import com.wyu.plato.link.model.ShortLinkDO;
+import com.wyu.plato.link.mapper.LinkMapper;
+import com.wyu.plato.link.model.LinkDO;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,13 +19,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class CustomShardingTest {
 
     @Autowired
-    private ShortLinkMapper shortLinkMapper;
+    private LinkMapper linkMapper;
 
     @Test
     public void createLink() {
-        ShortLinkDO shortLinkDO = new ShortLinkDO();
-        shortLinkDO.setCode("0XXXXXXa");
-        shortLinkDO.setLongHash("test");
-        int rows = shortLinkMapper.insert(shortLinkDO);
+        LinkDO linkDO = new LinkDO();
+        linkDO.setCode("0XXXXXXa");
+        linkDO.setLongHash("test");
+        int rows = linkMapper.insert(linkDO);
     }
 }

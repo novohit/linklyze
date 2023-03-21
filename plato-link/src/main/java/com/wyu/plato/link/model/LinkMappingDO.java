@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @TableName("short_link_mapping")
-public class ShortLinkMappingDO extends BaseModel {
+public class LinkMappingDO extends BaseModel {
 
 
     /**

@@ -2,7 +2,7 @@ package com.wyu.plato.link.model;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.wyu.plato.common.model.BaseModel;
-import java.time.LocalDateTime;
+
 import java.util.Date;
 
 import lombok.Data;
@@ -17,7 +17,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @TableName("short_link")
-public class ShortLinkDO extends BaseModel {
+public class LinkDO extends BaseModel {
 
 
     /**

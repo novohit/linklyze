@@ -1,8 +1,8 @@
 package com.wyu.plato.link.api.v1;
 
 import com.wyu.plato.common.util.CheckUtil;
-import com.wyu.plato.link.model.ShortLinkDO;
-import com.wyu.plato.link.service.ShortLinkService;
+import com.wyu.plato.link.model.LinkDO;
+import com.wyu.plato.link.service.LinkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 public class LinkApi {
 
     @Autowired
-    private ShortLinkService shortLinkService;
+    private LinkService linkService;
 
     /**
      * 短链码跳转
@@ -42,7 +42,7 @@ public class LinkApi {
          */
         // 判断短链码是否合法
         if (CheckUtil.isLetterOrDigit(code)) {
-            ShortLinkDO shortLink = this.shortLinkService.findOneByCode(code);
+            LinkDO shortLink = this.linkService.findOneByCode(code);
             if (shortLink != null) {
                 response.setHeader("Location", shortLink.getOriginalUrl());
                 // 302跳转
