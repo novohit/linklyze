@@ -14,7 +14,7 @@ public class ShortLinkTest {
     @Test
     public void createLinkDBPrefix() {
         for (int i = 0; i < 10; i++) {
-            log.info("[db:{},table:{}]", ShardingConfig.getRandomDBNo(), ShardingConfig.getRandomTableNo());
+            log.info("[db:{},table:{}]", ShardingConfig.getRandomDBNo(), ShardingConfig.getRandomTbNo());
         }
     }
 }

@@ -40,4 +40,13 @@ public class MurmurHashTest {
             log.info("origin_url:[{}], short_link:[{}]", originalUrl, shortLink);
         }
     }
+
+    @Test
+    public void testLink() {
+        for (int i = 0; i < 10; i++) {
+            String originalUrl = "https://www.baidu.com";
+            String shortLink = this.shortLinkComponent.createShortLink(originalUrl);
+            log.info("origin_url:[{}], short_link:[{}]", originalUrl, shortLink);
+        }
+    }
 }

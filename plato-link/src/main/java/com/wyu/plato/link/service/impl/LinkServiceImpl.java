@@ -87,6 +87,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkDO> implements 
                 .build();
 
         // 4.向MQ发送消息
+        log.info("向MQ发送消息,message:[{}]", message);
         this.rabbitTemplate.convertAndSend(RabbitMQConfig.LINK_EVENT_EXCHANGE, RabbitMQConfig.CREATE_LINK_ROUTING_KEY, message);
     }
 }

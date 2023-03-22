@@ -31,6 +31,11 @@ public class ShortLinkComponent {
 
     /**
      * 生成短链
+     * 这里有个问题 相同的url多次创建短链hash虽然一致，但是这里用的是随机库表位，导致生成出来的短链码不一致
+     * 会导致冗余表插入时短链码和原表短链码不一致
+     * 解决：
+     * 1.可以在生产者端提前生成好短链再发送消息
+     * 2.还是在消费者端生成短链 库表位不采取随机策略 而是hash取模
      *
      * @param url
      * @return
@@ -39,12 +44,15 @@ public class ShortLinkComponent {
         long murmurHash32 = CommonUtil.murmurHash32(url);
         // 62进制转换
         String code62 = encodeToBase62(murmurHash32);
-        String randomDBNo = ShardingConfig.getRandomDBNo();
-        String randomTableNo = ShardingConfig.getRandomTableNo();
+//        String randomDBNo = ShardingConfig.getRandomDBNo();
+//        String randomTableNo = ShardingConfig.getRandomTbNo();
+        String randomDBNo = ShardingConfig.getHashDBNo(code62);
+        String randomTableNo = ShardingConfig.getHashTbNo(code62);
         // 分库分表入库配置：首位添加库位 末位添加表位
         String linkCode = randomDBNo + code62 + randomTableNo;
         return linkCode;
     }
+
 
     public String encodeToBase62(long num) {
         // 特判一下 因为CHARS数组可以不按照顺序排列，打乱可以提高安全性
