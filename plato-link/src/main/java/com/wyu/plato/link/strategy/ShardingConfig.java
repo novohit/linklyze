@@ -53,6 +53,7 @@ public class ShardingConfig {
 
     /**
      * 根据短链的hash取模生成库位
+     * 采取hash生成表位，如果要加权负载均衡，只能直接通过更改list的元素个数来控制
      *
      * @param code
      * @return
