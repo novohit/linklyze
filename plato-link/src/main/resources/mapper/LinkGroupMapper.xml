@@ -15,7 +15,7 @@
     <delete id="deleteGroup" parameterType="java.lang.Long">
         delete
         from link_group
-        where id = #{groupId,jdbcType=BIGINT}
+        where id = #{id,jdbcType=BIGINT}
           and account_no = #{accountNo,jdbcType=BIGINT}
     </delete>
 </mapper>

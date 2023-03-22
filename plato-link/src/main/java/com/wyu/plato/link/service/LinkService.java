@@ -1,5 +1,6 @@
 package com.wyu.plato.link.service;
 
+import com.wyu.plato.link.api.v1.request.LinkCreateRequest;
 import com.wyu.plato.link.model.LinkDO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -10,4 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface LinkService extends IService<LinkDO> {
 
     LinkDO findOneByCode(String code);
+
+    void create(LinkCreateRequest linkCreateRequest);
 }

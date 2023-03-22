@@ -47,6 +47,11 @@ public enum BizCodeEnum {
      */
     SHORT_LINK_NOT_EXIST(260404, "短链不存在"),
 
+    /**
+     * 域名
+     */
+    DOMAIN_NOT_EXIST(270404, "域名不存在"),
+
 
     /**
      * 订单

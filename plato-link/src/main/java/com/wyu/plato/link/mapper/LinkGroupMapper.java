@@ -10,5 +10,5 @@ import org.apache.ibatis.annotations.Param;
  */
 public interface LinkGroupMapper extends BaseMapper<LinkGroupDO> {
 
-    int deleteGroup(@Param("groupId") Long groupId, @Param("accountNo") Long accountNo);
+    int deleteGroup(@Param("id") Long id, @Param("accountNo") Long accountNo);
 }
