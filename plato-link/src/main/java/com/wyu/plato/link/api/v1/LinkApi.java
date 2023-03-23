@@ -1,6 +1,7 @@
 package com.wyu.plato.link.api.v1;
 
 import com.wyu.plato.common.util.CheckUtil;
+import com.wyu.plato.common.util.CommonUtil;
 import com.wyu.plato.link.model.LinkDO;
 import com.wyu.plato.link.service.LinkService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,7 @@ public class LinkApi {
         if (CheckUtil.isLetterOrDigit(code)) {
             LinkDO shortLink = this.linkService.findOneByCode(code);
             if (shortLink != null) {
-                response.setHeader("Location", shortLink.getOriginalUrl());
+                response.setHeader("Location", CommonUtil.removeUrlPrefix(shortLink.getOriginalUrl()));
                 // 302跳转
                 response.setStatus(HttpStatus.FOUND.value());
             } else {

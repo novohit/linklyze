@@ -8,6 +8,7 @@ import com.wyu.plato.common.enums.LinkStateEnum;
 import com.wyu.plato.common.enums.MessageEventType;
 import com.wyu.plato.common.exception.BizException;
 import com.wyu.plato.common.model.CustomMessage;
+import com.wyu.plato.common.util.CommonUtil;
 import com.wyu.plato.common.util.uuid.IDUtil;
 import com.wyu.plato.link.api.v1.request.LinkCreateRequest;
 import com.wyu.plato.link.config.RabbitMQConfig;
@@ -78,7 +79,11 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkDO> implements 
         if (group == null) {
             throw new BizException(BizCodeEnum.GROUP_NOT_EXIST);
         }
-        // 3.构造自定义MQ消息对象
+
+        // 3.给原始url添加时间戳前缀
+        request.setOriginalUrl(CommonUtil.addUrlPrefix(request.getOriginalUrl()));
+
+        // 4.构造自定义MQ消息对象
         CustomMessage message = CustomMessage.builder()
                 .messageId(IDUtil.fastUUID())
                 .accountNo(accountNo)
@@ -86,7 +91,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkDO> implements 
                 .content(JSON.toJSONString(request))
                 .build();
 
-        // 4.向MQ发送消息
+        // 5.向MQ发送消息
         log.info("向MQ发送消息,message:[{}]", message);
         this.rabbitTemplate.convertAndSend(RabbitMQConfig.LINK_EVENT_EXCHANGE, RabbitMQConfig.CREATE_LINK_ROUTING_KEY, message);
     }

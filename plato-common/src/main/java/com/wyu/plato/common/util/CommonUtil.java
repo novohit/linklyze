@@ -191,4 +191,37 @@ public class CommonUtil {
         long murmurHash32 = Hashing.murmur3_32().hashUnencodedChars(value).padToLong();
         return murmurHash32;
     }
+
+    /**
+     * 给长链接拼装一个时间戳前缀，使得同一个长链可以生成不同的短链
+     *
+     * @param originUrl
+     * @return
+     */
+    public static String addUrlPrefix(String originUrl) {
+        return getCurrentTimestamp() + "&" + originUrl;
+    }
+
+    /**
+     * 去除长链的时间戳前缀
+     *
+     * @param prefixUrl
+     * @return
+     */
+    public static String removeUrlPrefix(String prefixUrl) {
+        return prefixUrl.substring(prefixUrl.indexOf("&") + 1);
+    }
+
+    /**
+     * 防止hash冲突
+     *
+     * @param prefixUrl
+     * @return
+     */
+    public static String getNewUrl(String prefixUrl) {
+        String timestamp = prefixUrl.substring(0, prefixUrl.indexOf("&"));
+        String newTimestamp = String.valueOf(Long.parseLong(timestamp) + 1);
+        String newUrl = newTimestamp + prefixUrl.substring(prefixUrl.indexOf("&") + 1);
+        return newUrl;
+    }
 }
