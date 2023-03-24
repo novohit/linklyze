@@ -34,6 +34,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         log.info("============================= LoginInterceptor Start ======================================");
+        log.info(request.getRequestURI());
         String authorization = request.getHeader(AUTHORIZATION_HEADER);
         // token为空
         if (!StringUtils.hasText(authorization)) {

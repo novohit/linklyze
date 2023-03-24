@@ -44,7 +44,7 @@ public class LinkCreateRequest {
 
 
     /**
-     * 过期时间
+     * 过期时间 永久则不用传
      */
     private Date expired;
 }

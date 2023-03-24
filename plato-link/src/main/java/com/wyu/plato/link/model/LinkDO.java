@@ -51,7 +51,7 @@ public class LinkDO extends BaseModel {
     private String longHash;
 
     /**
-     * 过期时间 永久为-1
+     * 过期时间 永久为null
      */
     private Date expired;
 

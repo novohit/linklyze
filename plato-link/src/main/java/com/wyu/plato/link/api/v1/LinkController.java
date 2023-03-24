@@ -1,19 +1,18 @@
 package com.wyu.plato.link.api.v1;
 
 
-import com.wyu.plato.common.util.RedisCache;
 import com.wyu.plato.common.util.Resp;
 import com.wyu.plato.link.api.v1.request.LinkCreateRequest;
 import com.wyu.plato.link.service.LinkService;
-import org.assertj.core.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Collections;
 
 /**
@@ -34,6 +33,11 @@ public class LinkController {
 
     @Autowired
     private RedisTemplate<Object, Object> redisTemplate;
+
+    @GetMapping("/test-uu")
+    public void testUU(HttpServletResponse response) {
+        System.out.println(response);
+    }
 
     /**
      * 创建短链

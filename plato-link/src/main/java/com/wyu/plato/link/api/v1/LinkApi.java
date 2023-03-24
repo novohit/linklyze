@@ -4,13 +4,17 @@ import com.wyu.plato.common.util.CheckUtil;
 import com.wyu.plato.common.util.CommonUtil;
 import com.wyu.plato.link.model.LinkDO;
 import com.wyu.plato.link.service.LinkService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -20,6 +24,8 @@ import javax.servlet.http.HttpServletResponse;
  * @since 2023-03-16
  */
 @Controller
+@RequestMapping
+@Slf4j
 public class LinkApi {
 
     @Autowired
@@ -34,6 +40,7 @@ public class LinkApi {
     @GetMapping("/{code}")
     @ResponseBody
     public void dispatch(@PathVariable("code") String code, HttpServletResponse response) {
+        log.info("code:[{}]", code);
         /**
          * 什么要用 301 跳转而不是 302
          * 301 是永久重定向，302 是临时重定向。

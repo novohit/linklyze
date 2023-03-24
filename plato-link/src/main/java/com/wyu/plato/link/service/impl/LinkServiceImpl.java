@@ -80,11 +80,11 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkDO> implements 
             return null;
         }
         // 校验短链码的状态和是否过期
-        if (!linkDO.getState().equals(LinkStateEnum.LOCK.name())) {
+        if (linkDO.getState().equals(LinkStateEnum.LOCK.name())) {
             log.info("link is lock:[{}]", linkDO);
             return null;
         }
-        if (linkDO.getExpired().before(new Date())) {
+        if (linkDO.getExpired() != null && linkDO.getExpired().before(new Date())) {
             log.info("link is expired:[{}]", linkDO);
             return null;
         }

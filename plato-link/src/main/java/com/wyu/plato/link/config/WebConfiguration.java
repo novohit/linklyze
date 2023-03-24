@@ -30,7 +30,7 @@ public class WebConfiguration implements WebMvcConfigurer {
         //  因为LoginInterceptor里我们用到了容器中的AccountService
         registry.addInterceptor(loginInterceptor())
                 // servlet.context-path会自动添加上去
-                .excludePathPatterns("/**/test*");
+                .excludePathPatterns("/**/test*", "/*");
     }
 
     @Override

@@ -1,8 +1,11 @@
 package com.wyu.plato.common.aspect;
 
+import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.apache.catalina.connector.RequestFacade;
+import org.apache.catalina.connector.ResponseFacade;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
@@ -66,11 +69,18 @@ public class LogAspect {
             // 打印请求的 IP
             logger.debug("IP             : {}", request.getRemoteAddr());
             // 打印请求入参
-
-            //logger.debug("Request Args   : {}", JSONArray.toJSONString(proceedingJoinPoint.getArgs()));
-            //logger.debug("Request Args   : \n{}", gson.toJson(proceedingJoinPoint.getArgs()));
+            // 注意如果controller方法参数上含有request/response对象 不能进行序列化 因为这两个对象中含有循环依赖 会导致oom问题
+            Object[] args = proceedingJoinPoint.getArgs();
+            for (int i = 0; i < args.length; i++) {
+                // 排除这两个对象
+                if (args[i] instanceof ResponseFacade || args[i] instanceof RequestFacade) {
+                    args[i] = "request/response";
+                }
+            }
+            //logger.debug("Request Args   : {}", JSONArray.toJSONString(args));
+            //logger.debug("Request Args   : \n{}", gson.toJson(args));
             // 这里用Gson序列化 其他解析不了文件类型
-            logger.debug("Request Args   : {}", gson.toJson(proceedingJoinPoint.getArgs()));
+            logger.debug("Request Args   : {}", gson.toJson(args));
         }
 
         long startTime = System.currentTimeMillis();
