@@ -10,4 +10,5 @@ public interface LinkManager {
 
     LinkDO findOneByCode(String code);
 
+    int save(LinkDO linkDO);
 }

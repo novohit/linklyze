@@ -1,5 +1,6 @@
 package com.wyu.plato.common.model;
 
+import com.wyu.plato.common.enums.MessageEventType;
 import lombok.Builder;
 import lombok.Data;
 
@@ -33,7 +34,7 @@ public class CustomMessage {
     /**
      * 事件类型 create、update、delete
      */
-    private String eventType;
+    private MessageEventType eventType;
 
     /**
      * 消息体

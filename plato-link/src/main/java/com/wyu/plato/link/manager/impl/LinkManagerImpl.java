@@ -22,4 +22,9 @@ public class LinkManagerImpl implements LinkManager {
         return this.linkMapper
                 .selectOne(new QueryWrapper<LinkDO>().lambda().eq(LinkDO::getCode, code));
     }
+
+    @Override
+    public int save(LinkDO linkDO) {
+        return this.linkMapper.insert(linkDO);
+    }
 }

@@ -36,7 +36,7 @@ public class MurmurHashTest {
         for (int i = 0; i < 100000; i++) {
             String value = CommonUtil.getStringNumRandom(5);
             String originalUrl = "https://www.baidu.com?id=" + value + "&name=" +value;
-            String shortLink = this.shortLinkComponent.createShortLink(value);
+            String shortLink = this.shortLinkComponent.createShortLink(value).getCode();
             log.info("origin_url:[{}], short_link:[{}]", originalUrl, shortLink);
         }
     }
@@ -45,7 +45,7 @@ public class MurmurHashTest {
     public void testLink() {
         for (int i = 0; i < 10; i++) {
             String originalUrl = "https://www.baidu.com";
-            String shortLink = this.shortLinkComponent.createShortLink(originalUrl);
+            String shortLink = this.shortLinkComponent.createShortLink(originalUrl).getCode();
             log.info("origin_url:[{}], short_link:[{}]", originalUrl, shortLink);
         }
     }

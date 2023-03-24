@@ -37,6 +37,11 @@ public class LinkCreateRequest {
     @Positive
     private Long domainId;
 
+    /**
+     * 域名 前端不需要传
+     */
+    private String domain;
+
 
     /**
      * 过期时间

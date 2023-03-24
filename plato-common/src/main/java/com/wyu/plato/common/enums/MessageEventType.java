@@ -5,7 +5,10 @@ package com.wyu.plato.common.enums;
  * @since 2023-03-22
  */
 public enum MessageEventType {
+
     LINK_CREATE,
+
+    LINK_MAPPING_CREATE,
 
     ;
 }

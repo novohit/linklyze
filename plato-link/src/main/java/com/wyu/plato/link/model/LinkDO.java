@@ -66,7 +66,7 @@ public class LinkDO extends BaseModel {
     private String state;
 
     /**
-     * 产品level FIRST青铜SECOND黄金THIRD钻石
+     * 产品level 青铜/黄金/钻石
      */
     private String linkLevel;
 
