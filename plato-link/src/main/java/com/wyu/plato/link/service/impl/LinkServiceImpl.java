@@ -28,9 +28,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author novo
@@ -57,6 +62,13 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkDO> implements 
 
     @Autowired
     private RabbitTemplate rabbitTemplate;
+
+    @Autowired
+    private RedisTemplate<Object, Object> redisTemplate;
+
+    @Autowired
+    @Qualifier("lock")
+    private RedisScript<Long> lockScript;
 
     @Override
     public LinkDO findOneByCode(String code) {
@@ -119,46 +131,120 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkDO> implements 
         // 1. 生成短链
         Long accountNo = customMessage.getAccountNo();
         LinkCreateRequest request = JSON.parseObject(customMessage.getContent(), LinkCreateRequest.class);
-        ShortLinkComponent.Link shortLink = shortLinkComponent.createShortLink(request.getOriginalUrl());
+        ShortLinkComponent.Link shortLink = this.shortLinkComponent.createShortLink(request.getOriginalUrl());
         String code = shortLink.getCode();
         long hash32 = shortLink.getHash32();
-        switch (customMessage.getEventType()) {
-            // C端
-            case LINK_CREATE: {
-                // 2. 构造入库对象
-                LinkDO linkDO = new LinkDO();
-                BeanUtils.copyProperties(request, linkDO);
-                linkDO.setAccountNo(accountNo);
-                linkDO.setCode(code);
-                // TODO 数据库字段类型修改
-                linkDO.setLongHash(String.valueOf(hash32));
-                linkDO.setState(LinkStateEnum.ACTIVE.name());
-                // TODO 查询短链level
-                linkDO.setLinkLevel(LinkLevelType.BRONZE.name());
-                // 3. 入库
-                int rows = this.linkManager.save(linkDO);
-                break;
+
+        // 短链码冲突或者加锁失败标记
+        boolean conflict = false;
+        // TODO 2. 加锁
+        Long res = this.redisTemplate.execute(lockScript, Collections.singletonList(code), accountNo, 100);
+
+        if (res > 0) {
+            // 加锁成功
+            switch (customMessage.getEventType()) {
+                // C端
+                case LINK_CREATE: {
+                    log.info("C端加锁成功");
+                    // 3. 查询数据库中是否存在该短链
+                    LinkDO dbLink = this.linkManager.findOneByCode(code);
+                    if (dbLink == null) {
+                        // 4. 构造入库对象
+                        LinkDO linkDO = this.genLinkDO(request, accountNo, code, hash32);
+                        // 5. 入库
+                        int rows = this.linkManager.save(linkDO);
+                    } else {
+                        // 数据库已存在该短链码
+                        log.warn("C端短链码冲突");
+                        conflict = true;
+                    }
+                    break;
+                }
+                // B端
+                case LINK_MAPPING_CREATE: {
+                    log.info("B端加锁成功");
+                    // 3. 查询数据库中是否存在该短链
+                    LinkMappingDO dbLinkMapping = this.linkMappingManager.findOneByCode(code);
+                    if (dbLinkMapping == null) {
+                        // 4. 构造入库对象
+                        LinkMappingDO mappingDO = this.genLinkMappingDO(request, accountNo, code, hash32);
+                        // 5. 入库
+                        int rows = this.linkMappingManager.save(mappingDO);
+                    } else {
+                        // 数据库已存在该短链码
+                        log.warn("B端短链码冲突");
+                        conflict = true;
+                    }
+                    break;
+                }
+                default:
+                    throw new BizException(BizCodeEnum.SERVER_ERROR);
             }
-            // B端
-            case LINK_MAPPING_CREATE: {
-                // 2. 构造入库对象
-                LinkMappingDO mappingDO = new LinkMappingDO();
-                BeanUtils.copyProperties(request, mappingDO);
-                mappingDO.setAccountNo(accountNo);
-                mappingDO.setCode(code);
-                // TODO 数据库字段类型修改
-                mappingDO.setLongHash(String.valueOf(hash32));
-                mappingDO.setState(LinkStateEnum.ACTIVE.name());
-                // TODO 查询短链level
-                mappingDO.setLinkLevel(LinkLevelType.BRONZE.name());
-                // 3. 入库
-                int rows = this.linkMappingManager.save(mappingDO);
-                break;
+        } else {
+            // 加锁失败 开始自旋
+            log.warn("加锁失败 开始自旋 message:[{}]", customMessage);
+            try {
+                TimeUnit.MILLISECONDS.sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
-            default:
-                throw new BizException(BizCodeEnum.SERVER_ERROR);
+            conflict = true;
         }
 
+        if (conflict) {
+            // 更新长链版本号
+            String newUrl = CommonUtil.getNewUrl(request.getOriginalUrl());
+            request.setOriginalUrl(newUrl);
+            customMessage.setContent(JSON.toJSONString(request));
+            // 开始递归
+            // TODO 限制递归深度
+            this.handleCreate(customMessage);
+        }
+        // TODO 解锁
     }
 
+
+    /**
+     * 构造mapping入库对象
+     *
+     * @param request
+     * @param accountNo
+     * @param code
+     * @param hash32
+     * @return
+     */
+    private LinkMappingDO genLinkMappingDO(LinkCreateRequest request, Long accountNo, String code, long hash32) {
+        LinkMappingDO mappingDO = new LinkMappingDO();
+        BeanUtils.copyProperties(request, mappingDO);
+        mappingDO.setAccountNo(accountNo);
+        mappingDO.setCode(code);
+        // TODO 数据库字段类型修改
+        mappingDO.setLongHash(String.valueOf(hash32));
+        mappingDO.setState(LinkStateEnum.ACTIVE.name());
+        // TODO 查询短链level
+        mappingDO.setLinkLevel(LinkLevelType.BRONZE.name());
+        return mappingDO;
+    }
+
+    /**
+     * 构造link入库对象
+     *
+     * @param request
+     * @param accountNo
+     * @param code
+     * @param hash32
+     * @return
+     */
+    private LinkDO genLinkDO(LinkCreateRequest request, Long accountNo, String code, long hash32) {
+        LinkDO linkDO = new LinkDO();
+        BeanUtils.copyProperties(request, linkDO);
+        linkDO.setAccountNo(accountNo);
+        linkDO.setCode(code);
+        // TODO 数据库字段类型修改
+        linkDO.setLongHash(String.valueOf(hash32));
+        linkDO.setState(LinkStateEnum.ACTIVE.name());
+        // TODO 查询短链level
+        linkDO.setLinkLevel(LinkLevelType.BRONZE.name());
+        return linkDO;
+    }
 }
