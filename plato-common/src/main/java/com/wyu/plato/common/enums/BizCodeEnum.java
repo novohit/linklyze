@@ -105,6 +105,11 @@ public enum BizCodeEnum {
 
     UNKNOWN_DB_ROUTE(800101, "未知的数据库"),
 
+    /**
+     * MQ消费异常
+     */
+    MQ_CONSUME_EXCEPTION(900101,"消费者消费异常"),
+
     ;
 
     @Getter

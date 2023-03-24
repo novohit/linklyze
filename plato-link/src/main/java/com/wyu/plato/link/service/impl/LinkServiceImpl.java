@@ -35,6 +35,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -98,12 +100,18 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkDO> implements 
     public void create(LinkCreateRequest request) {
         Long accountNo = LocalUserThreadHolder.getLocalUserNo();
         // 1.校验域名
-        DomainDO domain = this.domainManager.findById(request.getDomainId(), accountNo);
-        if (domain == null) {
+        List<DomainDO> availableDomain = this.domainManager.findAvailable(accountNo);
+        String domainValue = null;
+        for (DomainDO domain : availableDomain) {
+            if (Objects.equals(domain.getId(), request.getDomainId())) {
+                domainValue = domain.getValue();
+            }
+        }
+        if (domainValue == null) {
             throw new BizException(BizCodeEnum.DOMAIN_NOT_EXIST);
         }
         // 将域名set进去
-        request.setDomain(domain.getValue());
+        request.setDomain(domainValue);
         // 2.校验分组
         LinkGroupDO group = this.linkGroupManager.findById(request.getGroupId(), accountNo);
         if (group == null) {
@@ -134,7 +142,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkDO> implements 
         ShortLinkComponent.Link shortLink = this.shortLinkComponent.createShortLink(request.getOriginalUrl());
         String code = shortLink.getCode();
         long hash32 = shortLink.getHash32();
-
+        log.info("生成短链 code:[{}],hash:[{}]", code, hash32);
         // 短链码冲突或者加锁失败标记
         boolean conflict = false;
         // TODO 2. 加锁
@@ -153,6 +161,9 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkDO> implements 
                         LinkDO linkDO = this.genLinkDO(request, accountNo, code, hash32);
                         // 5. 入库
                         int rows = this.linkManager.save(linkDO);
+                        if (rows > 0) {
+                            log.info("C端入库成功");
+                        }
                     } else {
                         // 数据库已存在该短链码
                         log.warn("C端短链码冲突");
@@ -170,6 +181,9 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkDO> implements 
                         LinkMappingDO mappingDO = this.genLinkMappingDO(request, accountNo, code, hash32);
                         // 5. 入库
                         int rows = this.linkMappingManager.save(mappingDO);
+                        if (rows > 0) {
+                            log.info("B端入库成功");
+                        }
                     } else {
                         // 数据库已存在该短链码
                         log.warn("B端短链码冲突");
@@ -192,12 +206,14 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkDO> implements 
         }
 
         if (conflict) {
+            log.warn("短链码冲突或者加锁失败标记");
             // 更新长链版本号
             String newUrl = CommonUtil.getNewUrl(request.getOriginalUrl());
             request.setOriginalUrl(newUrl);
             customMessage.setContent(JSON.toJSONString(request));
             // 开始递归
             // TODO 限制递归深度
+            log.info("开始重新生成短链");
             this.handleCreate(customMessage);
         }
         // TODO 解锁

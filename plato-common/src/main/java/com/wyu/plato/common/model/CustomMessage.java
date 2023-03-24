@@ -4,6 +4,8 @@ import com.wyu.plato.common.enums.MessageEventType;
 import lombok.Builder;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * MQ自定义消息对象
  *
@@ -12,7 +14,7 @@ import lombok.Data;
  */
 @Data
 @Builder
-public class CustomMessage {
+public class CustomMessage implements Serializable {
 
     /**
      * 消息队列的消息id

@@ -27,6 +27,14 @@ public class DomainManagerImpl implements DomainManager {
     }
 
     @Override
+    public List<DomainDO> findAvailable(Long accountNo) {
+        List<DomainDO> customAll = this.findCustomAll(accountNo);
+        List<DomainDO> officialAll = this.findOfficialAll();
+        customAll.addAll(officialAll);
+        return customAll;
+    }
+
+    @Override
     public int create(DomainDO domainDO) {
         return this.domainMapper.insert(domainDO);
     }

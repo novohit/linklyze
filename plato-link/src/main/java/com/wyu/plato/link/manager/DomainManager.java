@@ -12,6 +12,8 @@ public interface DomainManager {
 
     DomainDO findById(Long id, Long accountNo);
 
+    List<DomainDO> findAvailable(Long accountNo);
+
     int create(DomainDO domainDO);
 
     /**

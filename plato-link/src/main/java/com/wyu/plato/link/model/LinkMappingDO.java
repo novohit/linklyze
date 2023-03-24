@@ -3,6 +3,8 @@ package com.wyu.plato.link.model;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.wyu.plato.common.model.BaseModel;
 import java.time.LocalDateTime;
+import java.util.Date;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -51,7 +53,7 @@ public class LinkMappingDO extends BaseModel {
     /**
      * 过期时间 永久为-1
      */
-    private LocalDateTime expired;
+    private Date expired;
 
     /**
      * 账户唯一标识

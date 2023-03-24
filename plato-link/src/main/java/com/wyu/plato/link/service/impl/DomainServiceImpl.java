@@ -26,9 +26,6 @@ public class DomainServiceImpl extends ServiceImpl<DomainMapper, DomainDO> imple
     @Override
     public List<DomainDO> findAll() {
         Long accountNo = LocalUserThreadHolder.getLocalUserNo();
-        List<DomainDO> officialAll = this.domainManager.findOfficialAll();
-        List<DomainDO> customAll = this.domainManager.findCustomAll(accountNo);
-        officialAll.addAll(customAll);
-        return officialAll;
+        return this.domainManager.findAvailable(accountNo);
     }
 }
