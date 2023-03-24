@@ -3,14 +3,15 @@ package com.wyu.plato.common.config;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnSingleCandidate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+import org.springframework.scripting.support.ResourceScriptSource;
 
 /**
  * @author novo
@@ -65,4 +66,14 @@ public class RedisConfig {
 //        redisTemplate.setConnectionFactory(connectionFactory);
 //        return redisTemplate;
 //    }
+
+    @Bean(name = "lock")
+    public DefaultRedisScript<Long> lockScript() {
+        DefaultRedisScript<Long> limitScript = new DefaultRedisScript<>();
+        // 设置脚本返回的类型
+        limitScript.setResultType(Long.class);
+        // 设置脚本位置 根目录从resource开始
+        limitScript.setScriptSource(new ResourceScriptSource(new ClassPathResource("lua/lock.lua")));
+        return limitScript;
+    }
 }
