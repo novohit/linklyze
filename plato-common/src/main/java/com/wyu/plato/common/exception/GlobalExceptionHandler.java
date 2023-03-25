@@ -1,7 +1,7 @@
 package com.wyu.plato.common.exception;
 
 import com.wyu.plato.common.enums.BizCodeEnum;
-import com.wyu.plato.common.util.Resp;
+import com.wyu.plato.common.model.vo.Resp;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

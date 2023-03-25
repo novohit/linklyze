@@ -5,7 +5,7 @@ import com.wyu.plato.account.api.v1.request.RegisterRequest;
 import com.wyu.plato.account.model.AccountDO;
 import com.wyu.plato.account.service.AccountService;
 import com.wyu.plato.account.service.FileService;
-import com.wyu.plato.common.util.Resp;
+import com.wyu.plato.common.model.vo.Resp;
 import com.wyu.plato.common.util.TokenUtil;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
+ * 用户接口
+ *
  * @author novo
  * @since 2023-02-27 18:45
  */

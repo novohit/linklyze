@@ -1,4 +1,4 @@
-package com.wyu.plato.common.model;
+package com.wyu.plato.common.model.bo;
 
 
 import lombok.Data;

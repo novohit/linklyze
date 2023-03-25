@@ -1,6 +1,7 @@
 package com.wyu.plato.link.service.impl;
 
 import com.alibaba.fastjson2.JSON;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wyu.plato.common.LocalUserThreadHolder;
 import com.wyu.plato.common.enums.BizCodeEnum;
@@ -8,10 +9,11 @@ import com.wyu.plato.common.enums.LinkLevelType;
 import com.wyu.plato.common.enums.LinkStateEnum;
 import com.wyu.plato.common.enums.MessageEventType;
 import com.wyu.plato.common.exception.BizException;
-import com.wyu.plato.common.model.CustomMessage;
+import com.wyu.plato.common.model.bo.CustomMessage;
 import com.wyu.plato.common.util.CommonUtil;
 import com.wyu.plato.common.util.uuid.IDUtil;
 import com.wyu.plato.link.api.v1.request.LinkCreateRequest;
+import com.wyu.plato.link.api.v1.request.PageRequest;
 import com.wyu.plato.link.component.ShortLinkComponent;
 import com.wyu.plato.link.config.RabbitMQConfig;
 import com.wyu.plato.link.manager.DomainManager;
@@ -132,6 +134,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkDO> implements 
 
     /**
      * 消费者端创建短链逻辑
+     * TODO 分布式事务
      *
      * @param customMessage
      */
@@ -145,7 +148,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkDO> implements 
         log.info("生成短链 code:[{}],hash:[{}]", code, hash32);
         // 短链码冲突或者加锁失败标记
         boolean conflict = false;
-        // TODO 2. 加锁
+        // 2. 加锁
         Long res = this.redisTemplate.execute(lockScript, Collections.singletonList(code), accountNo, 100);
 
         if (res > 0) {
@@ -217,6 +220,12 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkDO> implements 
             this.handleCreate(customMessage);
         }
         // TODO 解锁
+    }
+
+    @Override
+    public Page<LinkMappingDO> page(PageRequest pageRequest) {
+        Long accountNo = LocalUserThreadHolder.getLocalUserNo();
+        return this.linkMappingManager.page(accountNo, pageRequest.getGroupId(), pageRequest.getPage(), pageRequest.getSize());
     }
 
 

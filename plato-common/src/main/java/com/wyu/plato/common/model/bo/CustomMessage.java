@@ -1,4 +1,4 @@
-package com.wyu.plato.common.model;
+package com.wyu.plato.common.model.bo;
 
 import com.wyu.plato.common.enums.MessageEventType;
 import lombok.Builder;

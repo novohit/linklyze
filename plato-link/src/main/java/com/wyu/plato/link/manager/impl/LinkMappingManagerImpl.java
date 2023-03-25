@@ -1,6 +1,7 @@
 package com.wyu.plato.link.manager.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wyu.plato.link.manager.LinkManager;
 import com.wyu.plato.link.manager.LinkMappingManager;
 import com.wyu.plato.link.mapper.LinkMappingMapper;
@@ -28,5 +29,16 @@ public class LinkMappingManagerImpl implements LinkMappingManager {
     @Override
     public int save(LinkMappingDO linkDO) {
         return this.linkMappingMapper.insert(linkDO);
+    }
+
+    @Override
+    public Page<LinkMappingDO> page(Long accountNo, Long groupId, Integer page, Integer size) {
+        Page<LinkMappingDO> pageRequest = new Page<>(page, size);
+        Page<LinkMappingDO> pageResp = this.linkMappingMapper
+                .selectPage(pageRequest,
+                        new QueryWrapper<LinkMappingDO>().lambda()
+                                .eq(LinkMappingDO::getAccountNo, accountNo)
+                                .eq(LinkMappingDO::getGroupId, groupId));
+        return pageResp;
     }
 }

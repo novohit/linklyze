@@ -2,7 +2,7 @@ package com.wyu.plato.account.api.v1;
 
 import com.wyu.plato.account.api.v1.request.SendCodeRequest;
 import com.wyu.plato.account.service.NotifyService;
-import com.wyu.plato.common.util.Resp;
+import com.wyu.plato.common.model.vo.Resp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 /**
+ * 验证接口
+ *
  * @author novo
  * @since 2023-02-23 17:09
  */
