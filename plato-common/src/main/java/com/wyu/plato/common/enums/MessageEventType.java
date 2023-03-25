@@ -10,5 +10,13 @@ public enum MessageEventType {
 
     LINK_MAPPING_CREATE,
 
+    LINK_UPDATE,
+
+    LINK_MAPPING_UPDATE,
+
+    LINK_DELETE,
+
+    LINK_MAPPING_DELETE,
+
     ;
 }
