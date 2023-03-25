@@ -113,4 +113,49 @@ public class RabbitMQConfig {
                 .with(UPDATE_LINK_BINDING_KEY);
     }
 
+
+    // 删除配置 ================================================================================
+
+    public static final String DELETE_LINK_QUEUE = "short_link.delete.link.queue";
+
+    public static final String DELETE_LINK_MAPPING_QUEUE = "short_link.delete.link_mapping.queue";
+
+    public static final String DELETE_LINK_ROUTING_KEY = "short_link.delete.link.routing.key";
+
+    public static final String DELETE_LINK_BINDING_KEY = "short_link.delete.*.routing.key";
+
+    /**
+     * 短链删除队列
+     *
+     * @return
+     */
+    @Bean
+    public Queue deleteLinkQueue() {
+        return new Queue(DELETE_LINK_QUEUE, true, false, false);
+    }
+
+    /**
+     * 短链映射删除队列
+     *
+     * @return
+     */
+    @Bean
+    public Queue deleteLinkMappingQueue() {
+        return new Queue(DELETE_LINK_MAPPING_QUEUE, true, false, false);
+    }
+
+
+    @Bean
+    public Binding deleteLinkBinding() {
+        return BindingBuilder.bind(addLinkQueue())
+                .to(linkEventExchange())
+                .with(DELETE_LINK_BINDING_KEY);
+    }
+
+    @Bean
+    public Binding deleteLinkMappingBinding() {
+        return BindingBuilder.bind(addLinkMappingQueue())
+                .to(linkEventExchange())
+                .with(DELETE_LINK_BINDING_KEY);
+    }
 }
