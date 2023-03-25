@@ -36,7 +36,7 @@ public class LinkEventMQConsumer {
      */
     @RabbitListener(queues = RabbitMQConfig.CREATE_LINK_QUEUE)
     public void addLinkHandler(CustomMessage customMessage, Message message, Channel channel) {
-        log.info("C端消费者监听 message:[{}]", message);
+        log.info("C端消费者监听到创建事件 message:[{}]", message);
         try {
             customMessage.setEventType(MessageEventType.LINK_CREATE);
             long deliveryTag = message.getMessageProperties().getDeliveryTag();
@@ -44,7 +44,7 @@ public class LinkEventMQConsumer {
         } catch (Exception e) {
             throw new BizException(BizCodeEnum.MQ_CONSUME_EXCEPTION);
         }
-        log.info("C端消费成功");
+        log.info("C端消费成功 创建事件");
     }
 
     /**
@@ -56,7 +56,7 @@ public class LinkEventMQConsumer {
      */
     @RabbitListener(queues = RabbitMQConfig.CREATE_LINK_MAPPING_QUEUE)
     public void addLinkMappingHandler(CustomMessage customMessage, Message message, Channel channel) {
-        log.info("B端消费者监听 message:[{}]", message);
+        log.info("B端消费者监听到创建事件 message:[{}]", message);
         try {
             customMessage.setEventType(MessageEventType.LINK_MAPPING_CREATE);
             long deliveryTag = message.getMessageProperties().getDeliveryTag();
@@ -64,7 +64,7 @@ public class LinkEventMQConsumer {
         } catch (Exception e) {
             throw new BizException(BizCodeEnum.MQ_CONSUME_EXCEPTION);
         }
-        log.info("B端消费成功");
+        log.info("B端消费成功 创建事件");
     }
 
 
@@ -79,14 +79,14 @@ public class LinkEventMQConsumer {
      */
     @RabbitListener(queues = RabbitMQConfig.UPDATE_LINK_QUEUE)
     public void updateLinkHandler(CustomMessage customMessage, Message message, Channel channel) {
-        log.info("C端消费者监听 message:[{}]", message);
+        log.info("C端消费者监听到更新事件 message:[{}]", message);
         try {
             customMessage.setEventType(MessageEventType.LINK_UPDATE);
             long deliveryTag = message.getMessageProperties().getDeliveryTag();
         } catch (Exception e) {
             throw new BizException(BizCodeEnum.MQ_CONSUME_EXCEPTION);
         }
-        log.info("C端消费成功");
+        log.info("C端消费成功 更新事件");
     }
 
     /**
@@ -98,7 +98,7 @@ public class LinkEventMQConsumer {
      */
     @RabbitListener(queues = RabbitMQConfig.UPDATE_LINK_MAPPING_QUEUE)
     public void updateLinkMappingHandler(CustomMessage customMessage, Message message, Channel channel) {
-        log.info("B端消费者监听 message:[{}]", message);
+        log.info("B端消费者监听到更新事件 message:[{}]", message);
         try {
             customMessage.setEventType(MessageEventType.LINK_MAPPING_UPDATE);
             long deliveryTag = message.getMessageProperties().getDeliveryTag();
@@ -106,7 +106,7 @@ public class LinkEventMQConsumer {
         } catch (Exception e) {
             throw new BizException(BizCodeEnum.MQ_CONSUME_EXCEPTION);
         }
-        log.info("B端消费成功");
+        log.info("B端消费成功 更新事件");
     }
 
 
@@ -121,14 +121,14 @@ public class LinkEventMQConsumer {
      */
     @RabbitListener(queues = RabbitMQConfig.DELETE_LINK_QUEUE)
     public void deleteLinkHandler(CustomMessage customMessage, Message message, Channel channel) {
-        log.info("C端消费者监听 message:[{}]", message);
+        log.info("C端消费者监听到删除事件 message:[{}]", message);
         try {
             customMessage.setEventType(MessageEventType.LINK_DELETE);
             long deliveryTag = message.getMessageProperties().getDeliveryTag();
         } catch (Exception e) {
             throw new BizException(BizCodeEnum.MQ_CONSUME_EXCEPTION);
         }
-        log.info("C端消费成功");
+        log.info("C端消费成功 删除事件");
     }
 
     /**
@@ -138,9 +138,9 @@ public class LinkEventMQConsumer {
      * @param message
      * @param channel
      */
-    @RabbitListener(queues = RabbitMQConfig.UPDATE_LINK_MAPPING_QUEUE)
+    @RabbitListener(queues = RabbitMQConfig.DELETE_LINK_MAPPING_QUEUE)
     public void deleteLinkMappingHandler(CustomMessage customMessage, Message message, Channel channel) {
-        log.info("B端消费者监听 message:[{}]", message);
+        log.info("B端消费者监听到删除事件 message:[{}]", message);
         try {
             customMessage.setEventType(MessageEventType.LINK_MAPPING_DELETE);
             long deliveryTag = message.getMessageProperties().getDeliveryTag();
@@ -148,6 +148,6 @@ public class LinkEventMQConsumer {
         } catch (Exception e) {
             throw new BizException(BizCodeEnum.MQ_CONSUME_EXCEPTION);
         }
-        log.info("B端消费成功");
+        log.info("B端消费成功 删除事件");
     }
 }

@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wyu.plato.common.model.vo.PageVO;
 import com.wyu.plato.common.model.vo.Resp;
 import com.wyu.plato.link.api.v1.request.LinkCreateRequest;
+import com.wyu.plato.link.api.v1.request.LinkDeleteRequest;
+import com.wyu.plato.link.api.v1.request.LinkUpdateRequest;
 import com.wyu.plato.link.api.v1.request.PageRequest;
 import com.wyu.plato.link.model.LinkMappingDO;
 import com.wyu.plato.link.service.LinkService;
@@ -39,7 +41,7 @@ public class LinkController {
     private RedisTemplate<Object, Object> redisTemplate;
 
     /**
-     * 创建短链
+     * 短链创建
      *
      * @param linkCreateRequest
      * @return
@@ -61,6 +63,19 @@ public class LinkController {
         Page<LinkMappingDO> page = this.linkService.page(pageRequest);
         PageVO<LinkMappingDO> pageVO = new PageVO<>(page);
         return Resp.success(pageVO);
+    }
+
+
+    @PutMapping
+    public Resp update(@RequestBody @Validated LinkUpdateRequest linkUpdateRequest) {
+        this.linkService.update(linkUpdateRequest);
+        return Resp.success();
+    }
+
+    @DeleteMapping
+    public Resp delete(@RequestBody @Validated LinkDeleteRequest linkDeleteRequest) {
+        this.linkService.delete(linkDeleteRequest);
+        return Resp.success();
     }
 
     /**

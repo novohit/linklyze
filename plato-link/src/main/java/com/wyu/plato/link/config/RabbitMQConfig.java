@@ -101,14 +101,14 @@ public class RabbitMQConfig {
 
     @Bean
     public Binding updateLinkBinding() {
-        return BindingBuilder.bind(addLinkQueue())
+        return BindingBuilder.bind(updateLinkQueue())
                 .to(linkEventExchange())
                 .with(UPDATE_LINK_BINDING_KEY);
     }
 
     @Bean
     public Binding updateLinkMappingBinding() {
-        return BindingBuilder.bind(addLinkMappingQueue())
+        return BindingBuilder.bind(updateLinkMappingQueue())
                 .to(linkEventExchange())
                 .with(UPDATE_LINK_BINDING_KEY);
     }
@@ -147,14 +147,14 @@ public class RabbitMQConfig {
 
     @Bean
     public Binding deleteLinkBinding() {
-        return BindingBuilder.bind(addLinkQueue())
+        return BindingBuilder.bind(deleteLinkQueue())
                 .to(linkEventExchange())
                 .with(DELETE_LINK_BINDING_KEY);
     }
 
     @Bean
     public Binding deleteLinkMappingBinding() {
-        return BindingBuilder.bind(addLinkMappingQueue())
+        return BindingBuilder.bind(deleteLinkMappingQueue())
                 .to(linkEventExchange())
                 .with(DELETE_LINK_BINDING_KEY);
     }

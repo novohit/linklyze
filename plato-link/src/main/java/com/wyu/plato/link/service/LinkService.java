@@ -3,6 +3,8 @@ package com.wyu.plato.link.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wyu.plato.common.model.bo.CustomMessage;
 import com.wyu.plato.link.api.v1.request.LinkCreateRequest;
+import com.wyu.plato.link.api.v1.request.LinkDeleteRequest;
+import com.wyu.plato.link.api.v1.request.LinkUpdateRequest;
 import com.wyu.plato.link.api.v1.request.PageRequest;
 import com.wyu.plato.link.model.LinkDO;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -21,4 +23,8 @@ public interface LinkService extends IService<LinkDO> {
     void handleCreate(CustomMessage customMessage);
 
     Page<LinkMappingDO> page(PageRequest pageRequest);
+
+    void update(LinkUpdateRequest linkUpdateRequest);
+
+    void delete(LinkDeleteRequest linkDeleteRequest);
 }
