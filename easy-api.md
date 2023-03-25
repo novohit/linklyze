@@ -1,6 +1,6 @@
 # plato-account
 
-exported at 2023-03-25 14:56:32
+exported at 2023-03-25 16:45:14
 
 ## 用户接口
 
@@ -519,7 +519,7 @@ exported at 2023-03-25 14:56:32
 
 # plato-link
 
-exported at 2023-03-25 14:56:32
+exported at 2023-03-25 16:45:14
 
 ## C端短链解析接口
 
@@ -590,6 +590,72 @@ C端短链解析接口
   "domainId": 0,
   "domain": "",
   "expired": ""
+}
+```
+
+
+
+> RESPONSE
+
+**Headers:**
+
+| name | value | required | desc |
+| ------------ | ------------ | ------------ | ------------ |
+| content-type | application/json;charset=UTF-8 | NO |  |
+
+**Body:**
+
+| name | type | desc |
+| ------------ | ------------ | ------------ |
+| code | integer | 状态码 0 表示成功 |
+| data | object | 数据 |
+| msg | string | 描述 |
+
+**Response Demo:**
+
+```json
+{
+  "code": 0,
+  "data": {},
+  "msg": ""
+}
+```
+
+
+
+
+---
+### 分页查询
+
+> BASIC
+
+**Path:** /link/v1/page
+
+**Method:** POST
+
+> REQUEST
+
+**Headers:**
+
+| name | value | required | desc |
+| ------------ | ------------ | ------------ | ------------ |
+| Content-Type | application/json | YES |  |
+
+**Request Body:**
+
+| name | type | desc |
+| ------------ | ------------ | ------------ |
+| page | integer | 页码 |
+| size | integer | 条数 |
+| groupId | integer | 分组id |
+
+**Request Demo:**
+
+```json
+{
+  "page": 0,
+  "size": 0,
+  "groupId": 0
 }
 ```
 
