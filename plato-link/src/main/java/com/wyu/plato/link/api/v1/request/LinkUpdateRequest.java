@@ -20,7 +20,15 @@ public class LinkUpdateRequest {
     private Long mappingId;
 
     /**
+     * 短链码
+     * C端的partition key 要传
+     */
+    @NotBlank
+    private String code;
+
+    /**
      * 分组id
+     * 暂时不允许更改，partition key的更改涉及到数据迁移
      */
     @Positive
     private Long groupId;

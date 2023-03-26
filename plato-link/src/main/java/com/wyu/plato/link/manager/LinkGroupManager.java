@@ -19,5 +19,5 @@ public interface LinkGroupManager {
 
     List<LinkGroupDO> findAll(Long accountNo);
 
-    int update(LinkGroupDO groupDO, Long id, Long accountNo);
+    int update(LinkGroupDO groupDO, Long accountNo);
 }

@@ -83,6 +83,7 @@ public class LinkEventMQConsumer {
         try {
             customMessage.setEventType(MessageEventType.LINK_UPDATE);
             long deliveryTag = message.getMessageProperties().getDeliveryTag();
+            this.linkService.handleUpdate(customMessage);
         } catch (Exception e) {
             throw new BizException(BizCodeEnum.MQ_CONSUME_EXCEPTION);
         }
@@ -102,7 +103,7 @@ public class LinkEventMQConsumer {
         try {
             customMessage.setEventType(MessageEventType.LINK_MAPPING_UPDATE);
             long deliveryTag = message.getMessageProperties().getDeliveryTag();
-
+            this.linkService.handleUpdate(customMessage);
         } catch (Exception e) {
             throw new BizException(BizCodeEnum.MQ_CONSUME_EXCEPTION);
         }
@@ -125,6 +126,7 @@ public class LinkEventMQConsumer {
         try {
             customMessage.setEventType(MessageEventType.LINK_DELETE);
             long deliveryTag = message.getMessageProperties().getDeliveryTag();
+            this.linkService.handleDelete(customMessage);
         } catch (Exception e) {
             throw new BizException(BizCodeEnum.MQ_CONSUME_EXCEPTION);
         }
@@ -144,7 +146,7 @@ public class LinkEventMQConsumer {
         try {
             customMessage.setEventType(MessageEventType.LINK_MAPPING_DELETE);
             long deliveryTag = message.getMessageProperties().getDeliveryTag();
-
+            this.linkService.handleDelete(customMessage);
         } catch (Exception e) {
             throw new BizException(BizCodeEnum.MQ_CONSUME_EXCEPTION);
         }

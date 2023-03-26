@@ -64,7 +64,7 @@ public class LinkGroupServiceImpl extends ServiceImpl<LinkGroupMapper, LinkGroup
         Long accountNo = LocalUserThreadHolder.getLocalUserNo();
         LinkGroupDO groupDO = new LinkGroupDO();
         BeanUtils.copyProperties(updateRequest, groupDO);
-        int rows = this.linkGroupManager.update(groupDO, updateRequest.getId(), accountNo);
+        int rows = this.linkGroupManager.update(groupDO, accountNo);
         if (rows <= 0) {
             throw new BizException(BizCodeEnum.GROUP_OPER_ERROR);
         }

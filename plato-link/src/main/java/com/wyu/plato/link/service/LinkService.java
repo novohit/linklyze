@@ -26,5 +26,9 @@ public interface LinkService extends IService<LinkDO> {
 
     void update(LinkUpdateRequest linkUpdateRequest);
 
+    void handleUpdate(CustomMessage customMessage);
+
     void delete(LinkDeleteRequest linkDeleteRequest);
+
+    void handleDelete(CustomMessage customMessage);
 }

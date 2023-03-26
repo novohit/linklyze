@@ -211,7 +211,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkDO> implements 
         }
 
         if (conflict) {
-            log.warn("短链码冲突或者加锁失败标记");
+            log.warn("短链码冲突或加锁失败");
             // 更新长链版本号
             String newUrl = CommonUtil.getNewUrl(request.getOriginalUrl());
             request.setOriginalUrl(newUrl);
@@ -267,6 +267,46 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkDO> implements 
     }
 
     /**
+     * 消费者更新逻辑
+     *
+     * @param customMessage
+     */
+    public void handleUpdate(CustomMessage customMessage) {
+        Long accountNo = customMessage.getAccountNo();
+        LinkUpdateRequest request = JSON.parseObject(customMessage.getContent(), LinkUpdateRequest.class);
+
+        switch (customMessage.getEventType()) {
+            // C端
+            case LINK_UPDATE: {
+                LinkDO linkDO = new LinkDO();
+                BeanUtils.copyProperties(request, linkDO);
+                try {
+                    int rows = this.linkManager.update(linkDO, accountNo);
+                    if (rows <= 0) {
+                        log.error("C端更新失败");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            }
+            // B端
+            case LINK_MAPPING_UPDATE: {
+                LinkMappingDO mappingDO = new LinkMappingDO();
+                BeanUtils.copyProperties(request, mappingDO);
+                mappingDO.setId(request.getMappingId());
+                int rows = this.linkMappingManager.update(mappingDO, accountNo);
+                if (rows <= 0) {
+                    log.error("B端更新失败");
+                }
+                break;
+            }
+            default:
+                throw new BizException(BizCodeEnum.SERVER_ERROR);
+        }
+    }
+
+    /**
      * 生产者端删除逻辑
      *
      * @param request
@@ -287,6 +327,47 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkDO> implements 
         // 3.向MQ发送消息
         log.info("向MQ发送消息,message:[{}]", message);
         this.rabbitTemplate.convertAndSend(RabbitMQConfig.LINK_EVENT_EXCHANGE, RabbitMQConfig.DELETE_LINK_ROUTING_KEY, message);
+    }
+
+
+    /**
+     * 消费者删除逻辑
+     *
+     * @param customMessage
+     */
+    public void handleDelete(CustomMessage customMessage) {
+        Long accountNo = customMessage.getAccountNo();
+        LinkDeleteRequest request = JSON.parseObject(customMessage.getContent(), LinkDeleteRequest.class);
+
+        switch (customMessage.getEventType()) {
+            // C端
+            case LINK_DELETE: {
+                LinkDO linkDO = new LinkDO();
+                BeanUtils.copyProperties(request, linkDO);
+                try {
+                    int rows = this.linkManager.delete(linkDO, accountNo);
+                    if (rows <= 0) {
+                        log.error("C端删除失败");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            }
+            // B端
+            case LINK_MAPPING_DELETE: {
+                LinkMappingDO mappingDO = new LinkMappingDO();
+                BeanUtils.copyProperties(request, mappingDO);
+                mappingDO.setId(request.getMappingId());
+                int rows = this.linkMappingManager.delete(mappingDO, accountNo);
+                if (rows <= 0) {
+                    log.error("B端删除失败");
+                }
+                break;
+            }
+            default:
+                throw new BizException(BizCodeEnum.SERVER_ERROR);
+        }
     }
 
 
