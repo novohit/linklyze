@@ -17,9 +17,9 @@ public class BizException extends RuntimeException {
 
     protected Integer httpStatusCode = 200;
 
-    public BizException(Integer code, String msg) {
+    public BizException(String msg) {
         super(msg);
-        this.code = code;
+        this.code = 500;
         this.msg = msg;
     }
 

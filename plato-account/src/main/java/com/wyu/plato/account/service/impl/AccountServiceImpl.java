@@ -13,12 +13,10 @@ import com.wyu.plato.common.enums.AccountAuthType;
 import com.wyu.plato.common.enums.BizCodeEnum;
 import com.wyu.plato.common.enums.SendCodeType;
 import com.wyu.plato.common.exception.BizException;
-import com.wyu.plato.common.model.LocalUser;
+import com.wyu.plato.common.model.bo.LocalUser;
 import com.wyu.plato.common.util.CommonUtil;
 import com.wyu.plato.common.util.TokenUtil;
 import com.wyu.plato.common.util.uuid.IDUtil;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.impl.DefaultClaims;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.Md5Crypt;
 import org.springframework.beans.BeanUtils;
@@ -26,10 +24,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author novo

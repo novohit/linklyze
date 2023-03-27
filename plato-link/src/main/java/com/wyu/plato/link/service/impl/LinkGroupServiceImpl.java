@@ -4,8 +4,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wyu.plato.common.LocalUserThreadHolder;
 import com.wyu.plato.common.enums.BizCodeEnum;
 import com.wyu.plato.common.exception.BizException;
-import com.wyu.plato.link.api.v1.request.LinkGroupCreateRequest;
-import com.wyu.plato.link.api.v1.request.LinkGroupUpdateRequest;
+import com.wyu.plato.link.api.v1.request.GroupCreateRequest;
+import com.wyu.plato.link.api.v1.request.GroupUpdateRequest;
 import com.wyu.plato.link.manager.LinkGroupManager;
 import com.wyu.plato.link.mapper.LinkGroupMapper;
 import com.wyu.plato.link.model.LinkGroupDO;
@@ -27,7 +27,7 @@ public class LinkGroupServiceImpl extends ServiceImpl<LinkGroupMapper, LinkGroup
     private LinkGroupManager linkGroupManager;
 
     @Override
-    public void create(LinkGroupCreateRequest createRequest) {
+    public void create(GroupCreateRequest createRequest) {
         Long accountNo = LocalUserThreadHolder.getLocalUserNo();
         LinkGroupDO linkGroupDO = new LinkGroupDO();
         linkGroupDO.setTitle(createRequest.getTitle());
@@ -60,11 +60,11 @@ public class LinkGroupServiceImpl extends ServiceImpl<LinkGroupMapper, LinkGroup
     }
 
     @Override
-    public void update(LinkGroupUpdateRequest updateRequest) {
+    public void update(GroupUpdateRequest updateRequest) {
         Long accountNo = LocalUserThreadHolder.getLocalUserNo();
         LinkGroupDO groupDO = new LinkGroupDO();
         BeanUtils.copyProperties(updateRequest, groupDO);
-        int rows = this.linkGroupManager.update(groupDO, updateRequest.getId(), accountNo);
+        int rows = this.linkGroupManager.update(groupDO, accountNo);
         if (rows <= 0) {
             throw new BizException(BizCodeEnum.GROUP_OPER_ERROR);
         }

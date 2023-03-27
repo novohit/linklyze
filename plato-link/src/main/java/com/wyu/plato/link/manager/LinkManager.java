@@ -11,4 +11,8 @@ public interface LinkManager {
     LinkDO findOneByCode(String code);
 
     int save(LinkDO linkDO);
+
+    int update(LinkDO linkDO, Long accountNo);
+
+    int delete(LinkDO linkDO, Long accountNo);
 }

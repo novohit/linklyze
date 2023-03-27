@@ -1,10 +1,9 @@
 package com.wyu.plato.link.api.v1;
 
 
-import com.wyu.plato.common.util.Resp;
-import com.wyu.plato.link.api.v1.request.LinkGroupCreateRequest;
-import com.wyu.plato.link.api.v1.request.LinkGroupUpdateRequest;
-import com.wyu.plato.link.model.LinkGroupDO;
+import com.wyu.plato.common.model.vo.Resp;
+import com.wyu.plato.link.api.v1.request.GroupCreateRequest;
+import com.wyu.plato.link.api.v1.request.GroupUpdateRequest;
 import com.wyu.plato.link.service.LinkGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -13,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.constraints.Positive;
 
 /**
+ * 分组接口
+ *
  * @author novo
  * @since 2023-03-11
  */
@@ -25,13 +26,13 @@ public class LinkGroupController {
     private LinkGroupService linkGroupService;
 
     /**
-     * 创建短链分组
+     * 创建分组
      *
      * @param createRequest
      * @return
      */
     @PostMapping
-    public Resp create(@RequestBody @Validated LinkGroupCreateRequest createRequest) {
+    public Resp create(@RequestBody @Validated GroupCreateRequest createRequest) {
         this.linkGroupService.create(createRequest);
         return Resp.success();
     }
@@ -55,7 +56,7 @@ public class LinkGroupController {
      * @return
      */
     @PutMapping
-    public Resp update(@RequestBody @Validated LinkGroupUpdateRequest updateRequest) {
+    public Resp update(@RequestBody @Validated GroupUpdateRequest updateRequest) {
         this.linkGroupService.update(updateRequest);
         return Resp.success();
     }

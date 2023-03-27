@@ -1,0 +1,1675 @@
+{
+  "item": [
+    {
+      "item": [
+        {
+          "item": [
+            {
+              "request": {
+                "method": "POST",
+                "description": "",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "multipart/form-data",
+                    "type": "text",
+                    "description": ""
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "file",
+                      "value": "",
+                      "type": "file",
+                      "description": ""
+                    }
+                  ]
+                },
+                "url": {
+                  "path": [
+                    "account",
+                    "v1",
+                    "upload"
+                  ],
+                  "query": [],
+                  "host": "{{plato-account}}",
+                  "raw": "{{plato-account}}/account/v1/upload"
+                }
+              },
+              "response": [
+                {
+                  "originalRequest": {
+                    "method": "POST",
+                    "description": "",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "multipart/form-data",
+                        "type": "text",
+                        "description": ""
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "key": "file",
+                          "value": "",
+                          "type": "file",
+                          "description": ""
+                        }
+                      ]
+                    },
+                    "url": {
+                      "path": [
+                        "account",
+                        "v1",
+                        "upload"
+                      ],
+                      "query": [],
+                      "host": "{{plato-account}}",
+                      "raw": "{{plato-account}}/account/v1/upload"
+                    }
+                  },
+                  "_postman_previewlanguage": "json",
+                  "code": 200,
+                  "name": "上传头像-Example",
+                  "header": [
+                    {
+                      "name": "date",
+                      "key": "date",
+                      "value": "周六, 25 3月 202316:37:53 GMT",
+                      "description": "The date and time that the message was sent"
+                    },
+                    {
+                      "name": "server",
+                      "key": "server",
+                      "value": "Apache-Coyote/1.1",
+                      "description": "A name for the server"
+                    },
+                    {
+                      "name": "transfer-encoding",
+                      "key": "transfer-encoding",
+                      "value": "chunked",
+                      "description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+                    },
+                    {
+                      "name": "content-type",
+                      "key": "content-type",
+                      "value": "application/json;charset\u003dUTF-8"
+                    }
+                  ],
+                  "body": "{\n    \"code\": 0, //状态码 0 表示成功\n    \"data\": {}, //数据\n    \"msg\": \"\" //描述\n}"
+                }
+              ],
+              "name": "上传头像"
+            },
+            {
+              "request": {
+                "method": "POST",
+                "description": "",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text",
+                    "description": ""
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  },
+                  "raw": "{\n  \"phone\": \"\",\n  \"password\": \"\"\n}"
+                },
+                "url": {
+                  "path": [
+                    "account",
+                    "v1",
+                    "login"
+                  ],
+                  "query": [],
+                  "host": "{{plato-account}}",
+                  "raw": "{{plato-account}}/account/v1/login"
+                }
+              },
+              "response": [
+                {
+                  "originalRequest": {
+                    "method": "POST",
+                    "description": "",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text",
+                        "description": ""
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      },
+                      "raw": "{\n    \"phone\": \"\",\n    \"password\": \"\"\n}"
+                    },
+                    "url": {
+                      "path": [
+                        "account",
+                        "v1",
+                        "login"
+                      ],
+                      "query": [],
+                      "host": "{{plato-account}}",
+                      "raw": "{{plato-account}}/account/v1/login"
+                    }
+                  },
+                  "_postman_previewlanguage": "json",
+                  "code": 200,
+                  "name": "用户登录-Example",
+                  "header": [
+                    {
+                      "name": "date",
+                      "key": "date",
+                      "value": "周六, 25 3月 202316:37:53 GMT",
+                      "description": "The date and time that the message was sent"
+                    },
+                    {
+                      "name": "server",
+                      "key": "server",
+                      "value": "Apache-Coyote/1.1",
+                      "description": "A name for the server"
+                    },
+                    {
+                      "name": "transfer-encoding",
+                      "key": "transfer-encoding",
+                      "value": "chunked",
+                      "description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+                    },
+                    {
+                      "name": "content-type",
+                      "key": "content-type",
+                      "value": "application/json;charset\u003dUTF-8"
+                    }
+                  ],
+                  "body": "{\n    \"code\": 0, //状态码 0 表示成功\n    \"data\": {}, //数据\n    \"msg\": \"\" //描述\n}"
+                }
+              ],
+              "name": "用户登录"
+            },
+            {
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded",
+                    "type": "text",
+                    "description": ""
+                  }
+                ],
+                "url": {
+                  "path": [
+                    "account",
+                    "v1",
+                    "test-token"
+                  ],
+                  "query": [],
+                  "host": "{{plato-account}}",
+                  "raw": "{{plato-account}}/account/v1/test-token"
+                }
+              },
+              "response": [
+                {
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/x-www-form-urlencoded",
+                        "type": "text",
+                        "description": ""
+                      }
+                    ],
+                    "url": {
+                      "path": [
+                        "account",
+                        "v1",
+                        "test-token"
+                      ],
+                      "query": [],
+                      "host": "{{plato-account}}",
+                      "raw": "{{plato-account}}/account/v1/test-token"
+                    }
+                  },
+                  "_postman_previewlanguage": "json",
+                  "code": 200,
+                  "name": "token-Example",
+                  "header": [
+                    {
+                      "name": "date",
+                      "key": "date",
+                      "value": "周六, 25 3月 202316:37:53 GMT",
+                      "description": "The date and time that the message was sent"
+                    },
+                    {
+                      "name": "server",
+                      "key": "server",
+                      "value": "Apache-Coyote/1.1",
+                      "description": "A name for the server"
+                    },
+                    {
+                      "name": "transfer-encoding",
+                      "key": "transfer-encoding",
+                      "value": "chunked",
+                      "description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+                    },
+                    {
+                      "name": "content-type",
+                      "key": "content-type",
+                      "value": "application/json;charset\u003dUTF-8"
+                    }
+                  ],
+                  "body": "{\n    \"code\": 0, //状态码 0 表示成功\n    \"data\": {}, //数据\n    \"msg\": \"\" //描述\n}"
+                }
+              ],
+              "name": "token"
+            },
+            {
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded",
+                    "type": "text",
+                    "description": ""
+                  }
+                ],
+                "url": {
+                  "path": [
+                    "account",
+                    "v1",
+                    "test-token-verify"
+                  ],
+                  "query": [
+                    {
+                      "key": "token",
+                      "value": "",
+                      "equals": true,
+                      "description": ""
+                    }
+                  ],
+                  "host": "{{plato-account}}",
+                  "raw": "{{plato-account}}/account/v1/test-token-verify"
+                }
+              },
+              "response": [
+                {
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/x-www-form-urlencoded",
+                        "type": "text",
+                        "description": ""
+                      }
+                    ],
+                    "url": {
+                      "path": [
+                        "account",
+                        "v1",
+                        "test-token-verify"
+                      ],
+                      "query": [
+                        {
+                          "key": "token",
+                          "value": "",
+                          "equals": true,
+                          "description": ""
+                        }
+                      ],
+                      "host": "{{plato-account}}",
+                      "raw": "{{plato-account}}/account/v1/test-token-verify"
+                    }
+                  },
+                  "_postman_previewlanguage": "json",
+                  "code": 200,
+                  "name": "tokenVerify-Example",
+                  "header": [
+                    {
+                      "name": "date",
+                      "key": "date",
+                      "value": "周六, 25 3月 202316:37:53 GMT",
+                      "description": "The date and time that the message was sent"
+                    },
+                    {
+                      "name": "server",
+                      "key": "server",
+                      "value": "Apache-Coyote/1.1",
+                      "description": "A name for the server"
+                    },
+                    {
+                      "name": "transfer-encoding",
+                      "key": "transfer-encoding",
+                      "value": "chunked",
+                      "description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+                    },
+                    {
+                      "name": "content-type",
+                      "key": "content-type",
+                      "value": "application/json;charset\u003dUTF-8"
+                    }
+                  ],
+                  "body": "{\n    \"code\": 0, //状态码 0 表示成功\n    \"data\": {}, //数据\n    \"msg\": \"\" //描述\n}"
+                }
+              ],
+              "name": "tokenVerify"
+            },
+            {
+              "request": {
+                "method": "POST",
+                "description": "",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text",
+                    "description": ""
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  },
+                  "raw": "{\n  \"phone\": \"\",\n  \"password\": \"\",\n  \"rePassword\": \"\",\n  \"code\": \"\"\n}"
+                },
+                "url": {
+                  "path": [
+                    "account",
+                    "v1",
+                    "register"
+                  ],
+                  "query": [],
+                  "host": "{{plato-account}}",
+                  "raw": "{{plato-account}}/account/v1/register"
+                }
+              },
+              "response": [
+                {
+                  "originalRequest": {
+                    "method": "POST",
+                    "description": "",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text",
+                        "description": ""
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      },
+                      "raw": "{\n    \"phone\": \"\",\n    \"password\": \"\",\n    \"rePassword\": \"\",\n    \"code\": \"\" //短信验证码\n}"
+                    },
+                    "url": {
+                      "path": [
+                        "account",
+                        "v1",
+                        "register"
+                      ],
+                      "query": [],
+                      "host": "{{plato-account}}",
+                      "raw": "{{plato-account}}/account/v1/register"
+                    }
+                  },
+                  "_postman_previewlanguage": "json",
+                  "code": 200,
+                  "name": "用户注册-Example",
+                  "header": [
+                    {
+                      "name": "date",
+                      "key": "date",
+                      "value": "周六, 25 3月 202316:37:53 GMT",
+                      "description": "The date and time that the message was sent"
+                    },
+                    {
+                      "name": "server",
+                      "key": "server",
+                      "value": "Apache-Coyote/1.1",
+                      "description": "A name for the server"
+                    },
+                    {
+                      "name": "transfer-encoding",
+                      "key": "transfer-encoding",
+                      "value": "chunked",
+                      "description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+                    },
+                    {
+                      "name": "content-type",
+                      "key": "content-type",
+                      "value": "application/json;charset\u003dUTF-8"
+                    }
+                  ],
+                  "body": "{\n    \"code\": 0, //状态码 0 表示成功\n    \"data\": {}, //数据\n    \"msg\": \"\" //描述\n}"
+                }
+              ],
+              "name": "用户注册"
+            },
+            {
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded",
+                    "type": "text",
+                    "description": ""
+                  }
+                ],
+                "url": {
+                  "path": [
+                    "account",
+                    "v1",
+                    ":account_no"
+                  ],
+                  "query": [],
+                  "host": "{{plato-account}}",
+                  "raw": "{{plato-account}}/account/v1/{account_no}"
+                }
+              },
+              "response": [
+                {
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/x-www-form-urlencoded",
+                        "type": "text",
+                        "description": ""
+                      }
+                    ],
+                    "url": {
+                      "path": [
+                        "account",
+                        "v1",
+                        ":account_no"
+                      ],
+                      "query": [],
+                      "host": "{{plato-account}}",
+                      "raw": "{{plato-account}}/account/v1/{account_no}"
+                    }
+                  },
+                  "_postman_previewlanguage": "json",
+                  "code": 200,
+                  "name": "findByAccountNo-Example",
+                  "header": [
+                    {
+                      "name": "date",
+                      "key": "date",
+                      "value": "周六, 25 3月 202316:37:53 GMT",
+                      "description": "The date and time that the message was sent"
+                    },
+                    {
+                      "name": "server",
+                      "key": "server",
+                      "value": "Apache-Coyote/1.1",
+                      "description": "A name for the server"
+                    },
+                    {
+                      "name": "transfer-encoding",
+                      "key": "transfer-encoding",
+                      "value": "chunked",
+                      "description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+                    },
+                    {
+                      "name": "content-type",
+                      "key": "content-type",
+                      "value": "application/json;charset\u003dUTF-8"
+                    }
+                  ],
+                  "body": "{\n    \"code\": 0, //状态码 0 表示成功\n    \"data\": {}, //数据\n    \"msg\": \"\" //描述\n}"
+                }
+              ],
+              "name": "findByAccountNo"
+            }
+          ],
+          "name": "用户接口",
+          "description": "用户接口"
+        },
+        {
+          "item": [
+            {
+              "request": {
+                "method": "GET",
+                "description": "",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text",
+                    "description": ""
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  },
+                  "raw": "{\n  \"type\": \"\",\n  \"captcha\": \"\",\n  \"captchaId\": \"\",\n  \"to\": \"\"\n}"
+                },
+                "url": {
+                  "path": [
+                    "notify",
+                    "v1",
+                    "send-code"
+                  ],
+                  "query": [],
+                  "host": "{{plato-account}}",
+                  "raw": "{{plato-account}}/notify/v1/send-code"
+                }
+              },
+              "response": [
+                {
+                  "originalRequest": {
+                    "method": "GET",
+                    "description": "",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text",
+                        "description": ""
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      },
+                      "raw": "{\n    /**\n     * 发送业务验证码类型\n     * USER_REGISTER_PHONE :USER_REGISTER_PHONE\n     * USER_LOGIN_PHONE :USER_LOGIN_PHONE\n     * USER_REGISTER_EMAIl :USER_REGISTER_EMAIl\n     * USER_LOGIN_EMAIl :USER_LOGIN_EMAIl\n     */\n    \"type\": \"\",\n    \"captcha\": \"\",\n    \"captchaId\": \"\",\n    \"to\": \"\" //接收方，邮箱或手机号\n}"
+                    },
+                    "url": {
+                      "path": [
+                        "notify",
+                        "v1",
+                        "send-code"
+                      ],
+                      "query": [],
+                      "host": "{{plato-account}}",
+                      "raw": "{{plato-account}}/notify/v1/send-code"
+                    }
+                  },
+                  "_postman_previewlanguage": "json",
+                  "code": 200,
+                  "name": "发送短信验证码-Example",
+                  "header": [
+                    {
+                      "name": "date",
+                      "key": "date",
+                      "value": "周六, 25 3月 202316:37:53 GMT",
+                      "description": "The date and time that the message was sent"
+                    },
+                    {
+                      "name": "server",
+                      "key": "server",
+                      "value": "Apache-Coyote/1.1",
+                      "description": "A name for the server"
+                    },
+                    {
+                      "name": "transfer-encoding",
+                      "key": "transfer-encoding",
+                      "value": "chunked",
+                      "description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+                    },
+                    {
+                      "name": "content-type",
+                      "key": "content-type",
+                      "value": "application/json;charset\u003dUTF-8"
+                    }
+                  ],
+                  "body": "{\n    \"code\": 0, //状态码 0 表示成功\n    \"data\": {}, //数据\n    \"msg\": \"\" //描述\n}"
+                }
+              ],
+              "name": "发送短信验证码"
+            },
+            {
+              "request": {
+                "method": "GET",
+                "description": "",
+                "header": [],
+                "url": {
+                  "path": [
+                    "notify",
+                    "v1",
+                    "captcha"
+                  ],
+                  "query": [],
+                  "host": "{{plato-account}}",
+                  "raw": "{{plato-account}}/notify/v1/captcha"
+                }
+              },
+              "response": [
+                {
+                  "originalRequest": {
+                    "method": "GET",
+                    "description": "",
+                    "header": [],
+                    "url": {
+                      "path": [
+                        "notify",
+                        "v1",
+                        "captcha"
+                      ],
+                      "query": [],
+                      "host": "{{plato-account}}",
+                      "raw": "{{plato-account}}/notify/v1/captcha"
+                    }
+                  },
+                  "_postman_previewlanguage": "json",
+                  "code": 200,
+                  "name": "获取图形验证码-Example",
+                  "header": [
+                    {
+                      "name": "date",
+                      "key": "date",
+                      "value": "周六, 25 3月 202316:37:53 GMT",
+                      "description": "The date and time that the message was sent"
+                    },
+                    {
+                      "name": "server",
+                      "key": "server",
+                      "value": "Apache-Coyote/1.1",
+                      "description": "A name for the server"
+                    },
+                    {
+                      "name": "transfer-encoding",
+                      "key": "transfer-encoding",
+                      "value": "chunked",
+                      "description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+                    },
+                    {
+                      "name": "content-type",
+                      "key": "content-type",
+                      "value": "application/json;charset\u003dUTF-8"
+                    }
+                  ],
+                  "body": "{\n    \"code\": 0, //状态码 0 表示成功\n    \"data\": {}, //数据\n    \"msg\": \"\" //描述\n}"
+                }
+              ],
+              "name": "获取图形验证码"
+            },
+            {
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "path": [
+                    "notify",
+                    "v1",
+                    "test"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "",
+                      "equals": true,
+                      "description": ""
+                    },
+                    {
+                      "key": "age",
+                      "value": "",
+                      "equals": true,
+                      "description": ""
+                    }
+                  ],
+                  "host": "{{plato-account}}",
+                  "raw": "{{plato-account}}/notify/v1/test"
+                }
+              },
+              "response": [
+                {
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "path": [
+                        "notify",
+                        "v1",
+                        "test"
+                      ],
+                      "query": [
+                        {
+                          "key": "name",
+                          "value": "",
+                          "equals": true,
+                          "description": ""
+                        },
+                        {
+                          "key": "age",
+                          "value": "",
+                          "equals": true,
+                          "description": ""
+                        }
+                      ],
+                      "host": "{{plato-account}}",
+                      "raw": "{{plato-account}}/notify/v1/test"
+                    }
+                  },
+                  "_postman_previewlanguage": "json",
+                  "code": 200,
+                  "name": "test-Example",
+                  "header": [
+                    {
+                      "name": "date",
+                      "key": "date",
+                      "value": "周六, 25 3月 202316:37:53 GMT",
+                      "description": "The date and time that the message was sent"
+                    },
+                    {
+                      "name": "server",
+                      "key": "server",
+                      "value": "Apache-Coyote/1.1",
+                      "description": "A name for the server"
+                    },
+                    {
+                      "name": "transfer-encoding",
+                      "key": "transfer-encoding",
+                      "value": "chunked",
+                      "description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+                    },
+                    {
+                      "name": "content-type",
+                      "key": "content-type",
+                      "value": "application/json;charset\u003dUTF-8"
+                    }
+                  ],
+                  "body": "{\n    \"code\": 0, //状态码 0 表示成功\n    \"data\": {}, //数据\n    \"msg\": \"\" //描述\n}"
+                }
+              ],
+              "name": "test"
+            }
+          ],
+          "name": "验证接口",
+          "description": "验证接口"
+        }
+      ],
+      "name": "plato-account",
+      "description": "exported at 2023-03-25 16:37:53"
+    },
+    {
+      "item": [
+        {
+          "item": [
+            {
+              "request": {
+                "method": "GET",
+                "description": "",
+                "header": [],
+                "url": {
+                  "path": [
+                    ":code"
+                  ],
+                  "query": [],
+                  "host": "{{plato-link}}",
+                  "raw": "{{plato-link}}/{code}"
+                }
+              },
+              "response": [
+                {
+                  "originalRequest": {
+                    "method": "GET",
+                    "description": "",
+                    "header": [],
+                    "url": {
+                      "path": [
+                        ":code"
+                      ],
+                      "query": [],
+                      "host": "{{plato-link}}",
+                      "raw": "{{plato-link}}/{code}"
+                    }
+                  },
+                  "_postman_previewlanguage": "json",
+                  "code": 200,
+                  "name": "短链码跳转-Example",
+                  "header": [
+                    {
+                      "name": "date",
+                      "key": "date",
+                      "value": "周六, 25 3月 202316:37:53 GMT",
+                      "description": "The date and time that the message was sent"
+                    },
+                    {
+                      "name": "server",
+                      "key": "server",
+                      "value": "Apache-Coyote/1.1",
+                      "description": "A name for the server"
+                    },
+                    {
+                      "name": "transfer-encoding",
+                      "key": "transfer-encoding",
+                      "value": "chunked",
+                      "description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+                    },
+                    {
+                      "name": "content-type",
+                      "key": "content-type",
+                      "value": "application/json;charset\u003dUTF-8"
+                    }
+                  ],
+                  "body": "null"
+                }
+              ],
+              "name": "短链码跳转"
+            }
+          ],
+          "name": "C端短链解析接口",
+          "description": "C端短链解析接口"
+        },
+        {
+          "item": [
+            {
+              "request": {
+                "method": "POST",
+                "description": "",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text",
+                    "description": ""
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  },
+                  "raw": "{\n  \"groupId\": 0,\n  \"title\": \"\",\n  \"originalUrl\": \"\",\n  \"domainId\": 0,\n  \"domain\": \"\",\n  \"expired\": \"\"\n}"
+                },
+                "url": {
+                  "path": [
+                    "link",
+                    "v1"
+                  ],
+                  "query": [],
+                  "host": "{{plato-link}}",
+                  "raw": "{{plato-link}}/link/v1"
+                }
+              },
+              "response": [
+                {
+                  "originalRequest": {
+                    "method": "POST",
+                    "description": "",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text",
+                        "description": ""
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      },
+                      "raw": "{\n    \"groupId\": 0, //分组id\n    \"title\": \"\", //短链标题\n    \"originalUrl\": \"\", //原生url\n    \"domainId\": 0, //域名id\n    \"domain\": \"\", //域名 前端不需要传\n    \"expired\": \"\" //过期时间 永久则不用传\n}"
+                    },
+                    "url": {
+                      "path": [
+                        "link",
+                        "v1"
+                      ],
+                      "query": [],
+                      "host": "{{plato-link}}",
+                      "raw": "{{plato-link}}/link/v1"
+                    }
+                  },
+                  "_postman_previewlanguage": "json",
+                  "code": 200,
+                  "name": "创建短链-Example",
+                  "header": [
+                    {
+                      "name": "date",
+                      "key": "date",
+                      "value": "周六, 25 3月 202316:37:53 GMT",
+                      "description": "The date and time that the message was sent"
+                    },
+                    {
+                      "name": "server",
+                      "key": "server",
+                      "value": "Apache-Coyote/1.1",
+                      "description": "A name for the server"
+                    },
+                    {
+                      "name": "transfer-encoding",
+                      "key": "transfer-encoding",
+                      "value": "chunked",
+                      "description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+                    },
+                    {
+                      "name": "content-type",
+                      "key": "content-type",
+                      "value": "application/json;charset\u003dUTF-8"
+                    }
+                  ],
+                  "body": "{\n    \"code\": 0, //状态码 0 表示成功\n    \"data\": {}, //数据\n    \"msg\": \"\" //描述\n}"
+                }
+              ],
+              "name": "创建短链"
+            },
+            {
+              "request": {
+                "method": "POST",
+                "description": "",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text",
+                    "description": ""
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  },
+                  "raw": "{\n  \"page\": 0,\n  \"size\": 0,\n  \"groupId\": 0\n}"
+                },
+                "url": {
+                  "path": [
+                    "link",
+                    "v1",
+                    "page"
+                  ],
+                  "query": [],
+                  "host": "{{plato-link}}",
+                  "raw": "{{plato-link}}/link/v1/page"
+                }
+              },
+              "response": [
+                {
+                  "originalRequest": {
+                    "method": "POST",
+                    "description": "",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text",
+                        "description": ""
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      },
+                      "raw": "{\n    \"page\": 0, //页码\n    \"size\": 0, //条数\n    \"groupId\": 0 //分组id\n}"
+                    },
+                    "url": {
+                      "path": [
+                        "link",
+                        "v1",
+                        "page"
+                      ],
+                      "query": [],
+                      "host": "{{plato-link}}",
+                      "raw": "{{plato-link}}/link/v1/page"
+                    }
+                  },
+                  "_postman_previewlanguage": "json",
+                  "code": 200,
+                  "name": "分页查询-Example",
+                  "header": [
+                    {
+                      "name": "date",
+                      "key": "date",
+                      "value": "周六, 25 3月 202316:37:53 GMT",
+                      "description": "The date and time that the message was sent"
+                    },
+                    {
+                      "name": "server",
+                      "key": "server",
+                      "value": "Apache-Coyote/1.1",
+                      "description": "A name for the server"
+                    },
+                    {
+                      "name": "transfer-encoding",
+                      "key": "transfer-encoding",
+                      "value": "chunked",
+                      "description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+                    },
+                    {
+                      "name": "content-type",
+                      "key": "content-type",
+                      "value": "application/json;charset\u003dUTF-8"
+                    }
+                  ],
+                  "body": "{\n    \"code\": 0, //状态码 0 表示成功\n    \"data\": {}, //数据\n    \"msg\": \"\" //描述\n}"
+                }
+              ],
+              "name": "分页查询"
+            },
+            {
+              "request": {
+                "method": "GET",
+                "description": "",
+                "header": [],
+                "url": {
+                  "path": [
+                    "link",
+                    "v1",
+                    "test-lock"
+                  ],
+                  "query": [
+                    {
+                      "key": "code",
+                      "value": "",
+                      "equals": true,
+                      "description": ""
+                    },
+                    {
+                      "key": "account_no",
+                      "value": "",
+                      "equals": true,
+                      "description": ""
+                    }
+                  ],
+                  "host": "{{plato-link}}",
+                  "raw": "{{plato-link}}/link/v1/test-lock"
+                }
+              },
+              "response": [
+                {
+                  "originalRequest": {
+                    "method": "GET",
+                    "description": "",
+                    "header": [],
+                    "url": {
+                      "path": [
+                        "link",
+                        "v1",
+                        "test-lock"
+                      ],
+                      "query": [
+                        {
+                          "key": "code",
+                          "value": "",
+                          "equals": true,
+                          "description": ""
+                        },
+                        {
+                          "key": "account_no",
+                          "value": "",
+                          "equals": true,
+                          "description": ""
+                        }
+                      ],
+                      "host": "{{plato-link}}",
+                      "raw": "{{plato-link}}/link/v1/test-lock"
+                    }
+                  },
+                  "_postman_previewlanguage": "json",
+                  "code": 200,
+                  "name": "分布式可重入锁测试-Example",
+                  "header": [
+                    {
+                      "name": "date",
+                      "key": "date",
+                      "value": "周六, 25 3月 202316:37:53 GMT",
+                      "description": "The date and time that the message was sent"
+                    },
+                    {
+                      "name": "server",
+                      "key": "server",
+                      "value": "Apache-Coyote/1.1",
+                      "description": "A name for the server"
+                    },
+                    {
+                      "name": "transfer-encoding",
+                      "key": "transfer-encoding",
+                      "value": "chunked",
+                      "description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+                    },
+                    {
+                      "name": "content-type",
+                      "key": "content-type",
+                      "value": "application/json;charset\u003dUTF-8"
+                    }
+                  ],
+                  "body": "{\n    \"code\": 0, //状态码 0 表示成功\n    \"data\": {}, //数据\n    \"msg\": \"\" //描述\n}"
+                }
+              ],
+              "name": "分布式可重入锁测试"
+            }
+          ],
+          "name": "短链接口",
+          "description": "短链接口"
+        },
+        {
+          "item": [
+            {
+              "request": {
+                "method": "GET",
+                "description": "",
+                "header": [],
+                "url": {
+                  "path": [
+                    "domain",
+                    "v1",
+                    "list"
+                  ],
+                  "query": [],
+                  "host": "{{plato-link}}",
+                  "raw": "{{plato-link}}/domain/v1/list"
+                }
+              },
+              "response": [
+                {
+                  "originalRequest": {
+                    "method": "GET",
+                    "description": "",
+                    "header": [],
+                    "url": {
+                      "path": [
+                        "domain",
+                        "v1",
+                        "list"
+                      ],
+                      "query": [],
+                      "host": "{{plato-link}}",
+                      "raw": "{{plato-link}}/domain/v1/list"
+                    }
+                  },
+                  "_postman_previewlanguage": "json",
+                  "code": 200,
+                  "name": "可用域名列表-Example",
+                  "header": [
+                    {
+                      "name": "date",
+                      "key": "date",
+                      "value": "周六, 25 3月 202316:37:53 GMT",
+                      "description": "The date and time that the message was sent"
+                    },
+                    {
+                      "name": "server",
+                      "key": "server",
+                      "value": "Apache-Coyote/1.1",
+                      "description": "A name for the server"
+                    },
+                    {
+                      "name": "transfer-encoding",
+                      "key": "transfer-encoding",
+                      "value": "chunked",
+                      "description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+                    },
+                    {
+                      "name": "content-type",
+                      "key": "content-type",
+                      "value": "application/json;charset\u003dUTF-8"
+                    }
+                  ],
+                  "body": "{\n    \"code\": 0, //状态码 0 表示成功\n    \"data\": {}, //数据\n    \"msg\": \"\" //描述\n}"
+                }
+              ],
+              "name": "可用域名列表"
+            }
+          ],
+          "name": "域名接口",
+          "description": "域名接口"
+        },
+        {
+          "item": [
+            {
+              "request": {
+                "method": "POST",
+                "description": "",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text",
+                    "description": ""
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  },
+                  "raw": "{\n  \"title\": \"\"\n}"
+                },
+                "url": {
+                  "path": [
+                    "group",
+                    "v1"
+                  ],
+                  "query": [],
+                  "host": "{{plato-link}}",
+                  "raw": "{{plato-link}}/group/v1"
+                }
+              },
+              "response": [
+                {
+                  "originalRequest": {
+                    "method": "POST",
+                    "description": "",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text",
+                        "description": ""
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      },
+                      "raw": "{\n    \"title\": \"\" //分组标题\n}"
+                    },
+                    "url": {
+                      "path": [
+                        "group",
+                        "v1"
+                      ],
+                      "query": [],
+                      "host": "{{plato-link}}",
+                      "raw": "{{plato-link}}/group/v1"
+                    }
+                  },
+                  "_postman_previewlanguage": "json",
+                  "code": 200,
+                  "name": "创建分组-Example",
+                  "header": [
+                    {
+                      "name": "date",
+                      "key": "date",
+                      "value": "周六, 25 3月 202316:37:53 GMT",
+                      "description": "The date and time that the message was sent"
+                    },
+                    {
+                      "name": "server",
+                      "key": "server",
+                      "value": "Apache-Coyote/1.1",
+                      "description": "A name for the server"
+                    },
+                    {
+                      "name": "transfer-encoding",
+                      "key": "transfer-encoding",
+                      "value": "chunked",
+                      "description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+                    },
+                    {
+                      "name": "content-type",
+                      "key": "content-type",
+                      "value": "application/json;charset\u003dUTF-8"
+                    }
+                  ],
+                  "body": "{\n    \"code\": 0, //状态码 0 表示成功\n    \"data\": {}, //数据\n    \"msg\": \"\" //描述\n}"
+                }
+              ],
+              "name": "创建分组"
+            },
+            {
+              "request": {
+                "method": "DELETE",
+                "description": "",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded",
+                    "type": "text",
+                    "description": ""
+                  }
+                ],
+                "url": {
+                  "path": [
+                    "group",
+                    "v1",
+                    ":group_id"
+                  ],
+                  "query": [],
+                  "host": "{{plato-link}}",
+                  "raw": "{{plato-link}}/group/v1/{group_id}"
+                }
+              },
+              "response": [
+                {
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "description": "",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/x-www-form-urlencoded",
+                        "type": "text",
+                        "description": ""
+                      }
+                    ],
+                    "url": {
+                      "path": [
+                        "group",
+                        "v1",
+                        ":group_id"
+                      ],
+                      "query": [],
+                      "host": "{{plato-link}}",
+                      "raw": "{{plato-link}}/group/v1/{group_id}"
+                    }
+                  },
+                  "_postman_previewlanguage": "json",
+                  "code": 200,
+                  "name": "删除分组-Example",
+                  "header": [
+                    {
+                      "name": "date",
+                      "key": "date",
+                      "value": "周六, 25 3月 202316:37:53 GMT",
+                      "description": "The date and time that the message was sent"
+                    },
+                    {
+                      "name": "server",
+                      "key": "server",
+                      "value": "Apache-Coyote/1.1",
+                      "description": "A name for the server"
+                    },
+                    {
+                      "name": "transfer-encoding",
+                      "key": "transfer-encoding",
+                      "value": "chunked",
+                      "description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+                    },
+                    {
+                      "name": "content-type",
+                      "key": "content-type",
+                      "value": "application/json;charset\u003dUTF-8"
+                    }
+                  ],
+                  "body": "{\n    \"code\": 0, //状态码 0 表示成功\n    \"data\": {}, //数据\n    \"msg\": \"\" //描述\n}"
+                }
+              ],
+              "name": "删除分组"
+            },
+            {
+              "request": {
+                "method": "PUT",
+                "description": "",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text",
+                    "description": ""
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  },
+                  "raw": "{\n  \"id\": 0,\n  \"title\": \"\"\n}"
+                },
+                "url": {
+                  "path": [
+                    "group",
+                    "v1"
+                  ],
+                  "query": [],
+                  "host": "{{plato-link}}",
+                  "raw": "{{plato-link}}/group/v1"
+                }
+              },
+              "response": [
+                {
+                  "originalRequest": {
+                    "method": "PUT",
+                    "description": "",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text",
+                        "description": ""
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      },
+                      "raw": "{\n    \"id\": 0, //分组id\n    \"title\": \"\" //分组标题\n}"
+                    },
+                    "url": {
+                      "path": [
+                        "group",
+                        "v1"
+                      ],
+                      "query": [],
+                      "host": "{{plato-link}}",
+                      "raw": "{{plato-link}}/group/v1"
+                    }
+                  },
+                  "_postman_previewlanguage": "json",
+                  "code": 200,
+                  "name": "更新分组-Example",
+                  "header": [
+                    {
+                      "name": "date",
+                      "key": "date",
+                      "value": "周六, 25 3月 202316:37:53 GMT",
+                      "description": "The date and time that the message was sent"
+                    },
+                    {
+                      "name": "server",
+                      "key": "server",
+                      "value": "Apache-Coyote/1.1",
+                      "description": "A name for the server"
+                    },
+                    {
+                      "name": "transfer-encoding",
+                      "key": "transfer-encoding",
+                      "value": "chunked",
+                      "description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+                    },
+                    {
+                      "name": "content-type",
+                      "key": "content-type",
+                      "value": "application/json;charset\u003dUTF-8"
+                    }
+                  ],
+                  "body": "{\n    \"code\": 0, //状态码 0 表示成功\n    \"data\": {}, //数据\n    \"msg\": \"\" //描述\n}"
+                }
+              ],
+              "name": "更新分组"
+            },
+            {
+              "request": {
+                "method": "GET",
+                "description": "",
+                "header": [],
+                "url": {
+                  "path": [
+                    "group",
+                    "v1",
+                    ":group_id"
+                  ],
+                  "query": [],
+                  "host": "{{plato-link}}",
+                  "raw": "{{plato-link}}/group/v1/{group_id}"
+                }
+              },
+              "response": [
+                {
+                  "originalRequest": {
+                    "method": "GET",
+                    "description": "",
+                    "header": [],
+                    "url": {
+                      "path": [
+                        "group",
+                        "v1",
+                        ":group_id"
+                      ],
+                      "query": [],
+                      "host": "{{plato-link}}",
+                      "raw": "{{plato-link}}/group/v1/{group_id}"
+                    }
+                  },
+                  "_postman_previewlanguage": "json",
+                  "code": 200,
+                  "name": "分组详情-Example",
+                  "header": [
+                    {
+                      "name": "date",
+                      "key": "date",
+                      "value": "周六, 25 3月 202316:37:53 GMT",
+                      "description": "The date and time that the message was sent"
+                    },
+                    {
+                      "name": "server",
+                      "key": "server",
+                      "value": "Apache-Coyote/1.1",
+                      "description": "A name for the server"
+                    },
+                    {
+                      "name": "transfer-encoding",
+                      "key": "transfer-encoding",
+                      "value": "chunked",
+                      "description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+                    },
+                    {
+                      "name": "content-type",
+                      "key": "content-type",
+                      "value": "application/json;charset\u003dUTF-8"
+                    }
+                  ],
+                  "body": "{\n    \"code\": 0, //状态码 0 表示成功\n    \"data\": {}, //数据\n    \"msg\": \"\" //描述\n}"
+                }
+              ],
+              "name": "分组详情"
+            },
+            {
+              "request": {
+                "method": "GET",
+                "description": "",
+                "header": [],
+                "url": {
+                  "path": [
+                    "group",
+                    "v1",
+                    "list"
+                  ],
+                  "query": [],
+                  "host": "{{plato-link}}",
+                  "raw": "{{plato-link}}/group/v1/list"
+                }
+              },
+              "response": [
+                {
+                  "originalRequest": {
+                    "method": "GET",
+                    "description": "",
+                    "header": [],
+                    "url": {
+                      "path": [
+                        "group",
+                        "v1",
+                        "list"
+                      ],
+                      "query": [],
+                      "host": "{{plato-link}}",
+                      "raw": "{{plato-link}}/group/v1/list"
+                    }
+                  },
+                  "_postman_previewlanguage": "json",
+                  "code": 200,
+                  "name": "分组列表-Example",
+                  "header": [
+                    {
+                      "name": "date",
+                      "key": "date",
+                      "value": "周六, 25 3月 202316:37:53 GMT",
+                      "description": "The date and time that the message was sent"
+                    },
+                    {
+                      "name": "server",
+                      "key": "server",
+                      "value": "Apache-Coyote/1.1",
+                      "description": "A name for the server"
+                    },
+                    {
+                      "name": "transfer-encoding",
+                      "key": "transfer-encoding",
+                      "value": "chunked",
+                      "description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+                    },
+                    {
+                      "name": "content-type",
+                      "key": "content-type",
+                      "value": "application/json;charset\u003dUTF-8"
+                    }
+                  ],
+                  "body": "{\n    \"code\": 0, //状态码 0 表示成功\n    \"data\": {}, //数据\n    \"msg\": \"\" //描述\n}"
+                }
+              ],
+              "name": "分组列表"
+            }
+          ],
+          "name": "分组接口",
+          "description": "分组接口"
+        }
+      ],
+      "name": "plato-link",
+      "description": "exported at 2023-03-25 16:37:53"
+    }
+  ],
+  "info": {
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "name": "plato-short-link-20230325163753",
+    "description": "exported at 2023-03-25 16:37:53"
+  }
+}

@@ -1,4 +1,4 @@
-package com.wyu.plato.common.model;
+package com.wyu.plato.common.model.bo;
 
 import com.wyu.plato.common.enums.MessageEventType;
 import lombok.Builder;
@@ -7,7 +7,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * MQ自定义消息对象
+ * MQ自定义消息对象 要实现序列化接口
  *
  * @author novo
  * @since 2023-03-22

@@ -42,8 +42,8 @@ public class LinkGroupManagerImpl implements LinkGroupManager {
     }
 
     @Override
-    public int update(LinkGroupDO groupDO, Long id, Long accountNo) {
+    public int update(LinkGroupDO groupDO, Long accountNo) {
         return this.linkGroupMapper
-                .update(groupDO, new QueryWrapper<LinkGroupDO>().lambda().eq(LinkGroupDO::getAccountNo, accountNo).eq(LinkGroupDO::getId, id));
+                .update(groupDO, new QueryWrapper<LinkGroupDO>().lambda().eq(LinkGroupDO::getAccountNo, accountNo).eq(LinkGroupDO::getId, groupDO.getId()));
     }
 }

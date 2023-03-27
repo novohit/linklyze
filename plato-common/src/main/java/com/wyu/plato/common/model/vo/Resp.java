@@ -1,4 +1,4 @@
-package com.wyu.plato.common.util;
+package com.wyu.plato.common.model.vo;
 
 
 import com.alibaba.fastjson2.JSON;

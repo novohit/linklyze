@@ -27,4 +27,27 @@ public class LinkManagerImpl implements LinkManager {
     public int save(LinkDO linkDO) {
         return this.linkMapper.insert(linkDO);
     }
+
+    /**
+     * C端 code是partition key 所以要传code
+     *
+     * @param linkDO
+     * @param accountNo
+     * @return
+     */
+    @Override
+    public int update(LinkDO linkDO, Long accountNo) {
+        return this.linkMapper
+                .update(linkDO, new QueryWrapper<LinkDO>().lambda()
+                        .eq(LinkDO::getCode, linkDO.getCode())
+                        .eq(LinkDO::getAccountNo, accountNo));
+    }
+
+    @Override
+    public int delete(LinkDO linkDO, Long accountNo) {
+        return this.linkMapper
+                .delete(new QueryWrapper<LinkDO>().lambda()
+                        .eq(LinkDO::getCode, linkDO.getCode())
+                        .eq(LinkDO::getAccountNo, accountNo));
+    }
 }

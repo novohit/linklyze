@@ -2,6 +2,7 @@ package com.wyu.plato.common.util;
 
 import com.google.common.hash.Hashing;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.map.CaseInsensitiveMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -71,7 +72,8 @@ public class CommonUtil {
      */
     public static Map<String, String> getAllRequestHeader(HttpServletRequest request) {
         Enumeration<String> headerNames = request.getHeaderNames();
-        Map<String, String> map = new HashMap<>();
+        // apache.commons实现了一个可以不区分KEY大小写的MAP
+        Map<String, String> map = new CaseInsensitiveMap<>();
         while (headerNames.hasMoreElements()) {
             String key = (String) headerNames.nextElement();
             //根据名称获取请求头的值

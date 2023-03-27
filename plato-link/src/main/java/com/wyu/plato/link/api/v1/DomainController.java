@@ -1,7 +1,7 @@
 package com.wyu.plato.link.api.v1;
 
 
-import com.wyu.plato.common.util.Resp;
+import com.wyu.plato.common.model.vo.Resp;
 import com.wyu.plato.link.model.DomainDO;
 import com.wyu.plato.link.service.DomainService;
 import com.wyu.plato.link.vo.DomainVO;
@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
+ * 域名接口
+ *
  * @author novo
  * @since 2023-03-16
  */

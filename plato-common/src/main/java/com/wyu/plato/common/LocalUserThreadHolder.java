@@ -1,7 +1,7 @@
 package com.wyu.plato.common;
 
 
-import com.wyu.plato.common.model.LocalUser;
+import com.wyu.plato.common.model.bo.LocalUser;
 
 /**
  * @author novo

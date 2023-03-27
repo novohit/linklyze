@@ -1,7 +1,7 @@
 package com.wyu.plato.link.service;
 
-import com.wyu.plato.link.api.v1.request.LinkGroupCreateRequest;
-import com.wyu.plato.link.api.v1.request.LinkGroupUpdateRequest;
+import com.wyu.plato.link.api.v1.request.GroupCreateRequest;
+import com.wyu.plato.link.api.v1.request.GroupUpdateRequest;
 import com.wyu.plato.link.model.LinkGroupDO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -13,7 +13,7 @@ import java.util.List;
  */
 public interface LinkGroupService extends IService<LinkGroupDO> {
 
-    void create(LinkGroupCreateRequest createRequest);
+    void create(GroupCreateRequest createRequest);
 
     void delete(Long groupId);
 
@@ -21,5 +21,5 @@ public interface LinkGroupService extends IService<LinkGroupDO> {
 
     List<LinkGroupDO> findAll();
 
-    void update(LinkGroupUpdateRequest updateRequest);
+    void update(GroupUpdateRequest updateRequest);
 }

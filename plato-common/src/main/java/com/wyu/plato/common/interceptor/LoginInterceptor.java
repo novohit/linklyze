@@ -4,7 +4,7 @@ import com.alibaba.fastjson2.JSON;
 import com.wyu.plato.common.LocalUserThreadHolder;
 import com.wyu.plato.common.enums.BizCodeEnum;
 import com.wyu.plato.common.exception.BizException;
-import com.wyu.plato.common.model.LocalUser;
+import com.wyu.plato.common.model.bo.LocalUser;
 import com.wyu.plato.common.util.TokenUtil;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 登录拦截器
