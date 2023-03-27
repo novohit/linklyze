@@ -2,10 +2,10 @@
 
 ## 功能
 
-- [x] 账号系统
-- [x] 短链分组
-- [x] 生成短链
-- [ ] 流量包系统
+- [x] 账户服务
+- [x] 短链服务
+- [ ] 流量包服务
+- [ ] 
 
 ## 配置搭建
 ```
@@ -34,6 +34,50 @@ nacos/nacos-server:v2.0.4
 
 ```
 docker run -d --hostname my-rabbit --name plato_rabbitmq -p 15672:1-e RABBITMQ_DEFAULT_USER=admin -e RABBITMQ_DEFAULT_PASS=admin rabbitmq:3-management
+```
+
+
+
+- 不支持直接挂载文件，只能挂载文件夹
+- 想要挂载文件，必须宿主机也要有对应的同名文件
+
+```
+sudo docker run --privileged --name nginx -d -p 8088:80 \
+-v /data/nginx/html:/usr/share/nginx/html \
+-v /data/nginx/conf/nginx.conf:/etc/nginx/nginx.conf \
+-v /data/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf \
+-v /data/nginx/logs:/var/log/nginx nginx
+```
+
+
+
+```
+docker run -d --name zookeeper -p 2181:2181 -t wurstmeister/zookeeper
+```
+
+```
+docker run -d --name plato_kafka \
+-p 9092:9092 \
+--link zookeeper \
+-e KAFKA_BROKER_ID=0 \
+-e KAFKA_HEAP_OPTS=-Xmx256M \
+-e KAFKA_HEAP_OPTS=-Xms128M \
+-e KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181 \
+-e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://公网ip:9092 \
+-e KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:9092 \
+wurstmeister/kafka:2.13-2.7.0
+```
+
+
+
+```
+docker run -d --name kafka -p 9092:9092 --link zookeeper --env KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181 --env KAFKA_ADVERTISED_HOST_NAME=localhost --env KAFKA_ADVERTISED_PORT=9092 wurstmeister/kafka:2.13-2.7.0
+```
+
+
+
+```
+docker run -d --name kafka-map -p 8049:8080 -e DEFAULT_USERNAME=admin -e DEFAULT_PASSWORD=admin  dushixiang/kafka-map
 ```
 
 

@@ -14,10 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
+ * TODO 消息队列可靠性保证
+ * 搞清楚，消费者端事件，B端和C端的并非同时进行，所以并不能使用分布式事务，而是通过消息队列的可靠性来保证最终一致性
+ *
  * @author novo
  * @since 2023-03-21
  */
-
 @Component
 @Slf4j
 public class LinkEventMQConsumer {

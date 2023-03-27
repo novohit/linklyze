@@ -136,7 +136,6 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkDO> implements 
 
     /**
      * 消费者端创建短链逻辑
-     * TODO 分布式事务
      *
      * @param customMessage
      */
@@ -283,10 +282,10 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkDO> implements 
                 try {
                     int rows = this.linkManager.update(linkDO, accountNo);
                     if (rows <= 0) {
-                        log.error("C端更新失败");
+                        throw new BizException("C端更新失败");
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    throw new BizException(e.getMessage());
                 }
                 break;
             }
@@ -295,9 +294,13 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkDO> implements 
                 LinkMappingDO mappingDO = new LinkMappingDO();
                 BeanUtils.copyProperties(request, mappingDO);
                 mappingDO.setId(request.getMappingId());
-                int rows = this.linkMappingManager.update(mappingDO, accountNo);
-                if (rows <= 0) {
-                    log.error("B端更新失败");
+                try {
+                    int rows = this.linkMappingManager.update(mappingDO, accountNo);
+                    if (rows <= 0) {
+                        throw new BizException("B端更新失败");
+                    }
+                } catch (Exception e) {
+                    throw new BizException(e.getMessage());
                 }
                 break;
             }
@@ -347,10 +350,10 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkDO> implements 
                 try {
                     int rows = this.linkManager.delete(linkDO, accountNo);
                     if (rows <= 0) {
-                        log.error("C端删除失败");
+                        throw new BizException("C端删除失败");
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    throw new BizException(e.getMessage());
                 }
                 break;
             }
@@ -359,9 +362,13 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkDO> implements 
                 LinkMappingDO mappingDO = new LinkMappingDO();
                 BeanUtils.copyProperties(request, mappingDO);
                 mappingDO.setId(request.getMappingId());
-                int rows = this.linkMappingManager.delete(mappingDO, accountNo);
-                if (rows <= 0) {
-                    log.error("B端删除失败");
+                try {
+                    int rows = this.linkMappingManager.delete(mappingDO, accountNo);
+                    if (rows <= 0) {
+                        throw new BizException("B端删除失败");
+                    }
+                } catch (Exception e) {
+                    throw new BizException(e.getMessage());
                 }
                 break;
             }

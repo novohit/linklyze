@@ -22,11 +22,11 @@ public class RabbitMQConfig {
 
     public static final String CREATE_LINK_MAPPING_QUEUE = "short_link.create.link_mapping.queue";
 
-    public static final String CREATE_LINK_ROUTING_KEY = "short_link.create.link.routing.key";
+    public static final String CREATE_LINK_ROUTING_KEY = "short_link.create.link.mapping.routing.key";
 
-    //public static final String CREATE_LINK_MAPPING_ROUTING_KEY = "short_link.create.link_mapping.routing.key";
+    public static final String CREATE_LINK_BINDING_KEY = "short_link.create.link.*.routing.key";
 
-    public static final String CREATE_LINK_BINDING_KEY = "short_link.create.*.routing.key";
+    public static final String CREATE_LINK_MAPPING_BINDING_KEY = "short_link.create.*.mapping.routing.key";
 
     /**
      * 短链创建队列
@@ -64,7 +64,7 @@ public class RabbitMQConfig {
     public Binding addLinkMappingBinding() {
         return BindingBuilder.bind(addLinkMappingQueue())
                 .to(linkEventExchange())
-                .with(CREATE_LINK_BINDING_KEY);
+                .with(CREATE_LINK_MAPPING_BINDING_KEY);
     }
 
 
@@ -74,9 +74,11 @@ public class RabbitMQConfig {
 
     public static final String UPDATE_LINK_MAPPING_QUEUE = "short_link.update.link_mapping.queue";
 
-    public static final String UPDATE_LINK_ROUTING_KEY = "short_link.update.link.routing.key";
+    public static final String UPDATE_LINK_ROUTING_KEY = "short_link.update.link.mapping.routing.key";
 
-    public static final String UPDATE_LINK_BINDING_KEY = "short_link.update.*.routing.key";
+    public static final String UPDATE_LINK_BINDING_KEY = "short_link.update.link.*.routing.key";
+
+    public static final String UPDATE_LINK_MAPPING_BINDING_KEY = "short_link.update.*.mapping.routing.key";
 
     /**
      * 短链更新队列
@@ -110,7 +112,7 @@ public class RabbitMQConfig {
     public Binding updateLinkMappingBinding() {
         return BindingBuilder.bind(updateLinkMappingQueue())
                 .to(linkEventExchange())
-                .with(UPDATE_LINK_BINDING_KEY);
+                .with(UPDATE_LINK_MAPPING_BINDING_KEY);
     }
 
 
@@ -120,9 +122,11 @@ public class RabbitMQConfig {
 
     public static final String DELETE_LINK_MAPPING_QUEUE = "short_link.delete.link_mapping.queue";
 
-    public static final String DELETE_LINK_ROUTING_KEY = "short_link.delete.link.routing.key";
+    public static final String DELETE_LINK_ROUTING_KEY = "short_link.delete.link.mapping.routing.key";
 
-    public static final String DELETE_LINK_BINDING_KEY = "short_link.delete.*.routing.key";
+    public static final String DELETE_LINK_BINDING_KEY = "short_link.delete.link.*.routing.key";
+
+    public static final String DELETE_LINK_MAPPING_BINDING_KEY = "short_link.delete.*.mapping.routing.key";
 
     /**
      * 短链删除队列
@@ -156,6 +160,6 @@ public class RabbitMQConfig {
     public Binding deleteLinkMappingBinding() {
         return BindingBuilder.bind(deleteLinkMappingQueue())
                 .to(linkEventExchange())
-                .with(DELETE_LINK_BINDING_KEY);
+                .with(DELETE_LINK_MAPPING_BINDING_KEY);
     }
 }

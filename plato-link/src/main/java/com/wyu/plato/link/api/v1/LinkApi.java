@@ -4,6 +4,7 @@ import com.wyu.plato.common.util.CheckUtil;
 import com.wyu.plato.common.util.CommonUtil;
 import com.wyu.plato.link.model.LinkDO;
 import com.wyu.plato.link.service.LinkService;
+import com.wyu.plato.link.service.LogService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -29,6 +31,9 @@ public class LinkApi {
     @Autowired
     private LinkService linkService;
 
+    @Autowired
+    private LogService logService;
+
     /**
      * 短链码跳转
      *
@@ -37,7 +42,7 @@ public class LinkApi {
      */
     @GetMapping("/{code}")
     @ResponseBody
-    public void dispatch(@PathVariable("code") String code, HttpServletResponse response) {
+    public void dispatch(@PathVariable("code") String code, HttpServletRequest request, HttpServletResponse response) {
         log.info("code:[{}]", code);
         /**
          * 什么要用 301 跳转而不是 302
@@ -50,6 +55,7 @@ public class LinkApi {
         if (CheckUtil.isLetterOrDigit(code)) {
             LinkDO shortLink = this.linkService.findOneByCode(code);
             if (shortLink != null) {
+                this.logService.recordLog(request, code);
                 response.setHeader("Location", CommonUtil.removeUrlPrefix(shortLink.getOriginalUrl()));
                 // 302跳转
                 response.setStatus(HttpStatus.FOUND.value());
