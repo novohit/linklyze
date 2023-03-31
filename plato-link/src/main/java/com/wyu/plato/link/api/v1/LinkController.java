@@ -66,12 +66,24 @@ public class LinkController {
     }
 
 
+    /**
+     * 短链更新
+     *
+     * @param linkUpdateRequest
+     * @return
+     */
     @PutMapping
     public Resp update(@RequestBody @Validated LinkUpdateRequest linkUpdateRequest) {
         this.linkService.update(linkUpdateRequest);
         return Resp.success();
     }
 
+    /**
+     * 短链删除
+     *
+     * @param linkDeleteRequest
+     * @return
+     */
     @DeleteMapping
     public Resp delete(@RequestBody @Validated LinkDeleteRequest linkDeleteRequest) {
         this.linkService.delete(linkDeleteRequest);

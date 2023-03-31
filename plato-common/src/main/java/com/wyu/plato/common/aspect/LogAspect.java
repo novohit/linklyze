@@ -68,6 +68,9 @@ public class LogAspect {
             logger.debug("Class Method   : {}.{}", proceedingJoinPoint.getSignature().getDeclaringTypeName(), proceedingJoinPoint.getSignature().getName());
             // 打印请求的 IP
             logger.debug("IP             : {}", request.getRemoteAddr());
+            // 经过nginx代理后的请求头
+            logger.debug("Real-IP        : {}", request.getHeader("X-Real-IP"));
+            logger.debug("X-Forwarded-For: {}", request.getHeader("X-Forwarded-For"));
             // 打印请求入参
             // 注意如果controller方法参数上含有request/response对象 不能进行序列化 因为这两个对象中含有循环依赖 会导致oom问题
             Object[] args = proceedingJoinPoint.getArgs();

@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,6 +42,11 @@ public class GlobalExceptionHandler {
     public Resp exceptionHandler(HttpServletRequest request, Exception e) {
         String requestUrl = request.getRequestURI();
         String method = request.getMethod();
+        if (e instanceof HttpRequestMethodNotSupportedException) {
+            HttpRequestMethodNotSupportedException exception = (HttpRequestMethodNotSupportedException) e;
+            log.error("[接口请求方式错误] url:[{}] message:[{}]", requestUrl, exception.getMessage());
+            return Resp.error(exception.getMessage());
+        }
         log.error("[系统异常] url:[{}]", requestUrl, e);
         return Resp.buildResult(BizCodeEnum.SERVER_ERROR);
     }

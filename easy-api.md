@@ -1,6 +1,15 @@
+# 接口地址
+
+```
+账户服务：10.10.26.139:8081/api/{path}
+短链服务：10.10.26.139:8082/api/{path}
+```
+
+
+
 # plato-account
 
-exported at 2023-03-25 16:45:14
+exported at 2023-03-28 22:09:43
 
 ## 用户接口
 
@@ -519,7 +528,7 @@ exported at 2023-03-25 16:45:14
 
 # plato-link
 
-exported at 2023-03-25 16:45:14
+exported at 2023-03-28 22:09:43
 
 ## C端短链解析接口
 
@@ -553,7 +562,7 @@ C端短链解析接口
 
 
 ---
-### 创建短链
+### 短链创建
 
 > BASIC
 
@@ -655,6 +664,146 @@ C端短链解析接口
 {
   "page": 0,
   "size": 0,
+  "groupId": 0
+}
+```
+
+
+
+> RESPONSE
+
+**Headers:**
+
+| name | value | required | desc |
+| ------------ | ------------ | ------------ | ------------ |
+| content-type | application/json;charset=UTF-8 | NO |  |
+
+**Body:**
+
+| name | type | desc |
+| ------------ | ------------ | ------------ |
+| code | integer | 状态码 0 表示成功 |
+| data | object | 数据 |
+| msg | string | 描述 |
+
+**Response Demo:**
+
+```json
+{
+  "code": 0,
+  "data": {},
+  "msg": ""
+}
+```
+
+
+
+
+---
+### update
+
+> BASIC
+
+**Path:** /link/v1
+
+**Method:** PUT
+
+> REQUEST
+
+**Headers:**
+
+| name | value | required | desc |
+| ------------ | ------------ | ------------ | ------------ |
+| Content-Type | application/json | YES |  |
+
+**Request Body:**
+
+| name | type | desc |
+| ------------ | ------------ | ------------ |
+| mappingId | integer | 短链id |
+| code | string | 短链码<br>C端的partition key 要传 |
+| groupId | integer | 分组id<br>暂时不允许更改，partition key的更改涉及到数据迁移 |
+| title | string | 短链标题 |
+| domainId | integer | 域名id |
+| domain | string | 域名 前端不需要传 |
+| expired | string | 过期时间 永久则不用传 |
+
+**Request Demo:**
+
+```json
+{
+  "mappingId": 0,
+  "code": "",
+  "groupId": 0,
+  "title": "",
+  "domainId": 0,
+  "domain": "",
+  "expired": ""
+}
+```
+
+
+
+> RESPONSE
+
+**Headers:**
+
+| name | value | required | desc |
+| ------------ | ------------ | ------------ | ------------ |
+| content-type | application/json;charset=UTF-8 | NO |  |
+
+**Body:**
+
+| name | type | desc |
+| ------------ | ------------ | ------------ |
+| code | integer | 状态码 0 表示成功 |
+| data | object | 数据 |
+| msg | string | 描述 |
+
+**Response Demo:**
+
+```json
+{
+  "code": 0,
+  "data": {},
+  "msg": ""
+}
+```
+
+
+
+
+---
+### delete
+
+> BASIC
+
+**Path:** /link/v1
+
+**Method:** DELETE
+
+> REQUEST
+
+**Headers:**
+
+| name | value | required | desc |
+| ------------ | ------------ | ------------ | ------------ |
+| Content-Type | application/json | YES |  |
+
+**Request Body:**
+
+| name | type | desc |
+| ------------ | ------------ | ------------ |
+| mappingId | integer | 短链id |
+| code | string | 短链码 |
+| groupId | integer | 分组id<br>因为B端的partition key是account_no和group_id 所以group_id要传 |
+
+**Request Demo:**
+
+```json
+{
+  "mappingId": 0,
+  "code": "",
   "groupId": 0
 }
 ```
