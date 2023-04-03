@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration status="error">
+    <!--定义所有的appender -->
+    <appenders>
+        <!--SYSTEM_OUT:灰色-->
+        <Console name="console" target="SYSTEM_ERR">
+            <!--添加过滤器ThresholdFilter,可以有选择的输出某个级别以上的类别onMatch="ACCEPT" onMismatch="DENY"意思是匹配就接受,否则直接拒绝 -->
+            <!--控制台日志级别为trace以上的信息（ACCEPT） 其他的直接拒绝（onMismatch）-->
+            <ThresholdFilter level="trace" onMatch="ACCEPT" onMismatch="DENY"/>
+            <!-- %c:输出logger名称 %C:输出类名 %t:输出当前线程名称 %-5左对齐并且固定输出5个字符 -->
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level %class{36} %L %M - %m%n"/>
+        </Console>
+
+        <!--append:文件是否可追加-->
+        <File name="log" fileName="./logs/log4j2/log4j2.log" append="false">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level %class{36} %L %M - %m%n"/>
+        </File>
+
+        <File name="error" fileName="./logs/log4j2/error.log">
+            <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="%d{yyyy.MM.dd 'at' HH:mm:ss z} %-5level %class{36} %L %M - %m%n"/>
+        </File>
+
+        <!--打印出所有消息，每次大小超过size，则size大小的日志会自定存入按年份-月份建立的文件夹下面并进行压缩，作为存档 -->
+        <RollingFile name="rollingFile" fileName="./logs/log4j2/roll.log"
+                     filePattern="./logs/log4j2/$${date:yyyy-MM-dd}/web-%d{MM-dd-yyyy}-%i.log.gz">
+            <PatternLayout pattern="%d{yyyy.MM.dd 'at' HH:mm:ss z} %-5level %class{36} %L %M - %m%n"/>
+            <SizeBasedTriggeringPolicy size="2KB"/>
+        </RollingFile>
+
+    </appenders>
+
+    <!--然后定义logger，只有定义了logger并引⼊的appender，appender才会⽣效 -->
+    <loggers>
+        <logger name="com.wyu.plato" level="INFO" additivity="false">
+            <!-- additivity 不要继承root的logger 否则会重复打印日志 -->
+            <appender-ref ref="console"/>
+        </logger>
+        <root level="ERROR">
+            <!--<appender-ref ref="rollingFile"/>-->
+            <appender-ref ref="console"/>
+            <!--<appender-ref ref="error"/>
+            <appender-ref ref="log"/>-->
+        </root>
+    </loggers>
+
+</configuration>
+
+

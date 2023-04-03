@@ -16,6 +16,7 @@
         <maven.compiler.target>11</maven.compiler.target>
         <flink.version>1.13.1</flink.version>
         <scala.binary.version>2.12</scala.binary.version>
+        <log4j.version>2.19.0</log4j.version>
     </properties>
 
     <dependencies>
@@ -27,11 +28,23 @@
         <dependency>
             <groupId>org.apache.flink</groupId>
             <artifactId>flink-streaming-java_${scala.binary.version}</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
             <groupId>org.apache.flink</groupId>
             <artifactId>flink-clients_${scala.binary.version}</artifactId>
+        </dependency>
+
+        <!--旧版的已经包含flink-connector-base-->
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-connector-kafka_${scala.binary.version}</artifactId>
         </dependency>
 
         <!--Flink web ui-->
@@ -42,26 +55,24 @@
         </dependency>
 
 
-
-        <!--mysql驱动-->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-        </dependency>
+        <!--        &lt;!&ndash;mysql驱动&ndash;&gt;
+                <dependency>
+                    <groupId>mysql</groupId>
+                    <artifactId>mysql-connector-java</artifactId>
+                </dependency>-->
 
 
         <!--日志输出-->
+        <!--该包已经包含实现-->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+        <!--slf4j门面-->
         <dependency>
             <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.17</version>
-            <scope>runtime</scope>
+            <artifactId>slf4j-api</artifactId>
         </dependency>
 
         <!-- fastjson2 -->
@@ -70,6 +81,42 @@
             <artifactId>fastjson2</artifactId>
         </dependency>
 
+        <!-- UserAgent解析 -->
+        <dependency>
+            <groupId>eu.bitwalker</groupId>
+            <artifactId>UserAgentUtils</artifactId>
+            <version>1.21</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.apache.flink</groupId>
+                <artifactId>flink-streaming-java_${scala.binary.version}</artifactId>
+                <version>${flink.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.flink</groupId>
+                <artifactId>flink-clients_${scala.binary.version}</artifactId>
+                <version>${flink.version}</version>
+            </dependency>
+
+            <!--旧版的已经包含flink-connector-base-->
+            <dependency>
+                <groupId>org.apache.flink</groupId>
+                <artifactId>flink-connector-kafka_${scala.binary.version}</artifactId>
+                <version>${flink.version}</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
 
 </project>
