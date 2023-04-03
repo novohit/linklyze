@@ -32,7 +32,7 @@ public class UserAgentTest {
         String deviceType = agent.getOperatingSystem().getDeviceType().getName();
         String deviceGroup = agent.getOperatingSystem().getGroup().getName();
         String name1 = agent.getOperatingSystem().getName();
-        log.info(manufacturer);
+        log.info(manufacturer); // Microsoft Corporation
         log.info(deviceType); // Computer/Mobile
         log.info(deviceGroup); // WINDOWS/Android/IOS
         log.info(name1); // WINDOWS 10/Mac OS X (iPhone)
