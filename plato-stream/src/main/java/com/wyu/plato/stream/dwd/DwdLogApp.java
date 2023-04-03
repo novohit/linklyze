@@ -1,6 +1,7 @@
 package com.wyu.plato.stream.dwd;
 
 import com.alibaba.fastjson2.JSON;
+import com.wyu.plato.stream.constant.FlinkConstants;
 import com.wyu.plato.stream.domain.LogRecord;
 import com.wyu.plato.stream.func.SetNuMapFunction;
 import com.wyu.plato.stream.util.FlinkUtil;
@@ -8,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.api.common.serialization.SimpleStringSchema;
 import org.apache.flink.streaming.api.datastream.DataStream;
-import org.apache.flink.streaming.api.datastream.DataStreamSource;
+import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 
 import java.util.Objects;
@@ -20,8 +21,12 @@ import java.util.Objects;
 @Slf4j
 public class DwdLogApp {
     public static void main(String[] args) throws Exception {
-        DataStream<String> source = FlinkUtil.kafkaSource(SimpleStringSchema.class);
-        source.map(new MapFunction<String, LogRecord>() {
+        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        DataStream<String> source = env.addSource(FlinkUtil.kafkaConsumer(FlinkConstants.ODS_TOPIC, SimpleStringSchema.class));
+        env.enableCheckpointing(1000);
+        env.setParallelism(1);
+
+        SingleOutputStreamOperator<String> stream = source.map(new MapFunction<String, LogRecord>() {
                     @Override
                     public LogRecord map(String value) throws Exception {
                         // json ==> Obj
@@ -36,9 +41,10 @@ public class DwdLogApp {
                 })
                 .filter(Objects::nonNull)
                 .keyBy(LogRecord::getUdid)
-                .map(new SetNuMapFunction()) // 新老访客确认
-                .print();
+                .map(new SetNuMapFunction()); // 新老访客确认
+        stream.print();
+        stream.addSink(FlinkUtil.kafkaProducer(FlinkConstants.DWD_TOPIC, SimpleStringSchema.class));
 
-        FlinkUtil.env.execute();
+        env.execute();
     }
 }

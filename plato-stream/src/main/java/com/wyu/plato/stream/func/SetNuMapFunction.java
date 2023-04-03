@@ -1,5 +1,6 @@
 package com.wyu.plato.stream.func;
 
+import com.alibaba.fastjson2.JSON;
 import com.wyu.plato.stream.domain.LogRecord;
 import com.wyu.plato.stream.util.TimeUtil;
 import org.apache.flink.api.common.functions.RichMapFunction;
@@ -7,7 +8,7 @@ import org.apache.flink.api.common.state.ValueState;
 import org.apache.flink.api.common.state.ValueStateDescriptor;
 import org.apache.flink.configuration.Configuration;
 
-public class SetNuMapFunction extends RichMapFunction<LogRecord, LogRecord> {
+public class SetNuMapFunction extends RichMapFunction<LogRecord, String> {
 
     private transient ValueState<String> dayState;
 
@@ -19,7 +20,7 @@ public class SetNuMapFunction extends RichMapFunction<LogRecord, LogRecord> {
     }
 
     @Override
-    public LogRecord map(LogRecord value) throws Exception {
+    public String map(LogRecord value) throws Exception {
         String lastVisit = dayState.value();
         String currentVisit = TimeUtil.format(value.getTimestamp());
         if (lastVisit == null) {
@@ -31,6 +32,10 @@ public class SetNuMapFunction extends RichMapFunction<LogRecord, LogRecord> {
                 dayState.update(currentVisit);
             }
         }
-        return value;
+        try {
+            return JSON.toJSONString(value);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
