@@ -43,6 +43,7 @@ public class LogServiceImpl implements LogService {
         if (headers.containsKey(HttpHeaders.REFERER)) {
             map.put(HttpHeaders.REFERER, headers.get(HttpHeaders.REFERER));
         }
+        // X-Real-IP
         LogRecord logRecord = new LogRecord(null, code, ip, LogType.LINK.name(), null, map);
         String jsonLog = JSONObject.toJSONString(logRecord);
         log.info(jsonLog);

@@ -27,7 +27,7 @@ public class NotifyController {
      *
      * @return
      */
-    @GetMapping("/send-code")
+    @PostMapping("/send-code")
     public Resp sendCode(@RequestBody @Validated SendCodeRequest sendCodeRequest) {
         //this.notifyService.testSend();
         this.notifyService.send(sendCodeRequest);
