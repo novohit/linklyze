@@ -12,9 +12,9 @@ import java.util.List;
  * @since 2023-03-16
  */
 public class ShardingConfig {
-    private static final List<Pair<String, Double>> dbNo = new ArrayList<>();
+    public static final List<Pair<String, Double>> dbNo = new ArrayList<>();
 
-    private static final List<Pair<String, Double>> tbNo = new ArrayList<>();
+    public static final List<Pair<String, Double>> tbNo = new ArrayList<>();
 
     //private static final Random random = new Random();
 

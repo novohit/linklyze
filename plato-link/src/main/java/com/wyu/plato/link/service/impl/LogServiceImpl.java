@@ -36,14 +36,21 @@ public class LogServiceImpl implements LogService {
         // ip、浏览器信息
         String ip = CommonUtil.getIpAddr(request);
         Map<String, String> headers = CommonUtil.getAllRequestHeader(request);
-        Map<String, String> map = new HashMap<>();
+        LogRecord logRecord = LogRecord.builder()
+                .ip(ip)
+                .bizId(code)
+                .eventType(LogType.LINK.name())
+                .timestamp(CommonUtil.getCurrentTimestamp())
+                .build();
         if (headers.containsKey(HttpHeaders.USER_AGENT)) {
-            map.put(HttpHeaders.USER_AGENT, headers.get(HttpHeaders.USER_AGENT));
+            logRecord.setUserAgent(headers.get(HttpHeaders.USER_AGENT));
         }
         if (headers.containsKey(HttpHeaders.REFERER)) {
-            map.put(HttpHeaders.REFERER, headers.get(HttpHeaders.REFERER));
+            logRecord.setReferer(headers.get(HttpHeaders.REFERER));
         }
-        LogRecord logRecord = new LogRecord(null, code, ip, LogType.LINK.name(), null, map);
+        // X-Real-IP
+        String md5 = CommonUtil.MD5(logRecord.getIp() + logRecord.getBizId() + logRecord.getUserAgent());
+        logRecord.setUdid(md5);
         String jsonLog = JSONObject.toJSONString(logRecord);
         log.info(jsonLog);
         // 发送kafka

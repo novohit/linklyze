@@ -33,7 +33,7 @@ nacos/nacos-server:v2.0.4
 ```
 
 ```
-docker run -d --hostname my-rabbit --name plato_rabbitmq -p 15672:1-e RABBITMQ_DEFAULT_USER=admin -e RABBITMQ_DEFAULT_PASS=admin rabbitmq:3-management
+docker run -d --hostname my-rabbit --name plato_rabbitmq -p 15672:15672 -p 5672:5672 -e RABBITMQ_DEFAULT_USER=admin -e RABBITMQ_DEFAULT_PASS=admin rabbitmq:3-management
 ```
 
 
@@ -77,7 +77,7 @@ docker run -d --name kafka -p 9092:9092 --link zookeeper --env KAFKA_ZOOKEEPER_C
 
 
 ```
-docker run -d --name kafka-map -p 8049:8080 -e DEFAULT_USERNAME=admin -e DEFAULT_PASSWORD=admin  dushixiang/kafka-map
+docker run -d --name kafka-map -p 8049:8080 -e DEFAULT_USERNAME=admin -e DEFAULT_PASSWORD=admin  dushixiang/kafka-map:latest
 ```
 
 
@@ -85,61 +85,6 @@ docker run -d --name kafka-map -p 8049:8080 -e DEFAULT_USERNAME=admin -e DEFAULT
 ## 账户模块
 
 - 索引规范
-
-
-
-```
-CREATE TABLE `account` (
-	`id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-	`account_no` BIGINT DEFAULT NULL,
-	`avatar` VARCHAR ( 255 ) CHARACTER 
-	SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '头像',
-	`phone` VARCHAR ( 128 ) CHARACTER 
-	SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '手机号',
-	`password` VARCHAR ( 128 ) CHARACTER 
-	SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '密码',
-	`secret` VARCHAR ( 64 ) CHARACTER 
-	SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '盐，用于个人敏感信息处理',
-	`mail` VARCHAR ( 128 ) CHARACTER 
-	SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '邮箱',
-	`username` VARCHAR ( 255 ) CHARACTER 
-	SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '用户名',
-	`auth` VARCHAR ( 32 ) CHARACTER 
-	SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '认证级别，DEFAULT，REALNAME，ENTERPRISE，访问次数不一样',
-	`create_time` datetime DEFAULT CURRENT_TIMESTAMP,
-	`update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-	`delete_time` datetime DEFAULT NULL,
-	PRIMARY KEY ( `id` ),
-	UNIQUE KEY `uk_phone` ( `phone` ) USING BTREE,
-UNIQUE KEY `uk_account` ( `account_no` ) USING BTREE 
-) ENGINE = INNODB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_bin;
-```
-
-
-
-```
-CREATE TABLE `traffic` (
-	`id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-	`day_limit` INT DEFAULT NULL COMMENT '每天限制多少条短链',
-	`day_used` INT DEFAULT NULL COMMENT '当天用了多少条短链',
-	`total_limit` INT DEFAULT NULL COMMENT '总次数，活码才用',
-	`account_no` BIGINT DEFAULT NULL COMMENT '账户',
-	`out_trade_no` VARCHAR ( 64 ) CHARACTER 
-	SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '订单号',
-	`level` VARCHAR ( 64 ) CHARACTER 
-	SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '产品层级：FIRST青铜 SECOND黄金THIRD砖石',
-	`expired_date` date DEFAULT NULL COMMENT '过期时间',
-	`plugin_type` VARCHAR ( 64 ) CHARACTER 
-	SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '插件类型',
-	`product_id` BIGINT DEFAULT NULL COMMENT '商品主键',
-	`create_time` datetime DEFAULT CURRENT_TIMESTAMP,
-	`update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-	`delete_time` datetime DEFAULT NULL,
-	PRIMARY KEY ( `id` ),
-	UNIQUE KEY `uk_trade_no` ( `out_trade_no`, `account_no` ) USING BTREE,
-KEY `idx_account_no` ( `account_no` ) USING BTREE 
-) ENGINE = INNODB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_bin;
-```
 
 
 
@@ -200,65 +145,6 @@ B端用户如何查看自己创建的所有短链？
 
 ## 短链模块
 
-```
-CREATE TABLE `link_group` (
-	`id` BIGINT UNSIGNED NOT NULL,
-	`title` VARCHAR ( 255 ) CHARACTER 
-	SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '短链分组名',
-	`account_no` BIGINT DEFAULT NULL COMMENT '账户唯一标识',
-	`create_time` datetime DEFAULT CURRENT_TIMESTAMP,
-	`update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-	`delete_time` datetime DEFAULT NULL,
-PRIMARY KEY ( `id` ) 
-) ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_bin;
-```
-
-
-
-```
-CREATE TABLE `short_link` (
-	`id` BIGINT UNSIGNED NOT NULL,
-	`group_id` BIGINT DEFAULT NULL COMMENT '分组id',
-	`title` VARCHAR ( 128 ) CHARACTER 
-	SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '短链标题',
-	`original_url` VARCHAR ( 1024 ) CHARACTER 
-	SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '原url地址',
-	`domain` VARCHAR ( 128 ) CHARACTER 
-	SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '短链域名',
-	`code` VARCHAR ( 16 ) CHARACTER 
-	SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT '短链码',
-	`long_hash` VARCHAR ( 64 ) CHARACTER 
-	SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT '长链的hash码 方便查找',
-	`expired` datetime DEFAULT NULL COMMENT '过期时间 永久为-1',
-	`account_no` BIGINT DEFAULT NULL COMMENT '账户唯一标识',
-	`state` VARCHAR ( 16 ) CHARACTER 
-	SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '短链状态 lock：锁定 active：可用',
-	`link_level` VARCHAR ( 16 ) CHARACTER 
-	SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '产品level FIRST青铜SECOND黄金THIRD钻石',
-	`create_time` datetime DEFAULT CURRENT_TIMESTAMP,
-	`update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-	`delete_time` datetime DEFAULT NULL,
-	PRIMARY KEY ( `id` ),
-UNIQUE KEY `uk_code` ( `code` ) 
-) ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_bin;
-```
-
-
-
-```
-CREATE TABLE `domain` (
-	`id` BIGINT UNSIGNED NOT NULL,
-	`account_no` BIGINT DEFAULT NULL COMMENT '用户自己绑定的域名',
-	`domain_type` VARCHAR ( 11 ) CHARACTER 
-	SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '域名类型，自建custom, 官方offical',
-	`value` VARCHAR ( 255 ) CHARACTER 
-	SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-	`create_time` datetime DEFAULT CURRENT_TIMESTAMP,
-	`update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-	`delete_time` datetime DEFAULT NULL,
-PRIMARY KEY ( `id` ) 
-) ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_bin;
-```
 
 
 

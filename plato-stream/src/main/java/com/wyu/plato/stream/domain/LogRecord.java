@@ -1,7 +1,5 @@
-package com.wyu.plato.common.model.bo;
+package com.wyu.plato.stream.domain;
 
-import com.wyu.plato.common.enums.LogType;
-import com.wyu.plato.common.util.CommonUtil;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -43,7 +41,7 @@ public class LogRecord {
     private String eventType;
 
     /**
-     * Unique Device Identifier :设备唯一标识符
+     * Unique Device Identifier :设备唯一标识符/浏览器指纹
      */
     private String udid;
 
@@ -53,4 +51,9 @@ public class LogRecord {
     private String userAgent;
 
     private String referer;
+
+    /**
+     * 日新老访客标识
+     */
+    private int dnu;
 }

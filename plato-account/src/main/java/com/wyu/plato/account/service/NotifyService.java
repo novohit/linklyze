@@ -104,7 +104,7 @@ public class NotifyService {
             Map<String, Object> map = new HashMap<>();
             String img = Base64.encodeBase64String(os.toByteArray());
             map.put("img", img);
-            map.put("captchaId", captchaId);
+            map.put("captcha_id", captchaId);
             return map;
         } catch (IOException e) {
             log.error("生成图像验证码 获取流出错:", e);

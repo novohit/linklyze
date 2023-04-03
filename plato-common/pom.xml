@@ -170,4 +170,18 @@
 
     </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <!--被依赖的公共模块必须加上这个，打包之后启动，选择后面带EXE的启动，依赖该模块的其他模块就不会因为找不到依赖而打包出错-->
+                    <classifier>exe</classifier>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
 </project>
