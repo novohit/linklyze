@@ -22,8 +22,8 @@ import java.util.Objects;
 public class DwdLogApp {
     public static void main(String[] args) throws Exception {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
-        //DataStream<String> source = env.addSource(FlinkUtil.kafkaConsumer(FlinkConstants.ODS_TOPIC, SimpleStringSchema.class));
-        DataStream<String> source = env.socketTextStream("localhost", 8888);
+        DataStream<String> source = env.addSource(FlinkUtil.kafkaConsumer(FlinkConstants.ODS_TOPIC, SimpleStringSchema.class));
+        //DataStream<String> source = env.socketTextStream("localhost", 8888);
         env.enableCheckpointing(1000);
         env.setParallelism(1);
 

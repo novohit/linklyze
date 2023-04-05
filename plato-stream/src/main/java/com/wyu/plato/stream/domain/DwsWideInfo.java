@@ -9,31 +9,17 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class WideInfo {
+public class DwsWideInfo {
     // ==========================
-    /**
-     * 账户ID
-     */
-    private Long accountNo;
 
     /**
      * 业务ID
      */
-    private String bizId;
-
-    /**
-     * 产生时间戳
-     */
-    private Long timestamp;
+    private String code;
 
 
     private String referer;
 
-
-    /**
-     * 日新老访客标识
-     */
-    private int dnu;
 
     private String ip;
 
@@ -46,14 +32,10 @@ public class WideInfo {
 
     private String isp;
 
-    // 设备相关================================
-    private String udid;
-
     /**
      * 设备类型 Computer/Mobile
      */
     private String deviceType;
-
 
     /**
      * 操作系统 WINDOWS/Android/IOS
