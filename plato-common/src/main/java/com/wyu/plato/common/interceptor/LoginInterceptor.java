@@ -34,6 +34,8 @@ public class LoginInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         log.info("============================= LoginInterceptor Start ======================================");
         log.info(request.getRequestURI());
+        log.info("IP        : {}", request.getRemoteAddr());
+        log.info("Real-IP        : {}", request.getHeader("X-Real-IP"));
         String authorization = request.getHeader(AUTHORIZATION_HEADER);
         // token为空
         if (!StringUtils.hasText(authorization)) {

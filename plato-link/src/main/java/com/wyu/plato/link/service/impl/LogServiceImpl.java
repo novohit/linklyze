@@ -1,21 +1,17 @@
 package com.wyu.plato.link.service.impl;
 
 import com.alibaba.fastjson2.JSONObject;
-import com.wyu.plato.common.LocalUserThreadHolder;
 import com.wyu.plato.common.enums.LogType;
-import com.wyu.plato.common.model.bo.LocalUser;
 import com.wyu.plato.common.model.bo.LogRecord;
 import com.wyu.plato.common.util.CommonUtil;
 import com.wyu.plato.link.service.LogService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.graphql.tester.AutoConfigureGraphQlTester;
 import org.springframework.http.HttpHeaders;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 import java.util.Map;
 
 /**

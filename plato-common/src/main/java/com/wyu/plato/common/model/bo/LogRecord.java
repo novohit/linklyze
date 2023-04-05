@@ -1,7 +1,5 @@
 package com.wyu.plato.common.model.bo;
 
-import com.wyu.plato.common.enums.LogType;
-import com.wyu.plato.common.util.CommonUtil;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -37,6 +37,14 @@ public class WideInfo {
 
     private String ip;
 
+    // 地理位置===================================
+    private String country;
+
+    private String province;
+
+    private String city;
+
+    private String isp;
 
     // 设备相关================================
     private String udid;
