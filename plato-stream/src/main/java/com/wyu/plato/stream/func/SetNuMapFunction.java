@@ -22,7 +22,7 @@ public class SetNuMapFunction extends RichMapFunction<Log, String> {
     @Override
     public String map(Log value) throws Exception {
         String lastVisit = dayState.value();
-        String currentVisit = TimeUtil.format(value.getTimestamp());
+        String currentVisit = TimeUtil.format(value.getTimestamp(), TimeUtil.YY_MM_DD_PATTERN);
         if (lastVisit == null) {
             value.setDnu(1);
             dayState.update(currentVisit);

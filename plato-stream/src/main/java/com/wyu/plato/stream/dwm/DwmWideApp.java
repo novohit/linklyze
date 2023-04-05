@@ -1,16 +1,9 @@
 package com.wyu.plato.stream.dwm;
 
-import com.alibaba.fastjson2.JSON;
 import com.wyu.plato.stream.constant.FlinkConstants;
-import com.wyu.plato.stream.domain.DeviceInfo;
-import com.wyu.plato.stream.domain.Log;
-import com.wyu.plato.stream.domain.WideInfo;
 import com.wyu.plato.stream.func.DeviceParseMapFunction;
 import com.wyu.plato.stream.func.GaodeIPLocationFunction;
-import com.wyu.plato.stream.mapper.DeviceInfoMapper;
-import com.wyu.plato.stream.util.DeviceUtil;
 import com.wyu.plato.stream.util.FlinkUtil;
-import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.api.common.serialization.SimpleStringSchema;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
