@@ -27,7 +27,7 @@ public class WideInfo {
     private Long timestamp;
 
 
-    private String referer;
+    private String referer = "";
 
 
     /**
@@ -38,13 +38,13 @@ public class WideInfo {
     private String ip;
 
     // 地理位置===================================
-    private String country;
+    private String country = "中国";
 
     private String province;
 
     private String city;
 
-    private String isp;
+    private String isp = "";
 
     // 设备相关================================
     private String udid;

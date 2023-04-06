@@ -68,7 +68,7 @@ public class DwsApp {
                         value2.setUv(value1.getUv() + value2.getUv());
                         return value2;
                     }
-                }, new ProcessWindowFunction<WideInfo, DwsWideInfo, Tuple8<String,String, String, String, String, String, String, String>, TimeWindow>() {
+                }, new ProcessWindowFunction<WideInfo, DwsWideInfo, Tuple8<String, String, String, String, String, String, String, String>, TimeWindow>() {
                     @Override
                     public void process(Tuple8<String, String, String, String, String, String, String, String> tuple9, ProcessWindowFunction<WideInfo, DwsWideInfo, Tuple8<String, String, String, String, String, String, String, String>, TimeWindow>.Context context, Iterable<WideInfo> elements, Collector<DwsWideInfo> out) throws Exception {
                         for (WideInfo wideInfo : elements) {
@@ -81,6 +81,8 @@ public class DwsApp {
                     }
                 });
         resStream.print();
+        String sql = "insert into access_statistics (code,referer,ip,country,province,city,isp,device_type,os,browser_type,device_manufacturer,timestamp,start,end,uv,pv) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        resStream.addSink(FlinkUtil.jdbcSink(sql));
         //resStream.print();
 
 

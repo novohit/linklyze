@@ -53,6 +53,7 @@ public class DwsWideInfo {
     private String deviceManufacturer;
 
     // =========================
+    private long timestamp;
 
     private long start;
 
