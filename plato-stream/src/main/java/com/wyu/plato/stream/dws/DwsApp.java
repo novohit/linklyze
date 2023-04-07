@@ -23,6 +23,7 @@ import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
 import org.apache.flink.util.Collector;
 
 import java.time.Duration;
+import java.util.List;
 
 public class DwsApp {
     public static void main(String[] args) throws Exception {
@@ -73,6 +74,7 @@ public class DwsApp {
                     public void process(Tuple8<String, String, String, String, String, String, String, String> tuple9, ProcessWindowFunction<WideInfo, DwsWideInfo, Tuple8<String, String, String, String, String, String, String, String>, TimeWindow>.Context context, Iterable<WideInfo> elements, Collector<DwsWideInfo> out) throws Exception {
                         for (WideInfo wideInfo : elements) {
                             DwsWideInfo dswWide = DwsWideMapper.INSTANCE.wideToDws(wideInfo);
+
                             dswWide.setCode(wideInfo.getBizId());
                             dswWide.setStart(context.window().getStart());
                             dswWide.setEnd(context.window().getEnd());
@@ -81,7 +83,7 @@ public class DwsApp {
                     }
                 });
         resStream.print();
-        String sql = "insert into access_statistics (code,referer,ip,country,province,city,isp,device_type,os,browser_type,device_manufacturer,timestamp,start,end,uv,pv) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "insert into access_stats (id,code,referer,ip,country,province,city,isp,device_type,os,browser_type,device_manufacturer,timestamp,start,end,uv,pv) values(generateUUIDv4(),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         resStream.addSink(FlinkUtil.jdbcSink(sql));
         //resStream.print();
 

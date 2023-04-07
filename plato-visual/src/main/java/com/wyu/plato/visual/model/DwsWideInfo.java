@@ -1,5 +1,9 @@
 package com.wyu.plato.visual.model;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,7 +13,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@TableName(value = "access_stats")
 public class DwsWideInfo {
+
+    private Long id;
     // ==========================
 
     /**
@@ -53,6 +60,7 @@ public class DwsWideInfo {
     private String deviceManufacturer;
 
     // =========================
+    @JsonIgnore
     private long timestamp;
 
     private long start;

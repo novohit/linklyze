@@ -1,22 +1,22 @@
-package com.wyu.plato.link.api.v1.request;
+package com.wyu.plato.visual.api.v1.request;
 
 import com.wyu.plato.common.model.request.PageBase;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.validation.constraints.Positive;
+import javax.validation.constraints.NotBlank;
 
 /**
  * @author novo
- * @since 2023-03-25
+ * @since 2023-04-07
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class PageRequest extends PageBase {
 
     /**
-     * 分组id
+     * 短链码
      */
-    @Positive
-    private Long groupId;
+    @NotBlank
+    private String code;
 }
