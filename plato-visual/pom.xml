@@ -26,7 +26,17 @@
                     <groupId>org.apache.shardingsphere</groupId>
                     <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>mysql</groupId>
+                    <artifactId>mysql-connector-java</artifactId>
+                </exclusion>
             </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>com.clickhouse</groupId>
+            <artifactId>clickhouse-jdbc</artifactId>
+            <version>0.3.2-patch11</version>
         </dependency>
     </dependencies>
 

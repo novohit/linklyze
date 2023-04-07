@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
+@SpringBootApplication
 @MapperScan("com.wyu.plato.link.mapper")
 @ComponentScan(basePackages = {"com.wyu.plato.visual", "com.wyu.plato.common"})
 public class VisualApplication {
