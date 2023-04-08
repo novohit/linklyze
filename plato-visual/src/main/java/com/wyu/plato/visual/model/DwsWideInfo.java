@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @TableName(value = "access_stats")
 public class DwsWideInfo {
 
-    private Long id;
+    private String id;
     // ==========================
 
     /**

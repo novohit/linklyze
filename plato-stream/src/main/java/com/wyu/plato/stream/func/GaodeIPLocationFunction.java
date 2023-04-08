@@ -60,6 +60,13 @@ public class GaodeIPLocationFunction extends RichMapFunction<WideInfo, String> {
                 "27.17.234.255",
                 "36.149.28.255",
                 "42.48.34.255",
+                "27.115.83.255", // 上海
+                "1.58.24.255", // 哈尔滨
+                "14.17.95.255", // 东莞
+                "43.247.227.255", // 无锡
+                "27.150.159.255", // 厦门
+                "27.212.14.255", // 山东
+                "14.31.207.255", // 珠海
                 "59.50.33.81");
         String ip = value.getIp();
         ip = ipList.get(random.nextInt(ipList.size()));

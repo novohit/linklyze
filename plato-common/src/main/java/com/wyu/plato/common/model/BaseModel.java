@@ -18,10 +18,10 @@ public class BaseModel {
     //@TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    @JsonIgnore
+    //@JsonIgnore
     private Date createTime;
 
-    @JsonIgnore
+    //@JsonIgnore
     private Date updateTime;
 
     @TableLogic(value = "null", delval = "now()")

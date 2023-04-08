@@ -2,12 +2,17 @@ package com.wyu.plato.visual.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.wyu.plato.common.util.TimeUtil;
 import com.wyu.plato.visual.api.v1.request.PageRequest;
+import com.wyu.plato.visual.api.v1.request.RegionRequest;
 import com.wyu.plato.visual.mapper.AccessMapper;
 import com.wyu.plato.visual.model.DwsWideInfo;
 import com.wyu.plato.visual.service.AccessService;
+import com.wyu.plato.visual.vo.RegionStatsVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author novo
@@ -34,5 +39,13 @@ public class AccessServiceImpl implements AccessService {
         Page<DwsWideInfo> pageResp = this.accessMapper.selectPage(request, new QueryWrapper<DwsWideInfo>()
                 .lambda().eq(DwsWideInfo::getCode, pageRequest.getCode()));
         return pageResp;
+    }
+
+    @Override
+    public List<RegionStatsVO> region(RegionRequest regionRequest) {
+        // TODO 查询区间不能过大
+        String start = TimeUtil.format(regionRequest.getStart(), TimeUtil.YYMMDD_PATTERN);
+        String end = TimeUtil.format(regionRequest.getEnd(), TimeUtil.YYMMDD_PATTERN);
+        return this.accessMapper.region(regionRequest.getCode(), start, end);
     }
 }

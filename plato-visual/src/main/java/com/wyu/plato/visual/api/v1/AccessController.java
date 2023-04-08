@@ -4,14 +4,18 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wyu.plato.common.model.vo.PageVO;
 import com.wyu.plato.common.model.vo.Resp;
 import com.wyu.plato.visual.api.v1.request.PageRequest;
+import com.wyu.plato.visual.api.v1.request.RegionRequest;
 import com.wyu.plato.visual.model.DwsWideInfo;
 import com.wyu.plato.visual.service.AccessService;
+import com.wyu.plato.visual.vo.RegionStatsVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * 访问统计接口
@@ -21,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/visual/v1")
+@Validated
 public class AccessController {
 
     @Autowired
@@ -28,7 +33,7 @@ public class AccessController {
 
 
     /**
-     * 分页查询访问记录
+     * 分页查询实时访问记录
      *
      * @param pageRequest
      */
@@ -37,5 +42,16 @@ public class AccessController {
         Page<DwsWideInfo> page = this.accessService.page(pageRequest);
         PageVO<DwsWideInfo> pageVO = new PageVO<>(page);
         return Resp.success(pageVO);
+    }
+
+    /**
+     * 区域pv、uv统计
+     *
+     * @return
+     */
+    @PostMapping("/region")
+    public Resp region(@RequestBody @Validated RegionRequest regionRequest) {
+        List<RegionStatsVO> regionStatsVOList = this.accessService.region(regionRequest);
+        return Resp.success(regionStatsVOList);
     }
 }
