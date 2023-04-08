@@ -2,15 +2,15 @@ package com.wyu.plato.link.manager.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.wyu.plato.link.component.ShortLinkComponent;
-import com.wyu.plato.link.manager.LinkManager;
 import com.wyu.plato.link.manager.LinkMappingManager;
 import com.wyu.plato.link.mapper.LinkMappingMapper;
-import com.wyu.plato.link.model.LinkDO;
-import com.wyu.plato.link.model.LinkGroupDO;
 import com.wyu.plato.link.model.LinkMappingDO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author novo
@@ -42,6 +42,12 @@ public class LinkMappingManagerImpl implements LinkMappingManager {
                                 .eq(LinkMappingDO::getAccountNo, accountNo)
                                 .eq(LinkMappingDO::getGroupId, groupId));
         return pageResp;
+    }
+
+    @Override
+    public Map<Long, Map<String, Object>> groupLinkSum(Long accountNo, List<Long> groupIds) {
+        Map<Long, Map<String, Object>> groupLinkSum = this.linkMappingMapper.groupLinkSum(accountNo, groupIds);
+        return groupLinkSum;
     }
 
     /**

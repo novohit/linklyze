@@ -1,5 +1,6 @@
 package com.wyu.plato.link.model;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.wyu.plato.common.model.BaseModel;
 import lombok.Data;
@@ -28,4 +29,9 @@ public class LinkGroupDO extends BaseModel {
     private Long accountNo;
 
 
+    /**
+     * 组内短链数
+     */
+    @TableField(exist = false)
+    private Long linkSum;
 }
