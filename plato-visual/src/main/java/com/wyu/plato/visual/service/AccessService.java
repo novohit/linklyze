@@ -5,7 +5,7 @@ import com.wyu.plato.visual.api.v1.request.DeviceRequest;
 import com.wyu.plato.visual.api.v1.request.PageRequest;
 import com.wyu.plato.visual.api.v1.request.RegionRequest;
 import com.wyu.plato.visual.model.DwsWideInfo;
-import com.wyu.plato.visual.vo.DeviceGroupVO;
+import com.wyu.plato.visual.vo.StatsListVO;
 import com.wyu.plato.visual.vo.RegionStatsVO;
 
 import java.util.List;
@@ -19,5 +19,5 @@ public interface AccessService {
 
     List<RegionStatsVO> region(RegionRequest regionRequest);
 
-    DeviceGroupVO device(DeviceRequest deviceRequest);
+    StatsListVO device(DeviceRequest deviceRequest);
 }

@@ -10,10 +10,7 @@ import com.wyu.plato.visual.mapper.AccessMapper;
 import com.wyu.plato.visual.model.DeviceGroupByDO;
 import com.wyu.plato.visual.model.DwsWideInfo;
 import com.wyu.plato.visual.service.AccessService;
-import com.wyu.plato.visual.vo.BrowserStats;
-import com.wyu.plato.visual.vo.DeviceGroupVO;
-import com.wyu.plato.visual.vo.OsStats;
-import com.wyu.plato.visual.vo.RegionStatsVO;
+import com.wyu.plato.visual.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -56,7 +53,7 @@ public class AccessServiceImpl implements AccessService {
     }
 
     @Override
-    public DeviceGroupVO device(DeviceRequest deviceRequest) {
+    public StatsListVO device(DeviceRequest deviceRequest) {
         // TODO 查询区间不能过大
         String start = TimeUtil.format(deviceRequest.getStart(), TimeUtil.YYMMDD_PATTERN);
         String end = TimeUtil.format(deviceRequest.getEnd(), TimeUtil.YYMMDD_PATTERN);
@@ -72,6 +69,7 @@ public class AccessServiceImpl implements AccessService {
         final double finalPvSum = pvSum;
         final double finalUvSum = uvSum;
         // 单字段分组 多字段求和用reduce 如果是单字段求和Collectors.groupingBy(DeviceGroupByDO::getBrowserType,Collectors.summarizingLong(DeviceGroupByDO::getPv))
+        // 浏览器分组
         List<BrowserStats> browserStatsList = list.stream()
                 .collect(Collectors.groupingBy(DeviceGroupByDO::getBrowserType, Collectors.reducing((a, b) -> {
                     DeviceGroupByDO res = new DeviceGroupByDO();
@@ -97,6 +95,7 @@ public class AccessServiceImpl implements AccessService {
                     }
                 }).collect(Collectors.toList());
 
+        // 操作系统分组
         List<OsStats> osStatsList = list.stream()
                 .collect(Collectors.groupingBy(DeviceGroupByDO::getBrowserType, Collectors.reducing((a, b) -> {
                     DeviceGroupByDO res = new DeviceGroupByDO();
@@ -122,7 +121,33 @@ public class AccessServiceImpl implements AccessService {
                     }
                 }).collect(Collectors.toList());
 
-        DeviceGroupVO res = new DeviceGroupVO(browserStatsList, osStatsList, pvSum, uvSum);
+        // 设备类型分组
+        List<DeviceStats> deviceStatsList = list.stream()
+                .collect(Collectors.groupingBy(DeviceGroupByDO::getDeviceType, Collectors.reducing((a, b) -> {
+                    DeviceGroupByDO res = new DeviceGroupByDO();
+                    res.setDeviceType(a.getDeviceType());
+                    res.setPv(a.getPv() + b.getPv());
+                    res.setUv(a.getUv() + b.getUv());
+                    return res;
+                })))
+                // 分组reduce后返回的是Map<group_key, obj>
+                // 我们拿到obj再重新组装一下
+                .values().stream().map(optional -> {
+                    if (optional.isPresent()) {
+                        DeviceStats deviceStats = new DeviceStats();
+                        DeviceGroupByDO group = optional.get();
+                        deviceStats.setDeviceType(group.getDeviceType());
+                        deviceStats.setPv(group.getPv());
+                        deviceStats.setUv(group.getUv());
+                        deviceStats.setPvRatio(group.getPv() / finalPvSum);
+                        deviceStats.setUvRatio(group.getUv() / finalUvSum);
+                        return deviceStats;
+                    } else {
+                        return null;
+                    }
+                }).collect(Collectors.toList());
+
+        StatsListVO res = new StatsListVO(browserStatsList, osStatsList, deviceStatsList, pvSum, uvSum);
         return res;
     }
 }

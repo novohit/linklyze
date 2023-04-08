@@ -13,13 +13,31 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DeviceGroupVO {
+public class StatsListVO {
 
+    /**
+     * 浏览器统计
+     */
     private List<BrowserStats> browserStats;
 
+    /**
+     * 操作系统统计
+     */
     private List<OsStats> osStats;
 
+    /**
+     * 设备类型统计
+     */
+    private List<DeviceStats> deviceStats;
+
+
+    /**
+     * 总浏览量
+     */
     private Long pvSum;
 
+    /**
+     * 总访客数
+     */
     private Long uvSum;
 }

@@ -8,7 +8,7 @@ import com.wyu.plato.visual.api.v1.request.PageRequest;
 import com.wyu.plato.visual.api.v1.request.RegionRequest;
 import com.wyu.plato.visual.model.DwsWideInfo;
 import com.wyu.plato.visual.service.AccessService;
-import com.wyu.plato.visual.vo.DeviceGroupVO;
+import com.wyu.plato.visual.vo.StatsListVO;
 import com.wyu.plato.visual.vo.RegionStatsVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -64,7 +64,7 @@ public class AccessController {
      */
     @PostMapping("/device")
     public Resp device(@RequestBody @Validated DeviceRequest deviceRequest) {
-        DeviceGroupVO deviceGroupVO = this.accessService.device(deviceRequest);
-        return Resp.success(deviceGroupVO);
+        StatsListVO statsListVO = this.accessService.device(deviceRequest);
+        return Resp.success(statsListVO);
     }
 }

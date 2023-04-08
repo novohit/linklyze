@@ -7,8 +7,9 @@ import lombok.Data;
  * @since 2023-04-08
  */
 @Data
-public class OsStats {
-    private String os;
+public class DeviceStats {
+
+    private String deviceType;
 
     /**
      * 浏览量
@@ -29,4 +30,5 @@ public class OsStats {
      * 访客数占比
      */
     private Double uvRatio;
+
 }
