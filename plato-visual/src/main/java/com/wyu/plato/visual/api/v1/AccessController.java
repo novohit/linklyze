@@ -3,10 +3,12 @@ package com.wyu.plato.visual.api.v1;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wyu.plato.common.model.vo.PageVO;
 import com.wyu.plato.common.model.vo.Resp;
+import com.wyu.plato.visual.api.v1.request.DeviceRequest;
 import com.wyu.plato.visual.api.v1.request.PageRequest;
 import com.wyu.plato.visual.api.v1.request.RegionRequest;
 import com.wyu.plato.visual.model.DwsWideInfo;
 import com.wyu.plato.visual.service.AccessService;
+import com.wyu.plato.visual.vo.DeviceGroupVO;
 import com.wyu.plato.visual.vo.RegionStatsVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -45,7 +47,7 @@ public class AccessController {
     }
 
     /**
-     * 区域pv、uv统计
+     * 区域PV、UV统计
      *
      * @return
      */
@@ -53,5 +55,16 @@ public class AccessController {
     public Resp region(@RequestBody @Validated RegionRequest regionRequest) {
         List<RegionStatsVO> regionStatsVOList = this.accessService.region(regionRequest);
         return Resp.success(regionStatsVOList);
+    }
+
+    /**
+     * OS/Browser PV、UV统计
+     *
+     * @return
+     */
+    @PostMapping("/device")
+    public Resp device(@RequestBody @Validated DeviceRequest deviceRequest) {
+        DeviceGroupVO deviceGroupVO = this.accessService.device(deviceRequest);
+        return Resp.success(deviceGroupVO);
     }
 }
