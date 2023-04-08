@@ -70,5 +70,8 @@ public class LinkDO extends BaseModel {
      */
     private String linkLevel;
 
-
+    /**
+     * logo
+     */
+    private String logo;
 }

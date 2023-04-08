@@ -70,5 +70,8 @@ public class LinkMappingDO extends BaseModel {
      */
     private String linkLevel;
 
-
+    /**
+     * logo
+     */
+    private String logo;
 }
