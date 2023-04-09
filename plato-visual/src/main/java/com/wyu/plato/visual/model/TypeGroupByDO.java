@@ -7,7 +7,7 @@ import lombok.Data;
  * @since 2023-04-08
  */
 @Data
-public class DeviceGroupByDO {
+public class TypeGroupByDO {
 
     private String deviceType;
 
@@ -15,7 +15,7 @@ public class DeviceGroupByDO {
 
     private String browserType;
 
-    private Long pv;
+    private Long pv = 0L;
 
-    private Long uv;
+    private Long uv = 0L;
 }

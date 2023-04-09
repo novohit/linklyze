@@ -57,7 +57,7 @@ public class LinkApi {
         if (CheckUtil.isLetterOrDigit(code) && isValidDbAndTb(code)) {
             LinkDO shortLink = this.linkService.findOneByCode(code);
             if (shortLink != null) {
-                this.logService.recordLog(request, code);
+                this.logService.recordLog(request, code, shortLink.getAccountNo());
                 response.setHeader("Location", CommonUtil.removeUrlPrefix(shortLink.getOriginalUrl()));
                 // 302跳转
                 response.setStatus(HttpStatus.FOUND.value());

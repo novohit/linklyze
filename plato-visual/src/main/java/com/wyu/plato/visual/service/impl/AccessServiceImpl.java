@@ -7,7 +7,8 @@ import com.wyu.plato.common.util.TimeUtil;
 import com.wyu.plato.visual.api.v1.request.PageRequest;
 import com.wyu.plato.visual.api.v1.request.DateRequest;
 import com.wyu.plato.visual.mapper.AccessMapper;
-import com.wyu.plato.visual.model.DeviceGroupByDO;
+import com.wyu.plato.visual.model.RefererGroupByDO;
+import com.wyu.plato.visual.model.TypeGroupByDO;
 import com.wyu.plato.visual.model.DwsWideInfo;
 import com.wyu.plato.visual.model.TrendGroupByDO;
 import com.wyu.plato.visual.service.AccessService;
@@ -15,11 +16,7 @@ import com.wyu.plato.visual.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -61,16 +58,16 @@ public class AccessServiceImpl implements AccessService {
     }
 
     @Override
-    public StatsListVO device(DateRequest dateRequest) {
+    public StatsListVO type(DateRequest dateRequest) {
         // TODO 查询区间不能过大
         String start = TimeUtil.format(dateRequest.getStart(), TimeUtil.YYMMDD_PATTERN);
         String end = TimeUtil.format(dateRequest.getEnd(), TimeUtil.YYMMDD_PATTERN);
-        List<DeviceGroupByDO> list = this.accessMapper.device(dateRequest.getCode(), start, end);
+        List<TypeGroupByDO> list = this.accessMapper.type(dateRequest.getCode(), start, end);
 
         // 先计算总和
         long pvSum = 0;
         long uvSum = 0;
-        for (DeviceGroupByDO group : list) {
+        for (TypeGroupByDO group : list) {
             pvSum += group.getPv();
             uvSum += group.getUv();
         }
@@ -79,8 +76,8 @@ public class AccessServiceImpl implements AccessService {
         // 单字段分组 多字段求和用reduce 如果是单字段求和Collectors.groupingBy(DeviceGroupByDO::getBrowserType,Collectors.summarizingLong(DeviceGroupByDO::getPv))
         // 浏览器分组
         List<BrowserStats> browserStatsList = list.stream()
-                .collect(Collectors.groupingBy(DeviceGroupByDO::getBrowserType, Collectors.reducing((a, b) -> {
-                    DeviceGroupByDO res = new DeviceGroupByDO();
+                .collect(Collectors.groupingBy(TypeGroupByDO::getBrowserType, Collectors.reducing((a, b) -> {
+                    TypeGroupByDO res = new TypeGroupByDO();
                     res.setBrowserType(a.getBrowserType());
                     res.setPv(a.getPv() + b.getPv());
                     res.setUv(a.getUv() + b.getUv());
@@ -91,7 +88,7 @@ public class AccessServiceImpl implements AccessService {
                 .values().stream().map(optional -> {
                     if (optional.isPresent()) {
                         BrowserStats browserStats = new BrowserStats();
-                        DeviceGroupByDO group = optional.get();
+                        TypeGroupByDO group = optional.get();
                         browserStats.setBrowser(group.getBrowserType());
                         browserStats.setPv(group.getPv());
                         browserStats.setUv(group.getUv());
@@ -105,8 +102,8 @@ public class AccessServiceImpl implements AccessService {
 
         // 操作系统分组
         List<OsStats> osStatsList = list.stream()
-                .collect(Collectors.groupingBy(DeviceGroupByDO::getBrowserType, Collectors.reducing((a, b) -> {
-                    DeviceGroupByDO res = new DeviceGroupByDO();
+                .collect(Collectors.groupingBy(TypeGroupByDO::getBrowserType, Collectors.reducing((a, b) -> {
+                    TypeGroupByDO res = new TypeGroupByDO();
                     res.setOs(a.getOs());
                     res.setPv(a.getPv() + b.getPv());
                     res.setUv(a.getUv() + b.getUv());
@@ -117,7 +114,7 @@ public class AccessServiceImpl implements AccessService {
                 .values().stream().map(optional -> {
                     if (optional.isPresent()) {
                         OsStats osStats = new OsStats();
-                        DeviceGroupByDO group = optional.get();
+                        TypeGroupByDO group = optional.get();
                         osStats.setOs(group.getOs());
                         osStats.setPv(group.getPv());
                         osStats.setUv(group.getUv());
@@ -131,8 +128,8 @@ public class AccessServiceImpl implements AccessService {
 
         // 设备类型分组
         List<DeviceStats> deviceStatsList = list.stream()
-                .collect(Collectors.groupingBy(DeviceGroupByDO::getDeviceType, Collectors.reducing((a, b) -> {
-                    DeviceGroupByDO res = new DeviceGroupByDO();
+                .collect(Collectors.groupingBy(TypeGroupByDO::getDeviceType, Collectors.reducing((a, b) -> {
+                    TypeGroupByDO res = new TypeGroupByDO();
                     res.setDeviceType(a.getDeviceType());
                     res.setPv(a.getPv() + b.getPv());
                     res.setUv(a.getUv() + b.getUv());
@@ -143,7 +140,7 @@ public class AccessServiceImpl implements AccessService {
                 .values().stream().map(optional -> {
                     if (optional.isPresent()) {
                         DeviceStats deviceStats = new DeviceStats();
-                        DeviceGroupByDO group = optional.get();
+                        TypeGroupByDO group = optional.get();
                         deviceStats.setDeviceType(group.getDeviceType());
                         deviceStats.setPv(group.getPv());
                         deviceStats.setUv(group.getUv());
@@ -175,6 +172,13 @@ public class AccessServiceImpl implements AccessService {
         }
 
         return trendList;
+    }
+
+    @Override
+    public List<RefererGroupByDO> refererTopN(DateRequest dateRequest) {
+        String start = TimeUtil.format(dateRequest.getStart(), TimeUtil.YYMMDD_PATTERN);
+        String end = TimeUtil.format(dateRequest.getEnd(), TimeUtil.YYMMDD_PATTERN);
+        return this.accessMapper.refererTopN(dateRequest.getCode(), start, end, dateRequest.getN());
     }
 
     /**

@@ -5,21 +5,25 @@ import com.wyu.plato.common.enums.TrendIntervalType;
 import com.wyu.plato.common.model.vo.PageVO;
 import com.wyu.plato.common.model.vo.Resp;
 import com.wyu.plato.common.util.TimeUtil;
-import com.wyu.plato.visual.api.v1.request.TrendRequest;
 import com.wyu.plato.visual.api.v1.request.PageRequest;
 import com.wyu.plato.visual.api.v1.request.DateRequest;
 import com.wyu.plato.visual.model.DwsWideInfo;
+import com.wyu.plato.visual.model.RefererGroupByDO;
 import com.wyu.plato.visual.model.TrendGroupByDO;
 import com.wyu.plato.visual.service.AccessService;
 import com.wyu.plato.visual.vo.StatsListVO;
 import com.wyu.plato.visual.vo.RegionStatsVO;
+import org.apache.ibatis.binding.BindingException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindException;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.ConstraintViolationException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -67,11 +71,17 @@ public class AccessController {
      * @return
      */
     @PostMapping("/type")
-    public Resp device(@RequestBody @Validated DateRequest dateRequest) {
-        StatsListVO statsListVO = this.accessService.device(dateRequest);
+    public Resp type(@RequestBody @Validated DateRequest dateRequest) {
+        StatsListVO statsListVO = this.accessService.type(dateRequest);
         return Resp.success(statsListVO);
     }
 
+    /**
+     * 访问趋势图(天/小时)
+     *
+     * @param dateRequest
+     * @return
+     */
     @PostMapping("/trend")
     public Resp trend(@RequestBody @Validated DateRequest dateRequest) {
         List<TrendGroupByDO> trendList = this.accessService.trend(dateRequest);
@@ -81,5 +91,18 @@ public class AccessController {
             }
         }).collect(Collectors.toList());
         return Resp.success(res);
+    }
+
+
+    /**
+     * 访问来源TopN统计
+     *
+     * @param dateRequest
+     * @return
+     */
+    @PostMapping("/referer")
+    public Resp refererTopN(@RequestBody @Validated DateRequest dateRequest) {
+        List<RefererGroupByDO> refererTopN = this.accessService.refererTopN(dateRequest);
+        return Resp.success(refererTopN);
     }
 }

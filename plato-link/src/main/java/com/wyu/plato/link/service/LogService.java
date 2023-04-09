@@ -8,5 +8,5 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface LogService {
 
-    void recordLog(HttpServletRequest request, String code);
+    void recordLog(HttpServletRequest request, String code, Long accountNo);
 }

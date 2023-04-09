@@ -41,7 +41,7 @@
         GROUP BY country, province, city ORDER BY pv DESC;
     </select>
 
-    <select id="device" resultType="com.wyu.plato.visual.model.DeviceGroupByDO">
+    <select id="type" resultType="com.wyu.plato.visual.model.TypeGroupByDO">
         SELECT device_type, os, browser_type, sum(pv) as pv, sum(uv) as uv
         FROM access_stats
         WHERE code = #{code,jdbcType=VARCHAR}
@@ -69,6 +69,14 @@
         WHERE code = #{code,jdbcType=VARCHAR}
           AND toYYYYMMDD(`start`) = #{date,jdbcType=VARCHAR}
         GROUP BY `interval` ORDER BY `interval` DESC;
+    </select>
+    <select id="refererTopN" resultType="com.wyu.plato.visual.model.RefererGroupByDO">
+        SELECT referer, sum(pv) as pv
+        FROM access_stats
+        WHERE code = #{code,jdbcType=VARCHAR}
+        AND toYYYYMMDD(`start`) &gt;= #{start,jdbcType=VARCHAR}
+        AND toYYYYMMDD(`end`)  &lt;= #{end,jdbcType=VARCHAR}
+        GROUP BY referer ORDER BY pv DESC LIMIT #{n,jdbcType=INTEGER};
     </select>
 
 
