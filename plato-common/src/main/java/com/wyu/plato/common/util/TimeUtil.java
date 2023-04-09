@@ -1,10 +1,16 @@
 package com.wyu.plato.common.util;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author novo
@@ -97,8 +103,41 @@ public class TimeUtil {
      * @return
      */
     public static Date strToDate(String time) {
-        LocalDateTime localDateTime = LocalDateTime.parse(time, DEFAULT_DATE_TIME_FORMATTER);
+        return strToDate(time, null);
+    }
+
+    /**
+     * 字符串 转 Date
+     *
+     * @param time
+     * @return
+     */
+    public static Date strToDate(String time, String pattern) {
+        LocalDateTime localDateTime;
+        if (pattern == null) {
+            localDateTime = LocalDateTime.parse(time, DEFAULT_DATE_TIME_FORMATTER);
+        } else if (pattern.equals(YYMMDD_PATTERN)) {
+            // yyyyMMdd只有date没有time 所以要用LocalDate转换
+            localDateTime = LocalDate.parse(time, DateTimeFormatter.ofPattern(pattern)).atStartOfDay();
+        } else {
+            localDateTime = LocalDateTime.parse(time, DateTimeFormatter.ofPattern(pattern));
+
+        }
         return Date.from(localDateTime.atZone(DEFAULT_ZONE_ID).toInstant());
+    }
+
+    /**
+     * 字符串日期转换另一种格式
+     * example: 20230314->2023-03-14
+     *
+     * @param time
+     * @param oldPattern
+     * @param newPattern
+     * @return
+     */
+    public static String format(String time, String oldPattern, String newPattern) {
+        Date date = strToDate(time, oldPattern);
+        return format(date, newPattern);
     }
 
 
@@ -117,5 +156,40 @@ public class TimeUtil {
                 ZoneId.systemDefault());
         long seconds = ChronoUnit.SECONDS.between(currentDateTime, midnight);
         return (int) seconds;
+    }
+
+    /**
+     * 获取日历 两个时间内的所有日期集合
+     *
+     * @param startTime
+     * @param endTime
+     * @param pattern
+     * @return
+     */
+    public static List<String> getCalendar(String startTime, String endTime, String pattern) {
+        SimpleDateFormat format = new SimpleDateFormat(pattern);
+        // 声明保存日期集合
+        List<String> list = new ArrayList<String>();
+        try {
+            // 转化成日期类型
+            Date startDate = format.parse(startTime);
+            Date endDate = format.parse(endTime);
+
+            //用Calendar 进行日期比较判断
+            Calendar calendar = Calendar.getInstance();
+            while (startDate.getTime() <= endDate.getTime()) {
+                // 把日期添加到集合
+                list.add(format.format(startDate));
+                // 设置日期
+                calendar.setTime(startDate);
+                //把日期增加一天
+                calendar.add(Calendar.DATE, 1);
+                // 获取增加后的日期
+                startDate = calendar.getTime();
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 }

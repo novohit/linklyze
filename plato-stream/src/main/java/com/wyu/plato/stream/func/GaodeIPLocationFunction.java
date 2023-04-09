@@ -48,29 +48,7 @@ public class GaodeIPLocationFunction extends RichMapFunction<WideInfo, String> {
 
     @Override
     public String map(WideInfo value) throws Exception {
-        // TODO mock
-        Random random = new Random();
-        List<String> refererList = Arrays.asList("https://www.baidu.com", "https://www.douyin.com", "https://www.google.com", "https://mp.weixin.qq.com/", "");
-        value.setReferer(refererList.get(random.nextInt(refererList.size())));
-        List<String> ipList = Arrays.asList("192.168.56.1",
-                "119.133.7.205",
-                "14.29.106.1",
-                "1.15.255.255",
-                "118.121.204.216",
-                "27.17.234.255",
-                "36.149.28.255",
-                "42.48.34.255",
-                "27.115.83.255", // 上海
-                "1.58.24.255", // 哈尔滨
-                "14.17.95.255", // 东莞
-                "43.247.227.255", // 无锡
-                "27.150.159.255", // 厦门
-                "27.212.14.255", // 山东
-                "14.31.207.255", // 珠海
-                "59.50.33.81");
         String ip = value.getIp();
-        ip = ipList.get(random.nextInt(ipList.size()));
-        value.setIp(ip);
         String url = String.format(URL_PATTERN, ip, key);
         String body = null;
         try {

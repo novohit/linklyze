@@ -50,5 +50,26 @@
         GROUP BY device_type, os, browser_type ORDER BY pv DESC;
     </select>
 
+    <select id="trendByDay" resultType="com.wyu.plato.visual.model.TrendGroupByDO">
+        select toYYYYMMDD(`start`) as `interval`,
+        sum(uv) as uv, sum(pv) as pv,
+        count( DISTINCT ip) ip
+        from access_stats
+        WHERE code = #{code,jdbcType=VARCHAR}
+        AND toYYYYMMDD(`start`) &gt;= #{start,jdbcType=VARCHAR}
+        AND toYYYYMMDD(`end`)  &lt;= #{end,jdbcType=VARCHAR}
+        GROUP BY `interval` ORDER BY `interval` DESC;
+    </select>
+
+    <select id="trendByHour" resultType="com.wyu.plato.visual.model.TrendGroupByDO">
+        select toHour(`start`) as `interval`,
+               sum(uv) as uv, sum(pv) as pv,
+               count( DISTINCT ip) ip
+        from access_stats
+        WHERE code = #{code,jdbcType=VARCHAR}
+          AND toYYYYMMDD(`start`) = #{date,jdbcType=VARCHAR}
+        GROUP BY `interval` ORDER BY `interval` DESC;
+    </select>
+
 
 </mapper>

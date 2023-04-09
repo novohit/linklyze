@@ -11,7 +11,7 @@ import java.util.Date;
  * @since 2023-04-08
  */
 @Data
-public class RegionRequest {
+public class DateRequest {
 
     /**
      * 短链码

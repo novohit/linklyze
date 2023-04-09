@@ -88,7 +88,7 @@ public class FlinkUtil {
                     }
                 },
                 new JdbcExecutionOptions.Builder() // 控制批量写入大小
-                        .withBatchSize(5) // 到达5条才一次性异步写入
+                        .withBatchSize(1) // 到达5条才一次性异步写入
                         .build(),
                 new JdbcConnectionOptions.JdbcConnectionOptionsBuilder()
                         .withUrl(properties.getProperty("clickhouse.servers"))

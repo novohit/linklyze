@@ -2,22 +2,30 @@ package com.wyu.plato.visual.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.wyu.plato.common.enums.TrendIntervalType;
 import com.wyu.plato.common.util.TimeUtil;
-import com.wyu.plato.visual.api.v1.request.DeviceRequest;
 import com.wyu.plato.visual.api.v1.request.PageRequest;
-import com.wyu.plato.visual.api.v1.request.RegionRequest;
+import com.wyu.plato.visual.api.v1.request.DateRequest;
 import com.wyu.plato.visual.mapper.AccessMapper;
 import com.wyu.plato.visual.model.DeviceGroupByDO;
 import com.wyu.plato.visual.model.DwsWideInfo;
+import com.wyu.plato.visual.model.TrendGroupByDO;
 import com.wyu.plato.visual.service.AccessService;
 import com.wyu.plato.visual.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
+ * TODO 加上accountno 避免越权
+ *
  * @author novo
  * @since 2023-04-07
  */
@@ -45,19 +53,19 @@ public class AccessServiceImpl implements AccessService {
     }
 
     @Override
-    public List<RegionStatsVO> region(RegionRequest regionRequest) {
+    public List<RegionStatsVO> region(DateRequest dateRequest) {
         // TODO 查询区间不能过大
-        String start = TimeUtil.format(regionRequest.getStart(), TimeUtil.YYMMDD_PATTERN);
-        String end = TimeUtil.format(regionRequest.getEnd(), TimeUtil.YYMMDD_PATTERN);
-        return this.accessMapper.region(regionRequest.getCode(), start, end);
+        String start = TimeUtil.format(dateRequest.getStart(), TimeUtil.YYMMDD_PATTERN);
+        String end = TimeUtil.format(dateRequest.getEnd(), TimeUtil.YYMMDD_PATTERN);
+        return this.accessMapper.region(dateRequest.getCode(), start, end);
     }
 
     @Override
-    public StatsListVO device(DeviceRequest deviceRequest) {
+    public StatsListVO device(DateRequest dateRequest) {
         // TODO 查询区间不能过大
-        String start = TimeUtil.format(deviceRequest.getStart(), TimeUtil.YYMMDD_PATTERN);
-        String end = TimeUtil.format(deviceRequest.getEnd(), TimeUtil.YYMMDD_PATTERN);
-        List<DeviceGroupByDO> list = this.accessMapper.device(deviceRequest.getCode(), start, end);
+        String start = TimeUtil.format(dateRequest.getStart(), TimeUtil.YYMMDD_PATTERN);
+        String end = TimeUtil.format(dateRequest.getEnd(), TimeUtil.YYMMDD_PATTERN);
+        List<DeviceGroupByDO> list = this.accessMapper.device(dateRequest.getCode(), start, end);
 
         // 先计算总和
         long pvSum = 0;
@@ -149,5 +157,85 @@ public class AccessServiceImpl implements AccessService {
 
         StatsListVO res = new StatsListVO(browserStatsList, osStatsList, deviceStatsList, pvSum, uvSum);
         return res;
+    }
+
+    @Override
+    public List<TrendGroupByDO> trend(DateRequest dateRequest) {
+        // TODO 查询区间不能过大
+        String start = TimeUtil.format(dateRequest.getStart(), TimeUtil.YYMMDD_PATTERN);
+        String end = TimeUtil.format(dateRequest.getEnd(), TimeUtil.YYMMDD_PATTERN);
+        List<TrendGroupByDO> trendList;
+        // 查询一天内
+        if (start.equals(end)) {
+            trendList = this.accessMapper.trendByHour(dateRequest.getCode(), start);
+            trendList = hourlyStats(trendList);
+        } else {
+            trendList = this.accessMapper.trendByDay(dateRequest.getCode(), start, end);
+            trendList = dailyStats(trendList, start, end);
+        }
+
+        return trendList;
+    }
+
+    /**
+     * 连续日期的补全
+     *
+     * @param dbList
+     * @param start
+     * @param end
+     * @return
+     */
+    private List<TrendGroupByDO> dailyStats(List<TrendGroupByDO> dbList, String start, String end) {
+        List<TrendGroupByDO> runningDays = new ArrayList<>();
+        // 连续日期趋势
+        List<String> calendar = TimeUtil.getCalendar(start, end, TimeUtil.YYMMDD_PATTERN);
+        for (String date : calendar) {
+            boolean noData = true;
+            for (TrendGroupByDO trend : dbList) {
+                if (trend.getInterval().equals(date)) {
+                    noData = false;
+                    trend.setType(TrendIntervalType.DAY);
+                    runningDays.add(trend);
+                    break;
+                }
+            }
+            // 数据库中没查到 设置默认数据
+            if (noData) {
+                TrendGroupByDO trend = new TrendGroupByDO();
+                trend.setInterval(date);
+                trend.setType(TrendIntervalType.DAY);
+                runningDays.add(trend);
+            }
+        }
+        return runningDays;
+    }
+
+    /**
+     * 连续时间的补全
+     *
+     * @param dbList
+     * @return
+     */
+    private List<TrendGroupByDO> hourlyStats(List<TrendGroupByDO> dbList) {
+        List<TrendGroupByDO> runningHour = new ArrayList<>();
+        for (int i = 0; i <= 23; i++) {
+            boolean noData = true;
+            for (TrendGroupByDO trend : dbList) {
+                if (trend.getInterval().equals(String.valueOf(i))) {
+                    noData = false;
+                    trend.setType(TrendIntervalType.HOUR);
+                    runningHour.add(trend);
+                    break;
+                }
+            }
+            // 数据库中没查到 设置默认数据
+            if (noData) {
+                TrendGroupByDO trend = new TrendGroupByDO();
+                trend.setInterval(String.valueOf(i));
+                trend.setType(TrendIntervalType.HOUR);
+                runningHour.add(trend);
+            }
+        }
+        return runningHour;
     }
 }
