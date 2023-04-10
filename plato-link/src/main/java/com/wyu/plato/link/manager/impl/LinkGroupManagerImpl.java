@@ -46,14 +46,20 @@ public class LinkGroupManagerImpl implements LinkGroupManager {
         List<LinkGroupDO> groupList = this.linkGroupMapper
                 .selectList(new QueryWrapper<LinkGroupDO>().lambda().eq(LinkGroupDO::getAccountNo, accountNo));
         List<Long> groupIds = groupList.stream().map(LinkGroupDO::getId).collect(Collectors.toList());
-        // 查询分组内短链总数
+        // 查询用户所有分组内短链总数
         Map<Long, Map<String, Object>> map = this.linkMappingManager.groupLinkSum(accountNo, groupIds);
         List<LinkGroupDO> res = groupList.stream()
                 .peek(groupDO -> {
+                    // 获取一个分组内的短链总数 key为group_id value是一个HashMap  value:{"groupId":xxxxxxx,"link_sum":5}
+                    // 分组查询如果count(*)==null 是没有数据的，如果没有分库分表，在查询语句再套一层自连接去重是可以实现null=0的
+                    // 但是分库分表后语句可能不支持，这里直接判空
                     Map<String, Object> column = map.get(groupDO.getId());
-                    Long linkSum = (Long) column.getOrDefault("link_sum", 0L);
-                    groupDO.setLinkSum(linkSum);
-
+                    if (column == null) {
+                        groupDO.setLinkSum(0L);
+                    } else {
+                        Long linkSum = (Long) column.getOrDefault("link_sum", 0L);
+                        groupDO.setLinkSum(linkSum);
+                    }
                 })
                 .collect(Collectors.toList());
         return res;

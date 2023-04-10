@@ -11,6 +11,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class DwsWideInfo {
     // ==========================
+    /**
+     * 账户ID
+     */
+    private Long accountNo;
 
     /**
      * 业务ID

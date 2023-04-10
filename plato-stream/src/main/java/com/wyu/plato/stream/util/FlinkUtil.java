@@ -85,6 +85,7 @@ public class FlinkUtil {
                         pstmt.setLong(14, obj.getEnd());
                         pstmt.setLong(15, obj.getUv());
                         pstmt.setLong(16, obj.getPv());
+                        pstmt.setLong(17, obj.getAccountNo());
                     }
                 },
                 new JdbcExecutionOptions.Builder() // 控制批量写入大小

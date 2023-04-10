@@ -1,7 +1,6 @@
 package com.wyu.plato.account.api.v1.request;
 
 import lombok.Data;
-import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Pattern;
 

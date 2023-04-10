@@ -311,6 +311,14 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkDO> implements 
     }
 
     /**
+     * 消费者更新逻辑(更新group_id)
+     * @param customMessage
+     */
+    public void handleUpdateGroupId(CustomMessage customMessage) {
+
+    }
+
+    /**
      * 生产者端删除逻辑
      *
      * @param request

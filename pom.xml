@@ -8,6 +8,7 @@
     <artifactId>plato-short-link</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+
     <modules>
         <module>plato-common</module>
         <module>plato-account</module>
@@ -15,11 +16,11 @@
         <module>plato-link</module>
         <module>plato-stream</module>
         <module>plato-visual</module>
-        <!--<module>plato-stream</module>-->
     </modules>
 
     <properties>
         <!--JDK版本，如果是jdk8则这里是 1.8-->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>11</java.version>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
@@ -164,7 +165,6 @@
                 <artifactId>aliyun-sdk-oss</artifactId>
                 <version>${aliyun.oss.version}</version>
             </dependency>
-
 
             <!-- JWT相关 -->
             <dependency>

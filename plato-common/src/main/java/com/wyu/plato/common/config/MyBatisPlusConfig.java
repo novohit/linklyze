@@ -26,6 +26,7 @@ public class MyBatisPlusConfig {
         return interceptor;
     }
 
+    @SuppressWarnings("deprecation")
     @Bean
     public ConfigurationCustomizer configurationCustomizer() {
         return configuration -> configuration.setUseDeprecatedExecutor(false);

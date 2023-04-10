@@ -33,7 +33,7 @@ public class DomainController {
      * @return
      */
     @GetMapping("/list")
-    public Resp findAll() {
+    public Resp<List<DomainDO>> findAll() {
         List<DomainDO> domainList = this.domainService.findAll();
         List<DomainVO> domainVOList = domainList.stream().map(domainDO -> {
             DomainVO domainVO = new DomainVO();

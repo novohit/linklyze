@@ -28,7 +28,7 @@ public class NotifyController {
      * @return
      */
     @PostMapping("/send-code")
-    public Resp sendCode(@RequestBody @Validated SendCodeRequest sendCodeRequest) {
+    public Resp<Void> sendCode(@RequestBody @Validated SendCodeRequest sendCodeRequest) {
         //this.notifyService.testSend();
         this.notifyService.send(sendCodeRequest);
         return Resp.success();
@@ -40,13 +40,13 @@ public class NotifyController {
      * @return
      */
     @GetMapping("/captcha")
-    public Resp getCaptcha() {
+    public Resp<Map<String, Object>> getCaptcha() {
         Map<String, Object> map = this.notifyService.getCaptcha();
         return Resp.success(map);
     }
 
     @GetMapping("/test")
-    public Resp test(@RequestParam(required = false) String name, @RequestParam(required = false) String age) {
+    public Resp<Void> test(@RequestParam(required = false) String name, @RequestParam(required = false) String age) {
         return Resp.success();
     }
 }

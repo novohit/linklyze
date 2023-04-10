@@ -26,6 +26,11 @@ public class LinkUpdateRequest {
     @NotBlank
     private String code;
 
+//    /**
+//     * 修改group_id 要传
+//     */
+//    private Long newGroupId;
+
     /**
      * 分组id
      * 暂时不允许更改，partition key的更改涉及到数据迁移
