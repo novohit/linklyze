@@ -133,6 +133,7 @@
             <groupId>com.clickhouse</groupId>
             <artifactId>clickhouse-jdbc</artifactId>
             <version>0.3.2-patch11</version>
+            <classifier>http</classifier>
         </dependency>
 
 
@@ -174,4 +175,34 @@
         </dependencies>
     </dependencyManagement>
 
+    <build>
+        <finalName>plato-stream</finalName>
+        <plugins>
+            <!--默认编译版本比较低，所以用compiler插件,指定项目源码的jdk版本，编译后的jdk版本和编码,-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.6.1</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <encoding>${file.encoding}</encoding>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>2.2</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>

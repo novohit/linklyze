@@ -50,19 +50,28 @@ public class AccountController {
      * @return
      */
     @PostMapping("/login")
-    public Resp login(@RequestBody @Validated LoginRequest loginRequest) {
+    public Resp<String> login(@RequestBody @Validated LoginRequest loginRequest) {
         String token = this.accountService.login(loginRequest);
         return Resp.success(token);
     }
 
+    /**
+     * @ignore
+     * @return
+     */
     @PostMapping("/test-token")
-    public Resp token() {
+    public Resp<String> token() {
         String token = TokenUtil.generateAccessToken(1L);
         return Resp.success(token);
     }
 
+    /**
+     * @ignore
+     * @param token
+     * @return
+     */
     @PostMapping("/test-token-verify")
-    public Resp tokenVerify(String token) {
+    public Resp<Void> tokenVerify(String token) {
         Claims claims = TokenUtil.verifyToken(token);
         System.out.println(claims);
         return Resp.success();
@@ -75,14 +84,14 @@ public class AccountController {
      * @return
      */
     @PostMapping("/register")
-    public Resp register(@RequestBody @Validated RegisterRequest registerRequest) {
+    public Resp<Void> register(@RequestBody @Validated RegisterRequest registerRequest) {
         this.accountService.register(registerRequest);
         return Resp.success();
     }
 
 
     @PostMapping("/{account_no}")
-    public Resp findByAccountNo(@PathVariable("account_no") Long accountNo) {
+    public Resp<AccountDO> findByAccountNo(@PathVariable("account_no") Long accountNo) {
         AccountDO account = this.accountService.findByAccountNo(accountNo);
         return Resp.success(account);
     }

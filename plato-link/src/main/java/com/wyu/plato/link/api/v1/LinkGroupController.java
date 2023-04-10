@@ -4,12 +4,14 @@ package com.wyu.plato.link.api.v1;
 import com.wyu.plato.common.model.vo.Resp;
 import com.wyu.plato.link.api.v1.request.GroupCreateRequest;
 import com.wyu.plato.link.api.v1.request.GroupUpdateRequest;
+import com.wyu.plato.link.model.LinkGroupDO;
 import com.wyu.plato.link.service.LinkGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Positive;
+import java.util.List;
 
 /**
  * 分组接口
@@ -32,7 +34,7 @@ public class LinkGroupController {
      * @return
      */
     @PostMapping
-    public Resp create(@RequestBody @Validated GroupCreateRequest createRequest) {
+    public Resp<Void> create(@RequestBody @Validated GroupCreateRequest createRequest) {
         this.linkGroupService.create(createRequest);
         return Resp.success();
     }
@@ -44,7 +46,7 @@ public class LinkGroupController {
      * @return
      */
     @DeleteMapping("/{group_id}")
-    public Resp delete(@PathVariable("group_id") @Positive Long groupId) {
+    public Resp<Void> delete(@PathVariable("group_id") @Positive Long groupId) {
         this.linkGroupService.delete(groupId);
         return Resp.success();
     }
@@ -56,7 +58,7 @@ public class LinkGroupController {
      * @return
      */
     @PutMapping
-    public Resp update(@RequestBody @Validated GroupUpdateRequest updateRequest) {
+    public Resp<Void> update(@RequestBody @Validated GroupUpdateRequest updateRequest) {
         this.linkGroupService.update(updateRequest);
         return Resp.success();
     }
@@ -68,8 +70,9 @@ public class LinkGroupController {
      * @return
      */
     @GetMapping("/{group_id}")
-    public Resp findOne(@PathVariable("group_id") @Positive Long groupId) {
-        return Resp.success(this.linkGroupService.findOne(groupId));
+    public Resp<LinkGroupDO> findOne(@PathVariable("group_id") @Positive Long groupId) {
+        LinkGroupDO group = this.linkGroupService.findOne(groupId);
+        return Resp.success(group);
     }
 
     /**
@@ -78,7 +81,8 @@ public class LinkGroupController {
      * @return
      */
     @GetMapping("/list")
-    public Resp findAll() {
-        return Resp.success(this.linkGroupService.findAll());
+    public Resp<List<LinkGroupDO>> findAll() {
+        List<LinkGroupDO> groupList = this.linkGroupService.findAll();
+        return Resp.success(groupList);
     }
 }

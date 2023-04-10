@@ -47,7 +47,7 @@ public class LinkController {
      * @return
      */
     @PostMapping
-    public Resp create(@RequestBody @Validated LinkCreateRequest linkCreateRequest) {
+    public Resp<Void> create(@RequestBody @Validated LinkCreateRequest linkCreateRequest) {
         this.linkService.create(linkCreateRequest);
         return Resp.success();
     }
@@ -59,7 +59,7 @@ public class LinkController {
      * @return
      */
     @PostMapping("/page")
-    public Resp page(@RequestBody @Validated PageRequest pageRequest) {
+    public Resp<PageVO<LinkMappingDO>> page(@RequestBody @Validated PageRequest pageRequest) {
         Page<LinkMappingDO> page = this.linkService.page(pageRequest);
         PageVO<LinkMappingDO> pageVO = new PageVO<>(page);
         return Resp.success(pageVO);
@@ -73,7 +73,7 @@ public class LinkController {
      * @return
      */
     @PutMapping
-    public Resp update(@RequestBody @Validated LinkUpdateRequest linkUpdateRequest) {
+    public Resp<Void> update(@RequestBody @Validated LinkUpdateRequest linkUpdateRequest) {
         this.linkService.update(linkUpdateRequest);
         return Resp.success();
     }
@@ -85,7 +85,7 @@ public class LinkController {
      * @return
      */
     @DeleteMapping
-    public Resp delete(@RequestBody @Validated LinkDeleteRequest linkDeleteRequest) {
+    public Resp<Void> delete(@RequestBody @Validated LinkDeleteRequest linkDeleteRequest) {
         this.linkService.delete(linkDeleteRequest);
         return Resp.success();
     }
@@ -98,7 +98,7 @@ public class LinkController {
      * @return
      */
     @GetMapping("/test-lock")
-    public Resp testCreate(@RequestParam("code") String code, @RequestParam("account_no") Long accountNo) {
+    public Resp<Long> testCreate(@RequestParam("code") String code, @RequestParam("account_no") Long accountNo) {
         Long res = this.redisTemplate.execute(lockRedisScript, Collections.singletonList(code), accountNo, 100);
         return Resp.success(res);
     }

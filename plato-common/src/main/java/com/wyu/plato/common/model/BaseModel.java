@@ -16,13 +16,22 @@ import java.util.Date;
 @Data
 public class BaseModel {
 
+    /**
+     * id
+     */
     //@TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
+    /**
+     * 创建时间
+     */
     //@JsonIgnore
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
 
+    /**
+     * 更新时间
+     */
     //@JsonIgnore
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date updateTime;

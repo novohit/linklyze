@@ -30,7 +30,7 @@ public class DwsApp {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         DataStreamSource<WideInfo> source = env.addSource(FlinkUtil.kafkaConsumer(FlinkConstants.DWM_TOPIC, CustomWideInfoSchema.class));
         DataStreamSource<WideInfo> uvSource = env.addSource(FlinkUtil.kafkaConsumer(FlinkConstants.DWM_UV_TOPIC, CustomWideInfoSchema.class));
-        //env.enableCheckpointing(1000);
+        env.enableCheckpointing(1000);
         env.setParallelism(1);
         SingleOutputStreamOperator<WideInfo> stream = source.map((MapFunction<WideInfo, WideInfo>) value -> {
             value.setPv(1);
@@ -83,7 +83,7 @@ public class DwsApp {
                     }
                 });
         resStream.print();
-        String sql = "insert into access_stats (id,code,referer,ip,country,province,city,isp,device_type,os,browser_type,device_manufacturer,timestamp,start,end,uv,pv) values(generateUUIDv4(),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "insert into access_stats (id,code,referer,ip,country,province,city,isp,device_type,os,browser_type,device_manufacturer,timestamp,start,end,uv,pv,account_no) values(generateUUIDv4(),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         resStream.addSink(FlinkUtil.jdbcSink(sql));
         //resStream.print();
 

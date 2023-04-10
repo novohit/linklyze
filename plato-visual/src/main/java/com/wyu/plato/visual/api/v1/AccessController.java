@@ -48,7 +48,7 @@ public class AccessController {
      * @param pageRequest
      */
     @PostMapping("/page")
-    public Resp page(@RequestBody @Validated PageRequest pageRequest) {
+    public Resp<PageVO<DwsWideInfo>> page(@RequestBody @Validated PageRequest pageRequest) {
         Page<DwsWideInfo> page = this.accessService.page(pageRequest);
         PageVO<DwsWideInfo> pageVO = new PageVO<>(page);
         return Resp.success(pageVO);
@@ -60,7 +60,7 @@ public class AccessController {
      * @return
      */
     @PostMapping("/region")
-    public Resp region(@RequestBody @Validated DateRequest dateRequest) {
+    public Resp<List<RegionStatsVO>> region(@RequestBody @Validated DateRequest dateRequest) {
         List<RegionStatsVO> regionStatsVOList = this.accessService.region(dateRequest);
         return Resp.success(regionStatsVOList);
     }
@@ -71,7 +71,7 @@ public class AccessController {
      * @return
      */
     @PostMapping("/type")
-    public Resp type(@RequestBody @Validated DateRequest dateRequest) {
+    public Resp<StatsListVO> type(@RequestBody @Validated DateRequest dateRequest) {
         StatsListVO statsListVO = this.accessService.type(dateRequest);
         return Resp.success(statsListVO);
     }
@@ -83,7 +83,7 @@ public class AccessController {
      * @return
      */
     @PostMapping("/trend")
-    public Resp trend(@RequestBody @Validated DateRequest dateRequest) {
+    public Resp<List<TrendGroupByDO>> trend(@RequestBody @Validated DateRequest dateRequest) {
         List<TrendGroupByDO> trendList = this.accessService.trend(dateRequest);
         List<TrendGroupByDO> res = trendList.stream().peek(trendGroupByDO -> {
             if (trendGroupByDO.getType() == TrendIntervalType.DAY) {
@@ -101,7 +101,7 @@ public class AccessController {
      * @return
      */
     @PostMapping("/referer")
-    public Resp refererTopN(@RequestBody @Validated DateRequest dateRequest) {
+    public Resp<List<RefererGroupByDO>> refererTopN(@RequestBody @Validated DateRequest dateRequest) {
         List<RefererGroupByDO> refererTopN = this.accessService.refererTopN(dateRequest);
         return Resp.success(refererTopN);
     }

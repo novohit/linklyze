@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(value = JsonInclude.Include.NON_NULL) //如果json的data为null 不返回给前端
-public class Resp {
+public class Resp<T> {
 
     /**
      * 状态码 0 表示成功
@@ -27,7 +27,7 @@ public class Resp {
     /**
      * 数据
      */
-    private Object data;
+    private T data;
     /**
      * 描述
      */
@@ -35,62 +35,66 @@ public class Resp {
 
 
     /**
-     *  获取远程调用数据
-     *  注意事项：
-     *      支持多单词下划线专驼峰（序列化和反序列化）
+     * 获取远程调用数据
+     * 注意事项：
+     * 支持多单词下划线专驼峰（序列化和反序列化）
      *
      * @param typeReference
-     * @param <T>
+     * @param <K>
      * @return
      */
-    public <T> T getData(TypeReference<T> typeReference){
-        return JSON.parseObject(JSON.toJSONString(data),typeReference);
+    public <K> K getData(TypeReference<K> typeReference) {
+        return JSON.parseObject(JSON.toJSONString(data), typeReference);
     }
 
     /**
      * 成功，不传入数据
+     *
      * @return
      */
-    public static Resp success() {
-        return new Resp(BizCodeEnum.SUCCESS.getCode(), null, BizCodeEnum.SUCCESS.getMessage());
+    public static <T> Resp<T> success() {
+        return new Resp<>(BizCodeEnum.SUCCESS.getCode(), null, BizCodeEnum.SUCCESS.getMessage());
     }
 
     /**
-     *  成功，传入数据
+     * 成功，传入数据
+     *
      * @param data
      * @return
      */
-    public static Resp success(Object data) {
-        return new Resp(BizCodeEnum.SUCCESS.getCode(), data, BizCodeEnum.SUCCESS.getMessage());
+    public static <T> Resp<T> success(T data) {
+        return new Resp<>(BizCodeEnum.SUCCESS.getCode(), data, BizCodeEnum.SUCCESS.getMessage());
     }
 
     /**
      * 失败，传入描述信息
+     *
      * @param msg
      * @return
      */
-    public static Resp error(String msg) {
-        return new Resp(BizCodeEnum.SERVER_ERROR.getCode(), null, msg);
+    public static <T> Resp<T> error(String msg) {
+        return new Resp<>(BizCodeEnum.SERVER_ERROR.getCode(), null, msg);
     }
-
 
 
     /**
      * 自定义状态码和错误信息
+     *
      * @param code
      * @param msg
      * @return
      */
-    public static Resp buildCodeAndMsg(int code, String msg) {
-        return new Resp(code, null, msg);
+    public static <T> Resp<T> buildCodeAndMsg(int code, String msg) {
+        return new Resp<>(code, null, msg);
     }
 
     /**
      * 传入枚举，返回信息
+     *
      * @param codeEnum
      * @return
      */
-    public static Resp buildResult(BizCodeEnum codeEnum){
-        return Resp.buildCodeAndMsg(codeEnum.getCode(),codeEnum.getMessage());
+    public static <T> Resp<T> buildResult(BizCodeEnum codeEnum) {
+        return Resp.buildCodeAndMsg(codeEnum.getCode(), codeEnum.getMessage());
     }
 }
