@@ -47,6 +47,12 @@
             <artifactId>flink-connector-kafka_${scala.binary.version}</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-connector-jdbc_${scala.binary.version}</artifactId>
+        </dependency>
+
+
         <!--Flink web ui-->
         <dependency>
             <groupId>org.apache.flink</groupId>
@@ -101,6 +107,34 @@
             <version>1.4.2.Final</version>
         </dependency>
 
+        <!--httpclient只支持阻塞IO请求 同步-->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.14</version>
+        </dependency>
+        <!--httpclient依赖commons-logging-->
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.2</version>
+        </dependency>
+
+
+        <!--        &lt;!&ndash;异步请求&ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.apache.httpcomponents</groupId>-->
+<!--            <artifactId>httpasyncclient</artifactId>-->
+<!--            <version>4.1.5</version>-->
+<!--        </dependency>-->
+
+        <!-- https://mvnrepository.com/artifact/com.clickhouse/clickhouse-jdbc -->
+        <dependency>
+            <groupId>com.clickhouse</groupId>
+            <artifactId>clickhouse-jdbc</artifactId>
+            <version>0.3.2-patch11</version>
+        </dependency>
+
 
         <dependency>
             <groupId>junit</groupId>
@@ -129,6 +163,13 @@
                 <artifactId>flink-connector-kafka_${scala.binary.version}</artifactId>
                 <version>${flink.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>org.apache.flink</groupId>
+                <artifactId>flink-connector-jdbc_${scala.binary.version}</artifactId>
+                <version>1.13.6</version>
+            </dependency>
+
 
         </dependencies>
     </dependencyManagement>

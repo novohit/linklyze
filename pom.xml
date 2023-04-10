@@ -14,6 +14,7 @@
         <module>plato-gateway</module>
         <module>plato-link</module>
         <module>plato-stream</module>
+        <module>plato-visual</module>
         <!--<module>plato-stream</module>-->
     </modules>
 

@@ -4,29 +4,45 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.wyu.plato.link.model.LinkMappingDO">
-        <id column="id" property="id" />
-        <result column="create_time" property="createTime" />
-        <result column="update_time" property="updateTime" />
-        <result column="delete_time" property="deleteTime" />
-        <result column="group_id" property="groupId" />
-        <result column="title" property="title" />
-        <result column="original_url" property="originalUrl" />
-        <result column="domain" property="domain" />
-        <result column="code" property="code" />
-        <result column="long_hash" property="longHash" />
-        <result column="expired" property="expired" />
-        <result column="account_no" property="accountNo" />
-        <result column="state" property="state" />
-        <result column="link_level" property="linkLevel" />
+        <id column="id" property="id"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="delete_time" property="deleteTime"/>
+        <result column="group_id" property="groupId"/>
+        <result column="title" property="title"/>
+        <result column="original_url" property="originalUrl"/>
+        <result column="domain" property="domain"/>
+        <result column="code" property="code"/>
+        <result column="long_hash" property="longHash"/>
+        <result column="expired" property="expired"/>
+        <result column="account_no" property="accountNo"/>
+        <result column="state" property="state"/>
+        <result column="link_level" property="linkLevel"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id,
+        id
+        ,
         create_time,
         update_time,
         delete_time,
         group_id, title, original_url, `domain`, code, long_hash, expired, account_no, `state`, link_level
     </sql>
+
+    <!--ShardingJDBC 只支持部分子查询 所以这里写成子查询形式是不行的-->
+    <select id="groupLinkSum" resultType="java.util.Map">
+        SELECT group_id, count(*) as link_sum
+        FROM short_link_mapping
+        WHERE account_no = #{accountNo,jdbcType=BIGINT}
+        AND delete_time IS NULL
+        AND group_id IN
+        <foreach collection="groupIds" item="groupId" index="index" open="(" close=")" separator=",">
+            #{groupId}
+        </foreach>
+        GROUP BY
+        group_id;
+    </select>
+
 
 </mapper>

@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.InetAddress;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.UnknownHostException;
 import java.security.MessageDigest;
 import java.util.*;
@@ -30,6 +32,9 @@ public class CommonUtil {
         String ipAddress = null;
         try {
             ipAddress = request.getHeader("x-forwarded-for");
+            if (ipAddress == null || ipAddress.length() == 0 || "unknown".equalsIgnoreCase(ipAddress)) {
+                ipAddress = request.getHeader("X-Forwarded-For");
+            }
             if (ipAddress == null || ipAddress.length() == 0 || "unknown".equalsIgnoreCase(ipAddress)) {
                 ipAddress = request.getHeader("Proxy-Client-IP");
             }
@@ -225,5 +230,30 @@ public class CommonUtil {
         String newTimestamp = String.valueOf(Long.parseLong(timestamp) + 1);
         String newUrl = newTimestamp + prefixUrl.substring(prefixUrl.indexOf("&") + 1);
         return newUrl;
+    }
+
+
+    /**
+     * 获取url的logo
+     */
+    public static String getLogoUrl(String prefixUrl) {
+        String originUrl = removeUrlPrefix(prefixUrl);
+        URI uri = null;
+        try {
+            uri = new URI(originUrl);
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
+        String host = uri.getHost();
+        String HTTPS = "https://";
+        String HTTP = "http://";
+        String faviconSuffix = "/favicon.ico";
+        if (originUrl.contains(HTTPS)) {
+            return HTTPS + host + faviconSuffix;
+        } else if (originUrl.contains(HTTP)) {
+            return HTTP + host + faviconSuffix;
+        } else {
+            return host + faviconSuffix;
+        }
     }
 }

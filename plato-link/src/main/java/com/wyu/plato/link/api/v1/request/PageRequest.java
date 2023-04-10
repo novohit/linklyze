@@ -1,6 +1,8 @@
 package com.wyu.plato.link.api.v1.request;
 
+import com.wyu.plato.common.model.request.PageBase;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.Positive;
 
@@ -9,19 +11,8 @@ import javax.validation.constraints.Positive;
  * @since 2023-03-25
  */
 @Data
-public class PageRequest {
-
-    /**
-     * 页码
-     */
-    @Positive
-    private Integer page;
-
-    /**
-     * 条数
-     */
-    @Positive
-    private Integer size;
+@EqualsAndHashCode(callSuper = true)
+public class PageRequest extends PageBase {
 
     /**
      * 分组id

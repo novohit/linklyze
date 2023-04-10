@@ -143,7 +143,8 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkDO> implements 
         // 1. 生成短链
         Long accountNo = customMessage.getAccountNo();
         LinkCreateRequest request = JSON.parseObject(customMessage.getContent(), LinkCreateRequest.class);
-        ShortLinkComponent.Link shortLink = this.shortLinkComponent.createShortLink(request.getOriginalUrl());
+        String prefixUrl = request.getOriginalUrl();
+        ShortLinkComponent.Link shortLink = this.shortLinkComponent.createShortLink(prefixUrl);
         String code = shortLink.getCode();
         long hash32 = shortLink.getHash32();
         log.info("生成短链 code:[{}],hash:[{}]", code, hash32);
@@ -162,7 +163,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkDO> implements 
                     LinkDO dbLink = this.linkManager.findOneByCode(code);
                     if (dbLink == null) {
                         // 4. 构造入库对象
-                        LinkDO linkDO = this.genLinkDO(request, accountNo, code, hash32);
+                        LinkDO linkDO = this.genLinkDO(request, accountNo, code, hash32, prefixUrl);
                         // 5. 入库
                         int rows = this.linkManager.save(linkDO);
                         if (rows > 0) {
@@ -182,7 +183,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkDO> implements 
                     LinkMappingDO dbLinkMapping = this.linkMappingManager.findOneByCode(code);
                     if (dbLinkMapping == null) {
                         // 4. 构造入库对象
-                        LinkMappingDO mappingDO = this.genLinkMappingDO(request, accountNo, code, hash32);
+                        LinkMappingDO mappingDO = this.genLinkMappingDO(request, accountNo, code, hash32, prefixUrl);
                         // 5. 入库
                         int rows = this.linkMappingManager.save(mappingDO);
                         if (rows > 0) {
@@ -212,7 +213,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkDO> implements 
         if (conflict) {
             log.warn("短链码冲突或加锁失败");
             // 更新长链版本号
-            String newUrl = CommonUtil.getNewUrl(request.getOriginalUrl());
+            String newUrl = CommonUtil.getNewUrl(prefixUrl);
             request.setOriginalUrl(newUrl);
             customMessage.setContent(JSON.toJSONString(request));
             // 开始递归
@@ -387,7 +388,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkDO> implements 
      * @param hash32
      * @return
      */
-    private LinkMappingDO genLinkMappingDO(LinkCreateRequest request, Long accountNo, String code, long hash32) {
+    private LinkMappingDO genLinkMappingDO(LinkCreateRequest request, Long accountNo, String code, long hash32, String prefixUrl) {
         LinkMappingDO mappingDO = new LinkMappingDO();
         BeanUtils.copyProperties(request, mappingDO);
         mappingDO.setAccountNo(accountNo);
@@ -397,6 +398,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkDO> implements 
         mappingDO.setState(LinkStateEnum.ACTIVE.name());
         // TODO 查询短链level
         mappingDO.setLinkLevel(LinkLevelType.BRONZE.name());
+        mappingDO.setLogo(CommonUtil.getLogoUrl(prefixUrl));
         return mappingDO;
     }
 
@@ -409,7 +411,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkDO> implements 
      * @param hash32
      * @return
      */
-    private LinkDO genLinkDO(LinkCreateRequest request, Long accountNo, String code, long hash32) {
+    private LinkDO genLinkDO(LinkCreateRequest request, Long accountNo, String code, long hash32, String prefixUrl) {
         LinkDO linkDO = new LinkDO();
         BeanUtils.copyProperties(request, linkDO);
         linkDO.setAccountNo(accountNo);
@@ -419,6 +421,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkDO> implements 
         linkDO.setState(LinkStateEnum.ACTIVE.name());
         // TODO 查询短链level
         linkDO.setLinkLevel(LinkLevelType.BRONZE.name());
+        linkDO.setLogo(CommonUtil.getLogoUrl(prefixUrl));
         return linkDO;
     }
 }

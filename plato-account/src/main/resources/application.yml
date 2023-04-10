@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: dev
+    active: prod
   jackson:
     property-naming-strategy: SNAKE_CASE
   application:
