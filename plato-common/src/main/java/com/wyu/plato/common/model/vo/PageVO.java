@@ -47,4 +47,12 @@ public class PageVO<T> {
         this.totalPage = page.getPages();
         this.items = page.getRecords();
     }
+
+    public PageVO(Long page, Long size, Long total, Long totalPage, List<T> data) {
+        this.page = page;
+        this.size = size;
+        this.total = total;
+        this.totalPage = totalPage;
+        this.items = data;
+    }
 }

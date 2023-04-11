@@ -1,6 +1,7 @@
 package com.wyu.plato.link.model;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wyu.plato.common.model.BaseModel;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -33,6 +34,7 @@ public class LinkMappingDO extends BaseModel {
     /**
      * 原url地址
      */
+    @JsonIgnore
     private String originalUrl;
 
     /**
@@ -48,6 +50,7 @@ public class LinkMappingDO extends BaseModel {
     /**
      * 长链的hash码 方便查找
      */
+    @JsonIgnore
     private String longHash;
 
     /**

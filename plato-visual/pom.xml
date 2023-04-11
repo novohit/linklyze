@@ -41,7 +41,7 @@
     </dependencies>
 
     <build>
-        <finalName>plato-visual</finalName>
+        <finalName>plato-visual-${project.version}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

@@ -1,16 +1,16 @@
 package com.wyu.plato.visual.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.wyu.plato.common.constant.Constants;
 import com.wyu.plato.common.enums.TrendIntervalType;
+import com.wyu.plato.common.model.vo.PageVO;
 import com.wyu.plato.common.util.TimeUtil;
-import com.wyu.plato.visual.api.v1.request.PageRequest;
 import com.wyu.plato.visual.api.v1.request.DateRequest;
+import com.wyu.plato.visual.api.v1.request.PageRequest;
 import com.wyu.plato.visual.mapper.AccessMapper;
-import com.wyu.plato.visual.model.RefererGroupByDO;
-import com.wyu.plato.visual.model.TypeGroupByDO;
 import com.wyu.plato.visual.model.DwsWideInfo;
+import com.wyu.plato.visual.model.RefererGroupByDO;
 import com.wyu.plato.visual.model.TrendGroupByDO;
+import com.wyu.plato.visual.model.TypeGroupByDO;
 import com.wyu.plato.visual.service.AccessService;
 import com.wyu.plato.visual.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,13 +40,23 @@ public class AccessServiceImpl implements AccessService {
      * @return
      */
     @Override
-    public Page<DwsWideInfo> page(PageRequest pageRequest) {
+    public PageVO<DwsWideInfo> page(PageRequest pageRequest) {
         Integer page = pageRequest.getPage();
         Integer size = pageRequest.getSize();
-        Page<DwsWideInfo> request = new Page<>(page, size);
-        Page<DwsWideInfo> pageResp = this.accessMapper.selectPage(request, new QueryWrapper<DwsWideInfo>()
-                .lambda().eq(DwsWideInfo::getCode, pageRequest.getCode()));
-        return pageResp;
+        String code = pageRequest.getCode();
+        // 不用Mybatis-Plus自带的
+//        Page<DwsWideInfo> request = new Page<>(page, size);
+//        Page<DwsWideInfo> pageResp = this.accessMapper.selectPage(request, new QueryWrapper<DwsWideInfo>()
+//                .lambda().eq(DwsWideInfo::getCode, pageRequest.getCode()));
+        int offset = (page - 1) * size;
+        int total = this.accessMapper.pagRecordTotal(code, Constants.VISUAL_MAX_LIMIT);
+        int totalPage = (total + size - 1) / size;
+        List<DwsWideInfo> record = this.accessMapper.pageRecord(code, offset, size);
+        PageVO<DwsWideInfo> pageVO = new PageVO<>(Long.parseLong(String.valueOf(page)),
+                Long.parseLong(String.valueOf(size)),
+                Long.parseLong(String.valueOf(total)),
+                Long.parseLong(String.valueOf(totalPage)), record);
+        return pageVO;
     }
 
     @Override

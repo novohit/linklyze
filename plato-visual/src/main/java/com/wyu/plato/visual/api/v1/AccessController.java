@@ -1,6 +1,7 @@
 package com.wyu.plato.visual.api.v1;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.wyu.plato.common.constant.Constants;
 import com.wyu.plato.common.enums.TrendIntervalType;
 import com.wyu.plato.common.model.vo.PageVO;
 import com.wyu.plato.common.model.vo.Resp;
@@ -49,9 +50,12 @@ public class AccessController {
      */
     @PostMapping("/page")
     public Resp<PageVO<DwsWideInfo>> page(@RequestBody @Validated PageRequest pageRequest) {
-        Page<DwsWideInfo> page = this.accessService.page(pageRequest);
-        PageVO<DwsWideInfo> pageVO = new PageVO<>(page);
-        return Resp.success(pageVO);
+        int total = pageRequest.getPage() * pageRequest.getSize();
+        if (total > Constants.VISUAL_MAX_LIMIT) {
+            return Resp.error("只允许查询最近1000条数据");
+        }
+        PageVO<DwsWideInfo> page = this.accessService.page(pageRequest);
+        return Resp.success(page);
     }
 
     /**
