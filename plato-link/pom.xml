@@ -35,7 +35,7 @@
     </dependencies>
 
     <build>
-        <finalName>plato-link</finalName>
+        <finalName>plato-link-${project.version}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
