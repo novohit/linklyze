@@ -4,12 +4,15 @@ package com.wyu.plato.link.api.v1;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wyu.plato.common.model.vo.PageVO;
 import com.wyu.plato.common.model.vo.Resp;
+import com.wyu.plato.common.util.CommonUtil;
 import com.wyu.plato.link.api.v1.request.LinkCreateRequest;
 import com.wyu.plato.link.api.v1.request.LinkDeleteRequest;
 import com.wyu.plato.link.api.v1.request.LinkUpdateRequest;
 import com.wyu.plato.link.api.v1.request.PageRequest;
 import com.wyu.plato.link.model.LinkMappingDO;
 import com.wyu.plato.link.service.LinkService;
+import com.wyu.plato.link.vo.LinkVO;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -17,7 +20,10 @@ import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 短链接口
@@ -59,9 +65,20 @@ public class LinkController {
      * @return
      */
     @PostMapping("/page")
-    public Resp<PageVO<LinkMappingDO>> page(@RequestBody @Validated PageRequest pageRequest) {
+    public Resp<PageVO<LinkVO>> page(@RequestBody @Validated PageRequest pageRequest) {
         Page<LinkMappingDO> page = this.linkService.page(pageRequest);
-        PageVO<LinkMappingDO> pageVO = new PageVO<>(page);
+        List<LinkMappingDO> records = page.getRecords();
+
+        List<LinkVO> linkVOList = records.stream()
+                .map(mappingDO -> {
+                    LinkVO linkVO = new LinkVO();
+                    BeanUtils.copyProperties(mappingDO, linkVO);
+                    linkVO.setOriginalUrl(CommonUtil.removeUrlPrefix(linkVO.getOriginalUrl()));
+                    return linkVO;
+                }).collect(Collectors.toList());
+
+
+        PageVO<LinkVO> pageVO = new PageVO<>(page.getCurrent(), page.getSize(), page.getTotal(), page.getPages(), linkVOList);
         return Resp.success(pageVO);
     }
 
