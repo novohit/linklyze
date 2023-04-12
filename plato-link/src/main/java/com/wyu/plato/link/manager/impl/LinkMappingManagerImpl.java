@@ -40,7 +40,8 @@ public class LinkMappingManagerImpl implements LinkMappingManager {
                 .selectPage(pageRequest,
                         new QueryWrapper<LinkMappingDO>().lambda()
                                 .eq(LinkMappingDO::getAccountNo, accountNo)
-                                .eq(LinkMappingDO::getGroupId, groupId));
+                                .eq(LinkMappingDO::getGroupId, groupId)
+                                .orderByDesc(LinkMappingDO::getCreateTime));
         return pageResp;
     }
 
