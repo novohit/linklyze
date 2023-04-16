@@ -34,7 +34,6 @@ public class LinkDO extends BaseModel {
     /**
      * 原url地址
      */
-    @JsonIgnore
     private String originalUrl;
 
     /**

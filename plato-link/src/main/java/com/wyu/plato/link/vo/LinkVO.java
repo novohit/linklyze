@@ -1,26 +1,20 @@
-package com.wyu.plato.link.model;
+package com.wyu.plato.link.vo;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wyu.plato.common.model.BaseModel;
-import java.time.LocalDateTime;
-import java.util.Date;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.util.Date;
+
 /**
  * @author novo
- * @since 2023-03-16
+ * @since 2023-04-12
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@TableName("short_link_mapping")
-public class LinkMappingDO extends BaseModel {
-
-
+public class LinkVO extends BaseModel {
     /**
      * 分组id
      */
@@ -45,11 +39,6 @@ public class LinkMappingDO extends BaseModel {
      * 短链码
      */
     private String code;
-
-    /**
-     * 长链的hash码 方便查找
-     */
-    private String longHash;
 
     /**
      * 过期时间 永久为null
