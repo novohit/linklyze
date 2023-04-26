@@ -37,12 +37,12 @@
     </sql>
 
     <select id="region" resultType="com.wyu.plato.visual.vo.RegionStatsVO">
-        SELECT country, province, city, sum(pv) as pv, sum(uv) as uv
+        SELECT country, province, sum(pv) as pv, sum(uv) as uv
         FROM access_stats
         WHERE code = #{code,jdbcType=VARCHAR}
         AND toYYYYMMDD(`start`) &gt;= #{start,jdbcType=VARCHAR}
         AND toYYYYMMDD(`end`) &lt;= #{end,jdbcType=VARCHAR}
-        GROUP BY country, province, city ORDER BY pv DESC;
+        GROUP BY country, province ORDER BY pv DESC;
     </select>
 
     <select id="type" resultType="com.wyu.plato.visual.model.TypeGroupByDO">

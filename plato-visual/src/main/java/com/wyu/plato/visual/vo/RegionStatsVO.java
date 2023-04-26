@@ -1,5 +1,6 @@
 package com.wyu.plato.visual.vo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 /**
@@ -22,6 +23,7 @@ public class RegionStatsVO {
     /**
      * 城市
      */
+    @JsonIgnore
     private String city;
 
     /**
