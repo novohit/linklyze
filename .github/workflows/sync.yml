@@ -10,14 +10,13 @@ on:
 
 jobs:
   sync:
+    if: github.repository == 'novohit/linklyze'
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout source code
-        uses: actions/checkout@v2
+      - name: Sync repo
+        uses: wearerequired/git-mirror-action@master
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         with:
-          fetch-depth: 0
-
-      - name: Push to destination repository
-        run: |
-          git remote add destination https://x-access-token:${{ secrets.GIT_TOKEN }}@github.com/novohit/plato.git
-          git push --force-with-lease destination ${{ github.ref }}
+          source-repo: "git@github.com:novohit/linklyze.git"
+          destination-repo: "git@github.com:novohit/plato.git"
