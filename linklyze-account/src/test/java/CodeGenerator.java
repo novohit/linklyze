@@ -29,7 +29,7 @@ public class CodeGenerator {
                 .setFileOverride(false)
                 .setIdType(IdType.AUTO)
                 .setBaseResultMap(true)
-                .setBaseColumnList(true)
+                .setBaseColumnList(false)
                 .setEntityName("%sDO")
                 .setServiceName("%sService");
         mpg.setGlobalConfig(globalConfig);
@@ -37,10 +37,7 @@ public class CodeGenerator {
         // 数据源配置
         DataSourceConfig dataSourceConfig = new DataSourceConfig();
         dataSourceConfig
-                //.setUrl("jdbc:mysql://localhost:3308/z-mall?allowPublicKeyRetrieval=true&useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai")
-                //.setUrl("jdbc:mysql://localhost:3308/plato_account?allowPublicKeyRetrieval=true&useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai")
-                //.setUrl("jdbc:mysql://localhost:3308/plato_link?allowPublicKeyRetrieval=true&useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai")
-                .setUrl("jdbc:mysql://localhost:3308/plato_link_0?allowPublicKeyRetrieval=true&useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai")
+                .setUrl(datasourceUrl)
                 .setDriverName("com.mysql.cj.jdbc.Driver")
                 .setUsername("root")
                 .setPassword("root");
@@ -49,7 +46,7 @@ public class CodeGenerator {
         // 包名配置
         PackageConfig packageConfig = new PackageConfig();
         packageConfig
-                .setParent("com.linklyze.link")
+                .setParent(parent)
                 .setPathInfo(getPathInfo())
                 .setEntity("model")
                 .setController("api.v1")
@@ -100,15 +97,24 @@ public class CodeGenerator {
         throw new MybatisPlusException("请输入正确的" + tip + "！");
     }
 
+    // 在哪个包下生成路径
+    private static final String module = "/linklyze-account";
+
+    private static final String path = "com/linklyze/account";
+
+    // com.xxx.xxx
+    private static final String parent = path.replace("/", ".");
+
+    private static final String datasourceUrl = "jdbc:mysql://localhost:3308/plato_account?allowPublicKeyRetrieval=true&useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai";
+
     private static Map<String, String> getPathInfo() {
         Map<String, String> pathInfo = new HashMap<>();
-        // 在哪个包下生成路径
-        String module = "/plato-link";
-        pathInfo.put(ConstVal.ENTITY_PATH, System.getProperty("user.dir") + module + "/src/main/java/com/wyu/plato/link/model");
-        pathInfo.put(ConstVal.MAPPER_PATH, System.getProperty("user.dir") + module + "/src/main/java/com/wyu/plato/link/mapper");
-        pathInfo.put(ConstVal.SERVICE_PATH, System.getProperty("user.dir") + module + "/src/main/java/com/wyu/plato/link/service");
-        pathInfo.put(ConstVal.SERVICE_IMPL_PATH, System.getProperty("user.dir") + module + "/src/main/java/com/wyu/plato/link/service/impl");
-        pathInfo.put(ConstVal.CONTROLLER_PATH, System.getProperty("user.dir") + module + "/src/main/java/com/wyu/plato/link/api/v1");
+
+        pathInfo.put(ConstVal.ENTITY_PATH, System.getProperty("user.dir") + module + String.format("/src/main/java/%s/model", path));
+        pathInfo.put(ConstVal.MAPPER_PATH, System.getProperty("user.dir") + module + String.format("/src/main/java/%s/mapper", path));
+        pathInfo.put(ConstVal.SERVICE_PATH, System.getProperty("user.dir") + module + String.format("/src/main/java/%s/service", path));
+        pathInfo.put(ConstVal.SERVICE_IMPL_PATH, System.getProperty("user.dir") + module + String.format("/src/main/java/%s/service/impl", path));
+        pathInfo.put(ConstVal.CONTROLLER_PATH, System.getProperty("user.dir") + module + String.format("/src/main/java/%s/api/v1", path));
         pathInfo.put(ConstVal.XML_PATH, System.getProperty("user.dir") + module + "/src/main/resources/mapper");
         return pathInfo;
     }
