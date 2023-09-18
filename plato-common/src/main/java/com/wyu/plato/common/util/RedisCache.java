@@ -1,5 +1,7 @@
 package com.wyu.plato.common.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.BoundSetOperations;
 import org.springframework.data.redis.core.HashOperations;
@@ -19,6 +21,8 @@ import java.util.concurrent.TimeUnit;
 public class RedisCache {
     @Autowired
     public RedisTemplate redisTemplate;
+
+    private static final Logger log = LoggerFactory.getLogger(RedisCache.class);
 
     /**
      * 缓存基本的对象，Integer、String、实体类等

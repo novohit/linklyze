@@ -47,7 +47,7 @@ public class LinkApi {
     public void dispatch(@PathVariable("code") String code, HttpServletRequest request, HttpServletResponse response) {
         log.info("code:[{}]", code);
         /**
-         * 什么要用 301 跳转而不是 302
+         * 什么要用 302 跳转而不是 301
          * 301 是永久重定向，302 是临时重定向。
          * 短地址一经生成就不会变化，所以用 301 是同时对服务器压力也会有一定减少
          * 但是如果使用了 301，无法统计到短地址被点击的次数。
