@@ -1,4 +1,4 @@
-package com.wyu.plato.gateway.config;
+package com.linklyze.gateway.config;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.linklyze.common.enums.BizCodeEnum;

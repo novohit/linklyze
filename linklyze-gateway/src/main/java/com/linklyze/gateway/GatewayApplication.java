@@ -1,4 +1,4 @@
-package com.wyu.plato.gateway;
+package com.linklyze.gateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,7 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
  * @since 2023-02-22 16:54
  */
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
-@ComponentScan(basePackages = {"com.wyu.plato.account", "com.wyu.plato.gateway"})
+@ComponentScan(basePackages = {"com.linklyze.account", "com.linklyze.gateway"})
 public class GatewayApplication {
     public static void main(String[] args) {
         SpringApplication.run(GatewayApplication.class, args);
