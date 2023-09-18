@@ -17,7 +17,6 @@ import com.linklyze.visual.model.RefererGroupByDO;
 import com.linklyze.visual.model.TrendGroupByDO;
 import com.linklyze.visual.model.TypeGroupByDO;
 import com.linklyze.visual.service.AccessService;
-import com.wyu.plato.visual.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -11,8 +11,8 @@ import org.springframework.context.annotation.ComponentScan;
  * @since 2023-03-10
  */
 @SpringBootApplication
-@MapperScan("com.wyu.plato.link.mapper")
-@ComponentScan(basePackages = {"com.wyu.plato.link", "com.wyu.plato.common"})
+@MapperScan("com.linklyze.link.mapper")
+@ComponentScan(basePackages = {"com.linklyze.link", "com.linklyze.common"})
 @EnableFeignClients
 public class LinkApplication {
     public static void main(String[] args) {

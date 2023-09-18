@@ -122,11 +122,11 @@
 
     <!-- 开发环境:打印控制台 -->
     <springProfile name="dev">
-        <logger name="com.wyu.plato" level="DEBUG" additivity="false">
+        <logger name="com.linklyze" level="DEBUG" additivity="false">
             <!-- additivity 不要继承root的logger 否则会重复打印日志 -->
             <appender-ref ref="console"/>
         </logger>
-        <logger name="com.wyu.plato.account.mapper" level="OFF"/>
+        <logger name="com.linklyze.account.mapper" level="OFF"/>
         <root level="INFO">
             <appender-ref ref="console" />
         </root>

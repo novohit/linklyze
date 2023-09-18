@@ -32,7 +32,7 @@
 
     <!--然后定义logger，只有定义了logger并引⼊的appender，appender才会⽣效 -->
     <loggers>
-        <logger name="com.wyu.plato" level="INFO" additivity="false">
+        <logger name="com.linklyze" level="INFO" additivity="false">
             <!-- additivity 不要继承root的logger 否则会重复打印日志 -->
             <appender-ref ref="console"/>
         </logger>

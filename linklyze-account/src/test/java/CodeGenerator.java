@@ -49,7 +49,7 @@ public class CodeGenerator {
         // 包名配置
         PackageConfig packageConfig = new PackageConfig();
         packageConfig
-                .setParent("com.wyu.plato.link")
+                .setParent("com.linklyze.link")
                 .setPathInfo(getPathInfo())
                 .setEntity("model")
                 .setController("api.v1")
