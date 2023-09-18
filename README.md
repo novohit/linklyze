@@ -1,4 +1,12 @@
-## 短链系统
+## Linklyze
+
+## Link & Analyze
+
+分布式短链生成
+
+[原项目](https://github.com/novohit/linklyze) 已迁移至 [linklyze](https://github.com/novohit/linklyze)，旧仓库不在同步更新
+
+
 
 ## 架构图
 
@@ -11,7 +19,6 @@
 - [x] 账户服务
 - [x] 短链服务
 - [ ] 流量包服务
-- [ ] 
 
 ## 配置搭建
 ```
