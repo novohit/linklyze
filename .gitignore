@@ -1,5 +1,4 @@
 ### Java template
-HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
@@ -47,3 +46,5 @@ log
 temp/
 application-*.yml
 application-*.properties
+*.md
+!README.md
