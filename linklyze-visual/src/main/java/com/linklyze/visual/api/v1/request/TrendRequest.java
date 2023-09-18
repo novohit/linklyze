@@ -1,4 +1,4 @@
-package com.wyu.plato.visual.api.v1.request;
+package com.linklyze.visual.api.v1.request;
 
 import lombok.Data;
 

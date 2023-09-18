@@ -1,4 +1,4 @@
-package com.wyu.plato.visual;
+package com.linklyze.visual;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;

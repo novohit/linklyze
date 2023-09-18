@@ -1,4 +1,4 @@
-package com.wyu.plato.visual.vo;
+package com.linklyze.visual.vo;
 
 import lombok.Data;
 
@@ -7,9 +7,12 @@ import lombok.Data;
  * @since 2023-04-08
  */
 @Data
-public class DeviceStats {
+public class BrowserStats {
 
-    private String deviceType;
+    /**
+     * 浏览器类型
+     */
+    private String browser;
 
     /**
      * 浏览量
@@ -30,5 +33,4 @@ public class DeviceStats {
      * 访客数占比
      */
     private Double uvRatio;
-
 }

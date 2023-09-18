@@ -1,13 +1,13 @@
-package com.wyu.plato.visual.service;
+package com.linklyze.visual.service;
 
 import com.linklyze.common.model.vo.PageVO;
-import com.wyu.plato.visual.api.v1.request.PageRequest;
-import com.wyu.plato.visual.api.v1.request.DateRequest;
-import com.wyu.plato.visual.model.DwsWideInfo;
-import com.wyu.plato.visual.model.RefererGroupByDO;
-import com.wyu.plato.visual.model.TrendGroupByDO;
-import com.wyu.plato.visual.vo.StatsListVO;
-import com.wyu.plato.visual.vo.RegionStatsVO;
+import com.linklyze.visual.api.v1.request.DateRequest;
+import com.linklyze.visual.api.v1.request.PageRequest;
+import com.linklyze.visual.model.DwsWideInfo;
+import com.linklyze.visual.model.RefererGroupByDO;
+import com.linklyze.visual.model.TrendGroupByDO;
+import com.linklyze.visual.vo.RegionStatsVO;
+import com.linklyze.visual.vo.StatsListVO;
 
 import java.util.List;
 

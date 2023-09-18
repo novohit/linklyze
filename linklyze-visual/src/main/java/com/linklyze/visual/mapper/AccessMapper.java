@@ -1,11 +1,11 @@
-package com.wyu.plato.visual.mapper;
+package com.linklyze.visual.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.wyu.plato.visual.model.RefererGroupByDO;
-import com.wyu.plato.visual.model.TypeGroupByDO;
-import com.wyu.plato.visual.model.DwsWideInfo;
-import com.wyu.plato.visual.model.TrendGroupByDO;
-import com.wyu.plato.visual.vo.RegionStatsVO;
+import com.linklyze.visual.vo.RegionStatsVO;
+import com.linklyze.visual.model.RefererGroupByDO;
+import com.linklyze.visual.model.TypeGroupByDO;
+import com.linklyze.visual.model.DwsWideInfo;
+import com.linklyze.visual.model.TrendGroupByDO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

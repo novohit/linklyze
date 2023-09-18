@@ -1,18 +1,18 @@
-package com.wyu.plato.visual.api.v1;
+package com.linklyze.visual.api.v1;
 
 import com.linklyze.common.constant.Constants;
 import com.linklyze.common.enums.TrendIntervalType;
 import com.linklyze.common.model.vo.PageVO;
 import com.linklyze.common.model.vo.Resp;
 import com.linklyze.common.util.TimeUtil;
-import com.wyu.plato.visual.api.v1.request.DateRequest;
-import com.wyu.plato.visual.api.v1.request.PageRequest;
-import com.wyu.plato.visual.model.DwsWideInfo;
-import com.wyu.plato.visual.model.RefererGroupByDO;
-import com.wyu.plato.visual.model.TrendGroupByDO;
-import com.wyu.plato.visual.service.AccessService;
-import com.wyu.plato.visual.vo.RegionStatsVO;
-import com.wyu.plato.visual.vo.StatsListVO;
+import com.linklyze.visual.api.v1.request.DateRequest;
+import com.linklyze.visual.api.v1.request.PageRequest;
+import com.linklyze.visual.model.RefererGroupByDO;
+import com.linklyze.visual.model.TrendGroupByDO;
+import com.linklyze.visual.vo.RegionStatsVO;
+import com.linklyze.visual.vo.StatsListVO;
+import com.linklyze.visual.model.DwsWideInfo;
+import com.linklyze.visual.service.AccessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;

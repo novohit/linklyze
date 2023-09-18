@@ -1,4 +1,4 @@
-package com.wyu.plato.visual.model;
+package com.linklyze.visual.model;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;

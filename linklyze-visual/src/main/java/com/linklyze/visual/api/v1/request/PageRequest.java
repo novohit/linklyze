@@ -1,4 +1,4 @@
-package com.wyu.plato.visual.api.v1.request;
+package com.linklyze.visual.api.v1.request;
 
 import com.linklyze.common.model.request.PageBase;
 import lombok.Data;

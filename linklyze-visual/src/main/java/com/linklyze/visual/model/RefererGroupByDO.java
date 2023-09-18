@@ -1,4 +1,4 @@
-package com.wyu.plato.visual.model;
+package com.linklyze.visual.model;
 
 import lombok.Data;
 

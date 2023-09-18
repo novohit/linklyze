@@ -1,4 +1,4 @@
-package com.wyu.plato.visual.vo;
+package com.linklyze.visual.vo;
 
 import lombok.Data;
 
@@ -7,12 +7,8 @@ import lombok.Data;
  * @since 2023-04-08
  */
 @Data
-public class BrowserStats {
-
-    /**
-     * 浏览器类型
-     */
-    private String browser;
+public class OsStats {
+    private String os;
 
     /**
      * 浏览量

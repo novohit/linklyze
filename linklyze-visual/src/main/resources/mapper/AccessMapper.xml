@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.wyu.plato.visual.mapper.AccessMapper">
+<mapper namespace="com.linklyze.visual.mapper.AccessMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.wyu.plato.visual.model.DwsWideInfo">
+    <resultMap id="BaseResultMap" type="com.linklyze.visual.model.DwsWideInfo">
         <result column="id" property="id" />
         <result column="code" property="code" />
         <result column="referer" property="referer" />
@@ -36,7 +36,7 @@
         city, isp, device_type, os, browser_type, device_manufacturer, `timestamp`, `start`, `end`, uv, pv
     </sql>
 
-    <select id="region" resultType="com.wyu.plato.visual.vo.RegionStatsVO">
+    <select id="region" resultType="com.linklyze.visual.vo.RegionStatsVO">
         SELECT country, province, sum(pv) as pv, sum(uv) as uv
         FROM access_stats
         WHERE code = #{code,jdbcType=VARCHAR}
@@ -45,7 +45,7 @@
         GROUP BY country, province ORDER BY pv DESC;
     </select>
 
-    <select id="type" resultType="com.wyu.plato.visual.model.TypeGroupByDO">
+    <select id="type" resultType="com.linklyze.visual.model.TypeGroupByDO">
         SELECT device_type, os, browser_type, sum(pv) as pv, sum(uv) as uv
         FROM access_stats
         WHERE code = #{code,jdbcType=VARCHAR}
@@ -54,7 +54,7 @@
         GROUP BY device_type, os, browser_type ORDER BY pv DESC;
     </select>
 
-    <select id="trendByDay" resultType="com.wyu.plato.visual.model.TrendGroupByDO">
+    <select id="trendByDay" resultType="com.linklyze.visual.model.TrendGroupByDO">
         select toYYYYMMDD(`start`) as `interval`,
         sum(uv) as uv, sum(pv) as pv,
         count( DISTINCT ip) ip
@@ -65,7 +65,7 @@
         GROUP BY `interval` ORDER BY `interval` DESC;
     </select>
 
-    <select id="trendByHour" resultType="com.wyu.plato.visual.model.TrendGroupByDO">
+    <select id="trendByHour" resultType="com.linklyze.visual.model.TrendGroupByDO">
         select toHour(`start`) as `interval`,
                sum(uv) as uv, sum(pv) as pv,
                count( DISTINCT ip) ip
@@ -74,7 +74,7 @@
           AND toYYYYMMDD(`start`) = #{date,jdbcType=VARCHAR}
         GROUP BY `interval` ORDER BY `interval` DESC;
     </select>
-    <select id="refererTopN" resultType="com.wyu.plato.visual.model.RefererGroupByDO">
+    <select id="refererTopN" resultType="com.linklyze.visual.model.RefererGroupByDO">
         SELECT referer, sum(pv) as pv
         FROM access_stats
         WHERE code = #{code,jdbcType=VARCHAR}
@@ -82,7 +82,7 @@
         AND toYYYYMMDD(`end`)  &lt;= #{end,jdbcType=VARCHAR}
         GROUP BY referer ORDER BY pv DESC LIMIT #{n,jdbcType=INTEGER};
     </select>
-    <select id="pageRecord" resultType="com.wyu.plato.visual.model.DwsWideInfo">
+    <select id="pageRecord" resultType="com.linklyze.visual.model.DwsWideInfo">
         SELECT <include refid="Base_Column_List"/>
         FROM access_stats
         WHERE code = #{code,jdbcType=VARCHAR}

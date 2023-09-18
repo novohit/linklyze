@@ -1,4 +1,4 @@
-package com.wyu.plato.visual.vo;
+package com.linklyze.visual.vo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;

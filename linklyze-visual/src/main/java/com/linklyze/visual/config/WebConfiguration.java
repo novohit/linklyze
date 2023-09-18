@@ -1,4 +1,4 @@
-package com.wyu.plato.visual.config;
+package com.linklyze.visual.config;
 
 import com.linklyze.common.interceptor.LoginInterceptor;
 import org.springframework.context.annotation.Bean;
