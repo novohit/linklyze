@@ -13,10 +13,22 @@ jobs:
     if: github.repository == 'novohit/linklyze'
     runs-on: ubuntu-latest
     steps:
-      - name: Sync repo
+      - name: Sync Github
         uses: wearerequired/git-mirror-action@master
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         with:
           source-repo: "git@github.com:novohit/linklyze.git"
           destination-repo: "git@github.com:novohit/plato.git"
+
+  sync_gitee:
+    if: github.repository == 'novohit/linklyze'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sync Gitee
+        uses: wearerequired/git-mirror-action@master
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        with:
+          source-repo: "git@github.com:novohit/linklyze.git"
+          destination-repo: "git@gitee.com:novohit/linklyze.git"
