@@ -1,0 +1,23 @@
+name: Sync to Destination Repository
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Push to destination repository
+        run: |
+          git remote add destination https://x-access-token:${{ secrets.GIT_TOKEN }}@github.com/novohit/plato.git
+          git push --force-with-lease destination ${{ github.ref }}
