@@ -1,7 +1,7 @@
 package com.wyu.plato.link.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.wyu.plato.common.model.bo.CustomMessage;
+import com.linklyze.common.model.bo.CustomMessage;
 import com.wyu.plato.link.api.v1.request.LinkCreateRequest;
 import com.wyu.plato.link.api.v1.request.LinkDeleteRequest;
 import com.wyu.plato.link.api.v1.request.LinkUpdateRequest;

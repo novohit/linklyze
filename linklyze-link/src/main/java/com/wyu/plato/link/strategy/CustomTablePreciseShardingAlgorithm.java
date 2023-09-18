@@ -1,7 +1,5 @@
 package com.wyu.plato.link.strategy;
 
-import com.wyu.plato.common.enums.BizCodeEnum;
-import com.wyu.plato.common.exception.BizException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shardingsphere.api.sharding.standard.PreciseShardingAlgorithm;
 import org.apache.shardingsphere.api.sharding.standard.PreciseShardingValue;

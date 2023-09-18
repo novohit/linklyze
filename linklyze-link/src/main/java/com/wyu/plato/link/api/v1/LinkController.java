@@ -2,9 +2,9 @@ package com.wyu.plato.link.api.v1;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.wyu.plato.common.model.vo.PageVO;
-import com.wyu.plato.common.model.vo.Resp;
-import com.wyu.plato.common.util.CommonUtil;
+import com.linklyze.common.model.vo.PageVO;
+import com.linklyze.common.model.vo.Resp;
+import com.linklyze.common.util.CommonUtil;
 import com.wyu.plato.link.api.v1.request.LinkCreateRequest;
 import com.wyu.plato.link.api.v1.request.LinkDeleteRequest;
 import com.wyu.plato.link.api.v1.request.LinkUpdateRequest;
@@ -20,7 +20,6 @@ import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;

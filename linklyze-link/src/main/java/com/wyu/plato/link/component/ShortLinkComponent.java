@@ -1,6 +1,6 @@
 package com.wyu.plato.link.component;
 
-import com.wyu.plato.common.util.CommonUtil;
+import com.linklyze.common.util.CommonUtil;
 import com.wyu.plato.link.strategy.ShardingConfig;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;

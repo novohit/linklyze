@@ -1,7 +1,7 @@
 package com.wyu.plato.link.strategy;
 
 
-import com.wyu.plato.common.util.WeightRandom;
+import com.linklyze.common.util.WeightRandom;
 import org.apache.commons.math3.util.Pair;
 
 import java.util.ArrayList;

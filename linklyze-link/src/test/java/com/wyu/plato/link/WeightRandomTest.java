@@ -1,6 +1,6 @@
 package com.wyu.plato.link;
 
-import com.wyu.plato.common.util.WeightRandom;
+import com.linklyze.common.util.WeightRandom;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.math3.util.Pair;
 import org.junit.Before;

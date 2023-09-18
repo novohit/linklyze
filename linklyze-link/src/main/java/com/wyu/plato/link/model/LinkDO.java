@@ -2,7 +2,7 @@ package com.wyu.plato.link.model;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.wyu.plato.common.model.BaseModel;
+import com.linklyze.common.model.BaseModel;
 
 import java.util.Date;
 

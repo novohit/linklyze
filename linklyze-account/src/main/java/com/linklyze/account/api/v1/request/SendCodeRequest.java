@@ -1,7 +1,7 @@
 package com.linklyze.account.api.v1.request;
 
 import com.linklyze.account.annotation.EmailOrPhone;
-import com.wyu.plato.common.enums.SendCodeType;
+import com.linklyze.common.enums.SendCodeType;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;

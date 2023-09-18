@@ -1,10 +1,9 @@
 package com.wyu.plato.link.service.impl;
 
 import com.alibaba.fastjson2.JSONObject;
-import com.wyu.plato.common.enums.LogType;
-import com.wyu.plato.common.model.bo.LogRecord;
-import com.wyu.plato.common.util.CommonUtil;
-import com.wyu.plato.link.service.LinkService;
+import com.linklyze.common.enums.LogType;
+import com.linklyze.common.model.bo.LogRecord;
+import com.linklyze.common.util.CommonUtil;
 import com.wyu.plato.link.service.LogService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

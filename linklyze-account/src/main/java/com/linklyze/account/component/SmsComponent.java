@@ -1,7 +1,7 @@
 package com.linklyze.account.component;
 
 import com.linklyze.account.config.SmsProperties;
-import com.wyu.plato.common.util.CommonUtil;
+import com.linklyze.common.util.CommonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

@@ -1,6 +1,6 @@
 package com.wyu.plato.link.api.v1.request;
 
-import com.wyu.plato.common.model.request.PageBase;
+import com.linklyze.common.model.request.PageBase;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

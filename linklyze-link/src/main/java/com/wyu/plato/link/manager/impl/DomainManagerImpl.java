@@ -1,7 +1,7 @@
 package com.wyu.plato.link.manager.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.wyu.plato.common.enums.DomainType;
+import com.linklyze.common.enums.DomainType;
 import com.wyu.plato.link.manager.DomainManager;
 import com.wyu.plato.link.mapper.DomainMapper;
 import com.wyu.plato.link.model.DomainDO;

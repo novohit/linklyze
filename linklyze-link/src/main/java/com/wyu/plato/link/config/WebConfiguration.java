@@ -1,6 +1,6 @@
 package com.wyu.plato.link.config;
 
-import com.wyu.plato.common.interceptor.LoginInterceptor;
+import com.linklyze.common.interceptor.LoginInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.RestController;

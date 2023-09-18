@@ -2,11 +2,11 @@ package com.linklyze.account.service.strategy;
 
 import com.linklyze.account.component.SmsComponent;
 import com.linklyze.account.config.SmsProperties;
-import com.wyu.plato.common.constant.CacheConstants;
-import com.wyu.plato.common.enums.BizCodeEnum;
-import com.wyu.plato.common.exception.BizException;
-import com.wyu.plato.common.util.CommonUtil;
-import com.wyu.plato.common.util.RedisCache;
+import com.linklyze.common.constant.CacheConstants;
+import com.linklyze.common.enums.BizCodeEnum;
+import com.linklyze.common.exception.BizException;
+import com.linklyze.common.util.CommonUtil;
+import com.linklyze.common.util.RedisCache;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

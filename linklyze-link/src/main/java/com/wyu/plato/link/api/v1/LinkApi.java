@@ -1,9 +1,9 @@
 package com.wyu.plato.link.api.v1;
 
-import com.wyu.plato.common.enums.BizCodeEnum;
-import com.wyu.plato.common.exception.BizException;
-import com.wyu.plato.common.util.CheckUtil;
-import com.wyu.plato.common.util.CommonUtil;
+import com.linklyze.common.enums.BizCodeEnum;
+import com.linklyze.common.exception.BizException;
+import com.linklyze.common.util.CheckUtil;
+import com.linklyze.common.util.CommonUtil;
 import com.wyu.plato.link.model.LinkDO;
 import com.wyu.plato.link.service.LinkService;
 import com.wyu.plato.link.service.LogService;

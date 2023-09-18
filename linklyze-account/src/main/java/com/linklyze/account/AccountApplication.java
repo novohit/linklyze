@@ -13,7 +13,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
  */
 @MapperScan("com.wyu.plato.account.mapper")
 // @ComponentScan解决跨模块bean的注入问题 注意使用@ComponentScan还需要将本模块也写进行 因为覆盖了@SpringBootApplication原来的@ComponentScan
-@ComponentScan(basePackages = {"com.linklyze.account", "com.wyu.plato.common"})
+@ComponentScan(basePackages = {"com.linklyze.account", "com.linklyze.common"})
 @SpringBootApplication
 @EnableFeignClients
 @EnableAsync

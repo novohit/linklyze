@@ -1,8 +1,8 @@
 package com.wyu.plato.gateway.config;
 
 import com.alibaba.fastjson2.JSONObject;
-import com.wyu.plato.common.enums.BizCodeEnum;
-import com.wyu.plato.common.util.TokenUtil;
+import com.linklyze.common.enums.BizCodeEnum;
+import com.linklyze.common.util.TokenUtil;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;

@@ -1,7 +1,7 @@
 package com.wyu.plato.link.api.v1;
 
 
-import com.wyu.plato.common.model.vo.Resp;
+import com.linklyze.common.model.vo.Resp;
 import com.wyu.plato.link.model.DomainDO;
 import com.wyu.plato.link.service.DomainService;
 import com.wyu.plato.link.vo.DomainVO;

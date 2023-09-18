@@ -1,30 +1,25 @@
 package com.wyu.plato.visual.api.v1;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.wyu.plato.common.constant.Constants;
-import com.wyu.plato.common.enums.TrendIntervalType;
-import com.wyu.plato.common.model.vo.PageVO;
-import com.wyu.plato.common.model.vo.Resp;
-import com.wyu.plato.common.util.TimeUtil;
-import com.wyu.plato.visual.api.v1.request.PageRequest;
+import com.linklyze.common.constant.Constants;
+import com.linklyze.common.enums.TrendIntervalType;
+import com.linklyze.common.model.vo.PageVO;
+import com.linklyze.common.model.vo.Resp;
+import com.linklyze.common.util.TimeUtil;
 import com.wyu.plato.visual.api.v1.request.DateRequest;
+import com.wyu.plato.visual.api.v1.request.PageRequest;
 import com.wyu.plato.visual.model.DwsWideInfo;
 import com.wyu.plato.visual.model.RefererGroupByDO;
 import com.wyu.plato.visual.model.TrendGroupByDO;
 import com.wyu.plato.visual.service.AccessService;
-import com.wyu.plato.visual.vo.StatsListVO;
 import com.wyu.plato.visual.vo.RegionStatsVO;
-import org.apache.ibatis.binding.BindingException;
+import com.wyu.plato.visual.vo.StatsListVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindException;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.ConstraintViolationException;
 import java.util.List;
 import java.util.stream.Collectors;
 

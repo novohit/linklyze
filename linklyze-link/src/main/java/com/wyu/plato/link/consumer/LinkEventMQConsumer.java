@@ -1,10 +1,10 @@
 package com.wyu.plato.link.consumer;
 
 import com.rabbitmq.client.Channel;
-import com.wyu.plato.common.enums.BizCodeEnum;
-import com.wyu.plato.common.enums.MessageEventType;
-import com.wyu.plato.common.exception.BizException;
-import com.wyu.plato.common.model.bo.CustomMessage;
+import com.linklyze.common.enums.BizCodeEnum;
+import com.linklyze.common.enums.MessageEventType;
+import com.linklyze.common.exception.BizException;
+import com.linklyze.common.model.bo.CustomMessage;
 import com.wyu.plato.link.config.RabbitMQConfig;
 import com.wyu.plato.link.service.LinkService;
 import lombok.extern.slf4j.Slf4j;

@@ -1,7 +1,7 @@
 package com.wyu.plato.link.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.wyu.plato.common.LocalUserThreadHolder;
+import com.linklyze.common.LocalUserThreadHolder;
 import com.wyu.plato.link.manager.DomainManager;
 import com.wyu.plato.link.mapper.DomainMapper;
 import com.wyu.plato.link.model.DomainDO;

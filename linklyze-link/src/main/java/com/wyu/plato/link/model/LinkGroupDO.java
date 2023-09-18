@@ -2,7 +2,7 @@ package com.wyu.plato.link.model;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.wyu.plato.common.model.BaseModel;
+import com.linklyze.common.model.BaseModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;

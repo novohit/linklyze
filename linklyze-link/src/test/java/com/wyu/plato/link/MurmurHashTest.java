@@ -1,7 +1,7 @@
 package com.wyu.plato.link;
 
 import com.google.common.hash.Hashing;
-import com.wyu.plato.common.util.CommonUtil;
+import com.linklyze.common.util.CommonUtil;
 import com.wyu.plato.link.component.ShortLinkComponent;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;

@@ -1,7 +1,7 @@
 package com.linklyze.account.service.strategy;
 
-import com.wyu.plato.common.enums.SendCodeType;
-import com.wyu.plato.common.util.SpringContextUtil;
+import com.linklyze.common.enums.SendCodeType;
+import com.linklyze.common.util.SpringContextUtil;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,9 +1,9 @@
 package com.wyu.plato.link.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.wyu.plato.common.LocalUserThreadHolder;
-import com.wyu.plato.common.enums.BizCodeEnum;
-import com.wyu.plato.common.exception.BizException;
+import com.linklyze.common.LocalUserThreadHolder;
+import com.linklyze.common.enums.BizCodeEnum;
+import com.linklyze.common.exception.BizException;
 import com.wyu.plato.link.api.v1.request.GroupCreateRequest;
 import com.wyu.plato.link.api.v1.request.GroupUpdateRequest;
 import com.wyu.plato.link.manager.LinkGroupManager;

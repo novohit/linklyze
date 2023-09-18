@@ -71,7 +71,7 @@ public class CodeGenerator {
         StrategyConfig strategyConfig = new StrategyConfig();
         strategyConfig
                 .setNaming(NamingStrategy.underline_to_camel)
-                .setSuperEntityClass("com.wyu.plato.common.model.BaseModel")
+                .setSuperEntityClass("BaseModel")
                 //.setTablePrefix("z_")
                 .setEntitySerialVersionUID(false)
                 .setEntityLombokModel(true)

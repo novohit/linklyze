@@ -2,7 +2,7 @@ package com.wyu.plato.visual.model;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.wyu.plato.common.enums.TrendIntervalType;
+import com.linklyze.common.enums.TrendIntervalType;
 import lombok.Data;
 
 /**

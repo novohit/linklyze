@@ -7,7 +7,7 @@ import com.aliyun.oss.OSSException;
 import com.aliyun.oss.model.PutObjectRequest;
 import com.aliyun.oss.model.PutObjectResult;
 import com.linklyze.account.config.OSSProperties;
-import com.wyu.plato.common.util.CommonUtil;
+import com.linklyze.common.util.CommonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

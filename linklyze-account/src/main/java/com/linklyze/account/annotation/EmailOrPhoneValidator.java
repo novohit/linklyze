@@ -1,7 +1,7 @@
 package com.linklyze.account.annotation;
 
 import com.linklyze.account.api.v1.request.SendCodeRequest;
-import com.wyu.plato.common.util.CheckUtil;
+import com.linklyze.common.util.CheckUtil;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

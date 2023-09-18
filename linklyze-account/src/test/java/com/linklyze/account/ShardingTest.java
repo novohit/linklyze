@@ -4,7 +4,7 @@ import com.linklyze.account.mapper.AccountMapper;
 import com.linklyze.account.mapper.TrafficMapper;
 import com.linklyze.account.model.AccountDO;
 import com.linklyze.account.model.TrafficDO;
-import com.wyu.plato.common.util.CommonUtil;
+import com.linklyze.common.util.CommonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;

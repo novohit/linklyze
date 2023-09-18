@@ -2,7 +2,7 @@ package com.linklyze.account.api.v1;
 
 import com.linklyze.account.api.v1.request.SendCodeRequest;
 import com.linklyze.account.service.NotifyService;
-import com.wyu.plato.common.model.vo.Resp;
+import com.linklyze.common.model.vo.Resp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
