@@ -1,13 +1,12 @@
 package com.linklyze.account.model;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-
-import java.time.LocalDate;
-
 import com.linklyze.common.model.BaseModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.time.LocalDateTime;
 
 /**
  * @author novo
@@ -57,7 +56,7 @@ public class TrafficDO extends BaseModel {
     /**
      * 过期时间
      */
-    private LocalDate expiredDate;
+    private LocalDateTime expiredDate;
 
     /**
      * 插件类型
