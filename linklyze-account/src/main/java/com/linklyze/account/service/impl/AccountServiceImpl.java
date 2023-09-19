@@ -9,12 +9,14 @@ import com.linklyze.account.api.v1.request.RegisterRequest;
 import com.linklyze.account.model.AccountDO;
 import com.linklyze.account.mapper.AccountMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.linklyze.common.constant.CacheConstants;
 import com.linklyze.common.enums.AccountAuthType;
 import com.linklyze.common.enums.BizCodeEnum;
 import com.linklyze.common.enums.SendCodeType;
 import com.linklyze.common.exception.BizException;
 import com.linklyze.common.model.bo.LocalUser;
 import com.linklyze.common.util.CommonUtil;
+import com.linklyze.common.util.RedisCache;
 import com.linklyze.common.util.TokenUtil;
 import com.linklyze.common.util.uuid.IDUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +25,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -40,6 +43,10 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, AccountDO> im
 
     @Autowired
     private AccountMapper accountMapper;
+
+
+    @Autowired
+    private RedisCache redisCache;
 
     /**
      * 单库下可在数据库层面用唯一索引保证手机号唯一
@@ -82,6 +89,16 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, AccountDO> im
 
     @Override
     public String login(LoginRequest loginRequest) {
+        String captcha = loginRequest.getCaptcha();
+        String captchaId = loginRequest.getCaptchaId();
+        String captchaKey = CacheConstants.CAPTCHA_CODE_KEY + captchaId;
+        String captchaCache = this.redisCache.getCacheObject(captchaKey);
+        if (!StringUtils.hasText(captchaCache) || !captchaCache.equalsIgnoreCase(captcha)) {
+            // 图形验证码不存在或匹配失败
+            throw new BizException(BizCodeEnum.CAPTCHA_ERROR);
+        }
+        // 图形验证码匹配成功
+        this.redisCache.deleteObject(captchaKey);
         // 1 根据手机号查询db
         String phone = loginRequest.getPhone();
         List<AccountDO> accounts = this.accountMapper

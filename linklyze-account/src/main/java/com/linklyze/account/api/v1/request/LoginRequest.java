@@ -2,6 +2,7 @@ package com.linklyze.account.api.v1.request;
 
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 /**
@@ -15,4 +16,10 @@ public class LoginRequest {
     private String phone;
 
     private String password;
+
+    @NotBlank
+    private String captcha;
+
+    @NotBlank
+    private String captchaId;
 }

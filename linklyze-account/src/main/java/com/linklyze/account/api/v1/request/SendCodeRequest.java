@@ -19,12 +19,6 @@ public class SendCodeRequest {
      */
     private SendCodeType type;
 
-    @NotBlank
-    private String captcha;
-
-    @NotBlank
-    private String captchaId;
-
     /**
      * 接收方，邮箱或手机号
      */

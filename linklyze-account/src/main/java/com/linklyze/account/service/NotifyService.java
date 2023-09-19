@@ -1,14 +1,12 @@
 package com.linklyze.account.service;
 
 import com.google.code.kaptcha.impl.DefaultKaptcha;
+import com.linklyze.account.api.v1.request.SendCodeRequest;
 import com.linklyze.account.component.SmsComponent;
 import com.linklyze.account.service.strategy.MapSendStrategyFactory;
-import com.linklyze.account.api.v1.request.SendCodeRequest;
 import com.linklyze.account.service.strategy.VerifyStrategy;
-import com.linklyze.common.enums.BizCodeEnum;
 import com.linklyze.common.constant.CacheConstants;
 import com.linklyze.common.enums.SendCodeType;
-import com.linklyze.common.exception.BizException;
 import com.linklyze.common.util.RedisCache;
 import com.linklyze.common.util.uuid.IDUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -70,20 +68,9 @@ public class NotifyService {
     }
 
     public void send(SendCodeRequest sendCodeRequest) {
-        String captcha = sendCodeRequest.getCaptcha();
-        String captchaId = sendCodeRequest.getCaptchaId();
-        String captchaKey = CacheConstants.CAPTCHA_CODE_KEY + captchaId;
-        String captchaCache = this.redisCache.getCacheObject(captchaKey);
-        // 图形验证码匹配成功
-        if (StringUtils.hasText(captchaCache) && captchaCache.equalsIgnoreCase(captcha)) {
-            this.redisCache.deleteObject(captchaKey);
-            // 发送业务验证码
-            VerifyStrategy verifyStrategy = MapSendStrategyFactory.getChargeStrategy(sendCodeRequest.getType());
-            verifyStrategy.send(sendCodeRequest.getTo(), sendCodeRequest.getType().name());
-        } else {
-            // 图形验证码不存在或匹配失败
-            throw new BizException(BizCodeEnum.CAPTCHA_ERROR);
-        }
+        // 发送业务验证码
+        VerifyStrategy verifyStrategy = MapSendStrategyFactory.getChargeStrategy(sendCodeRequest.getType());
+        verifyStrategy.send(sendCodeRequest.getTo(), sendCodeRequest.getType().name());
     }
 
     public Map<String, Object> getCaptcha() {
