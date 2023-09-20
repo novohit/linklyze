@@ -41,7 +41,7 @@ public class ProductOrderServiceImpl extends ServiceImpl<ProductOrderMapper, Pro
     @Override
     public int updateState(String outTradeNo, String newState, String oldState) {
         Long accountNo = LocalUserThreadHolder.getLocalUserNo();
-        this.productOrderMapper.update(null, new UpdateWrapper<ProductOrderDO>()
+        return this.productOrderMapper.update(null, new UpdateWrapper<ProductOrderDO>()
                 .lambda()
                 .eq(ProductOrderDO::getAccountNo, accountNo)
                 .eq(ProductOrderDO::getOutTradeNo, outTradeNo)
