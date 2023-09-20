@@ -8,8 +8,8 @@ spring:
       discovery:
         server-addr: ${NACOS_SERVERS:localhost:8848}
         cluster-name: ${NACOS_CLUSTER_NAME:GZ}
-        username: ${NACOS_USERNAME}
-        password: ${NACOS_PASSWORD}
+        username: ${NACOS_USERNAME:nacos}
+        password: ${NACOS_PASSWORD:nacos}
     loadbalancer:
       nacos:
         # 启用nacos负载均衡配置同集群优先 同一集群下是随机策略 @LoadBalancerClient无效
