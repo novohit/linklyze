@@ -1,6 +1,8 @@
 package com.linklyze.account.api.v1.response;
 
 import com.linklyze.common.model.BaseModel;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -9,6 +11,8 @@ import java.time.LocalDateTime;
  * @author novo
  * @since 2023-09-20
  */
+@Data
+@EqualsAndHashCode(callSuper = true)
 public class ProductOrderResponse extends BaseModel {
 
     /**

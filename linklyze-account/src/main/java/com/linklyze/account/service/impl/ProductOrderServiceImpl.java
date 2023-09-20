@@ -1,5 +1,6 @@
 package com.linklyze.account.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -52,12 +53,15 @@ public class ProductOrderServiceImpl extends ServiceImpl<ProductOrderMapper, Pro
     public Page<ProductOrderDO> page(ProductOrderPageRequest pageRequest) {
         Long accountNo = LocalUserThreadHolder.getLocalUserNo();
         Page<ProductOrderDO> request = new Page<>(pageRequest.getPage(), pageRequest.getSize());
+        LambdaQueryWrapper<ProductOrderDO> wrapper = new QueryWrapper<ProductOrderDO>()
+                .lambda()
+                .eq(ProductOrderDO::getAccountNo, accountNo)
+                .orderByDesc(ProductOrderDO::getCreateTime);
+        if (pageRequest.getState() != null) {
+            wrapper.eq(ProductOrderDO::getState, pageRequest.getState());
+        }
         Page<ProductOrderDO> response = this.productOrderMapper
-                .selectPage(request,
-                        new QueryWrapper<ProductOrderDO>().lambda()
-                                .eq(ProductOrderDO::getAccountNo, accountNo)
-                                .eq(ProductOrderDO::getState, pageRequest.getState())
-                                .orderByDesc(ProductOrderDO::getCreateTime));
+                .selectPage(request, wrapper);
         return response;
     }
 }

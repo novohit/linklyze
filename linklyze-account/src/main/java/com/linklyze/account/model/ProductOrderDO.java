@@ -7,9 +7,11 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.time.LocalDateTime;
 
 import com.linklyze.common.model.BaseModel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 /**
@@ -18,9 +20,10 @@ import lombok.experimental.Accessors;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Accessors(chain = true)
-@TableName("product_order")
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
+@TableName("product_order")
 public class ProductOrderDO extends BaseModel {
 
 
