@@ -1,6 +1,6 @@
 package com.linklyze.visual.service;
 
-import com.linklyze.common.model.vo.PageVO;
+import com.linklyze.common.model.vo.PageResponse;
 import com.linklyze.visual.api.v1.request.DateRequest;
 import com.linklyze.visual.api.v1.request.PageRequest;
 import com.linklyze.visual.model.DwsWideInfo;
@@ -16,7 +16,7 @@ import java.util.List;
  * @since 2023-04-07
  */
 public interface AccessService {
-    PageVO<DwsWideInfo> page(PageRequest pageRequest);
+    PageResponse<DwsWideInfo> page(PageRequest pageRequest);
 
     List<RegionStatsVO> region(DateRequest dateRequest);
 

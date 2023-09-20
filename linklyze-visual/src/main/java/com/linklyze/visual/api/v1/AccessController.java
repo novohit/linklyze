@@ -2,7 +2,7 @@ package com.linklyze.visual.api.v1;
 
 import com.linklyze.common.constant.Constants;
 import com.linklyze.common.enums.TrendIntervalType;
-import com.linklyze.common.model.vo.PageVO;
+import com.linklyze.common.model.vo.PageResponse;
 import com.linklyze.common.model.vo.Resp;
 import com.linklyze.common.util.TimeUtil;
 import com.linklyze.visual.api.v1.request.DateRequest;
@@ -44,12 +44,12 @@ public class AccessController {
      * @param pageRequest
      */
     @PostMapping("/page")
-    public Resp<PageVO<DwsWideInfo>> page(@RequestBody @Validated PageRequest pageRequest) {
+    public Resp<PageResponse<DwsWideInfo>> page(@RequestBody @Validated PageRequest pageRequest) {
         int total = pageRequest.getPage() * pageRequest.getSize();
         if (total > Constants.VISUAL_MAX_LIMIT) {
             return Resp.error("只允许查询最近1000条数据");
         }
-        PageVO<DwsWideInfo> page = this.accessService.page(pageRequest);
+        PageResponse<DwsWideInfo> page = this.accessService.page(pageRequest);
         return Resp.success(page);
     }
 

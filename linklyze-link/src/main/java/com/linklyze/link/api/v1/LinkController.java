@@ -2,7 +2,7 @@ package com.linklyze.link.api.v1;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.linklyze.common.model.vo.PageVO;
+import com.linklyze.common.model.vo.PageResponse;
 import com.linklyze.common.model.vo.Resp;
 import com.linklyze.common.util.CommonUtil;
 import com.linklyze.link.api.v1.request.LinkCreateRequest;
@@ -64,7 +64,7 @@ public class LinkController {
      * @return
      */
     @PostMapping("/page")
-    public Resp<PageVO<LinkVO>> page(@RequestBody @Validated PageRequest pageRequest) {
+    public Resp<PageResponse<LinkVO>> page(@RequestBody @Validated PageRequest pageRequest) {
         Page<LinkMappingDO> page = this.linkService.page(pageRequest);
         List<LinkMappingDO> records = page.getRecords();
 
@@ -77,8 +77,8 @@ public class LinkController {
                 }).collect(Collectors.toList());
 
 
-        PageVO<LinkVO> pageVO = new PageVO<>(page.getCurrent(), page.getSize(), page.getTotal(), page.getPages(), linkVOList);
-        return Resp.success(pageVO);
+        PageResponse<LinkVO> pageResponse = new PageResponse<>(page.getCurrent(), page.getSize(), page.getTotal(), page.getPages(), linkVOList);
+        return Resp.success(pageResponse);
     }
 
 

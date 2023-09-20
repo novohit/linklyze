@@ -2,7 +2,7 @@ package com.linklyze.visual.service.impl;
 
 import com.linklyze.common.constant.Constants;
 import com.linklyze.common.enums.TrendIntervalType;
-import com.linklyze.common.model.vo.PageVO;
+import com.linklyze.common.model.vo.PageResponse;
 import com.linklyze.common.util.TimeUtil;
 import com.linklyze.visual.api.v1.request.PageRequest;
 import com.linklyze.visual.vo.BrowserStats;
@@ -44,7 +44,7 @@ public class AccessServiceImpl implements AccessService {
      * @return
      */
     @Override
-    public PageVO<DwsWideInfo> page(PageRequest pageRequest) {
+    public PageResponse<DwsWideInfo> page(PageRequest pageRequest) {
         Integer page = pageRequest.getPage();
         Integer size = pageRequest.getSize();
         String code = pageRequest.getCode();
@@ -56,11 +56,11 @@ public class AccessServiceImpl implements AccessService {
         int total = this.accessMapper.pagRecordTotal(code, Constants.VISUAL_MAX_LIMIT);
         int totalPage = (total + size - 1) / size;
         List<DwsWideInfo> record = this.accessMapper.pageRecord(code, offset, size);
-        PageVO<DwsWideInfo> pageVO = new PageVO<>(Long.parseLong(String.valueOf(page)),
+        PageResponse<DwsWideInfo> pageResponse = new PageResponse<>(Long.parseLong(String.valueOf(page)),
                 Long.parseLong(String.valueOf(size)),
                 Long.parseLong(String.valueOf(total)),
                 Long.parseLong(String.valueOf(totalPage)), record);
-        return pageVO;
+        return pageResponse;
     }
 
     @Override

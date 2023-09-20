@@ -13,7 +13,7 @@ import java.util.List;
  * @since 2023-03-25
  */
 @Data
-public class PageVO<T> {
+public class PageResponse<T> {
 
     /**
      * 页码
@@ -40,7 +40,7 @@ public class PageVO<T> {
      */
     private List<T> items;
 
-    public PageVO(Page<T> page) {
+    public PageResponse(Page<T> page) {
         this.page = page.getCurrent();
         this.size = page.getSize();
         this.total = page.getTotal();
@@ -48,7 +48,7 @@ public class PageVO<T> {
         this.items = page.getRecords();
     }
 
-    public PageVO(Long page, Long size, Long total, Long totalPage, List<T> data) {
+    public PageResponse(Long page, Long size, Long total, Long totalPage, List<T> data) {
         this.page = page;
         this.size = size;
         this.total = total;
