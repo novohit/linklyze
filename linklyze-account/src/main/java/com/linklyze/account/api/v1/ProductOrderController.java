@@ -3,7 +3,7 @@ package com.linklyze.account.api.v1;
 
 import com.linklyze.account.api.v1.request.ProductOrderPageRequest;
 import com.linklyze.account.service.ProductOrderService;
-import com.linklyze.common.model.vo.Resp;
+import com.linklyze.common.model.vo.Response;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,7 +25,7 @@ public class ProductOrderController {
     }
 
     @PostMapping("/page")
-    public Resp<Void> page(@RequestBody @Validated ProductOrderPageRequest pageRequest) {
+    public Response<Void> page(@RequestBody @Validated ProductOrderPageRequest pageRequest) {
         return null;
     }
 }

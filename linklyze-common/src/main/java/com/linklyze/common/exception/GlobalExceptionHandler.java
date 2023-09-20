@@ -1,7 +1,7 @@
 package com.linklyze.common.exception;
 
 import com.linklyze.common.enums.BizCodeEnum;
-import com.linklyze.common.model.vo.Resp;
+import com.linklyze.common.model.vo.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -39,16 +39,16 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseBody
     @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
-    public Resp exceptionHandler(HttpServletRequest request, Exception e) {
+    public Response exceptionHandler(HttpServletRequest request, Exception e) {
         String requestUrl = request.getRequestURI();
         String method = request.getMethod();
         if (e instanceof HttpRequestMethodNotSupportedException) {
             HttpRequestMethodNotSupportedException exception = (HttpRequestMethodNotSupportedException) e;
             log.error("[接口请求方式错误] url:[{}] message:[{}]", requestUrl, exception.getMessage());
-            return Resp.error(exception.getMessage());
+            return Response.error(exception.getMessage());
         }
         log.error("[系统异常] url:[{}]", requestUrl, e);
-        return Resp.buildResult(BizCodeEnum.SERVER_ERROR);
+        return Response.buildResult(BizCodeEnum.SERVER_ERROR);
     }
 
     /**
@@ -60,10 +60,10 @@ public class GlobalExceptionHandler {
      * @param e
      */
     @ExceptionHandler(BizException.class)
-    public ResponseEntity<Resp> httpExceptionHandler(HttpServletRequest request, BizException e) {
+    public ResponseEntity<Response> httpExceptionHandler(HttpServletRequest request, BizException e) {
         String requestUrl = request.getRequestURI();
         String method = request.getMethod();
-        Resp unifyResponse = new Resp(e.getCode(), null, e.getMessage());
+        Response unifyResponse = new Response(e.getCode(), null, e.getMessage());
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpStatus httpStatus = HttpStatus.resolve(e.getHttpStatusCode());
@@ -81,13 +81,13 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseBody
     @ResponseStatus(code = HttpStatus.BAD_REQUEST) // 参数错误 固定返回400
-    public Resp methodArgumentNotValidExceptionHandler(HttpServletRequest request, MethodArgumentNotValidException e) {
+    public Response methodArgumentNotValidExceptionHandler(HttpServletRequest request, MethodArgumentNotValidException e) {
         String requestUrl = request.getRequestURI();
         String method = request.getMethod();
         List<ObjectError> errors = e.getBindingResult().getAllErrors();
         String errorMsg = this.formatAllErrorsMessages(errors);
         log.error("[参数异常] url:[{}],msg:[{}]", requestUrl, errorMsg);
-        return Resp.error(errorMsg);
+        return Response.error(errorMsg);
     }
 
     /**
@@ -100,7 +100,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseBody
     @ResponseStatus(code = HttpStatus.BAD_REQUEST) // 参数错误 固定返回400
-    public Resp constraintViolationExceptionHandler(HttpServletRequest request, ConstraintViolationException e) {
+    public Response constraintViolationExceptionHandler(HttpServletRequest request, ConstraintViolationException e) {
         String requestUrl = request.getRequestURI();
         String method = request.getMethod();
 
@@ -108,7 +108,7 @@ public class GlobalExceptionHandler {
         Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
         String message = violations.stream().map(ConstraintViolation::getMessage).collect(Collectors.joining(";"));
         log.error("[参数异常] url:[{}]", requestUrl, e);
-        return Resp.error(message);
+        return Response.error(message);
     }
 
     /**
@@ -121,13 +121,13 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BindException.class)
     @ResponseBody
     @ResponseStatus(code = HttpStatus.BAD_REQUEST) // 参数错误 固定返回400
-    public Resp bindExceptionExceptionHandler(HttpServletRequest request, BindException e) {
+    public Response bindExceptionExceptionHandler(HttpServletRequest request, BindException e) {
         String requestUrl = request.getRequestURI();
         String method = request.getMethod();
         List<ObjectError> errors = e.getBindingResult().getAllErrors();
         String errorMsg = this.formatAllErrorsMessages(errors);
         log.error("[参数异常] url:[{}]", requestUrl, e);
-        return Resp.error(errorMsg);
+        return Response.error(errorMsg);
     }
 
 

@@ -5,7 +5,7 @@ import com.linklyze.account.api.v1.request.RegisterRequest;
 import com.linklyze.account.model.AccountDO;
 import com.linklyze.account.service.AccountService;
 import com.linklyze.account.service.FileService;
-import com.linklyze.common.model.vo.Resp;
+import com.linklyze.common.model.vo.Response;
 import com.linklyze.common.util.TokenUtil;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,9 +37,9 @@ public class AccountController {
      * @return
      */
     @PostMapping("/upload")
-    public Resp uploadImage(@RequestPart("file") MultipartFile file) {
+    public Response uploadImage(@RequestPart("file") MultipartFile file) {
         String imageUrl = this.fileService.uploadImage(file);
-        return Resp.success(imageUrl);
+        return Response.success(imageUrl);
     }
 
 
@@ -50,9 +50,9 @@ public class AccountController {
      * @return
      */
     @PostMapping("/login")
-    public Resp<String> login(@RequestBody @Validated LoginRequest loginRequest) {
+    public Response<String> login(@RequestBody @Validated LoginRequest loginRequest) {
         String token = this.accountService.login(loginRequest);
-        return Resp.success(token);
+        return Response.success(token);
     }
 
     /**
@@ -60,9 +60,9 @@ public class AccountController {
      * @return
      */
     @PostMapping("/test-token")
-    public Resp<String> token() {
+    public Response<String> token() {
         String token = TokenUtil.generateAccessToken(1L);
-        return Resp.success(token);
+        return Response.success(token);
     }
 
     /**
@@ -71,10 +71,10 @@ public class AccountController {
      * @return
      */
     @PostMapping("/test-token-verify")
-    public Resp<Void> tokenVerify(String token) {
+    public Response<Void> tokenVerify(String token) {
         Claims claims = TokenUtil.verifyToken(token);
         System.out.println(claims);
-        return Resp.success();
+        return Response.success();
     }
 
     /**
@@ -84,15 +84,15 @@ public class AccountController {
      * @return
      */
     @PostMapping("/register")
-    public Resp<Void> register(@RequestBody @Validated RegisterRequest registerRequest) {
+    public Response<Void> register(@RequestBody @Validated RegisterRequest registerRequest) {
         this.accountService.register(registerRequest);
-        return Resp.success();
+        return Response.success();
     }
 
 
     @PostMapping("/{account_no}")
-    public Resp<AccountDO> findByAccountNo(@PathVariable("account_no") Long accountNo) {
+    public Response<AccountDO> findByAccountNo(@PathVariable("account_no") Long accountNo) {
         AccountDO account = this.accountService.findByAccountNo(accountNo);
-        return Resp.success(account);
+        return Response.success(account);
     }
 }

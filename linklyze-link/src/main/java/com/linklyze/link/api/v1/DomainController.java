@@ -1,7 +1,7 @@
 package com.linklyze.link.api.v1;
 
 
-import com.linklyze.common.model.vo.Resp;
+import com.linklyze.common.model.vo.Response;
 import com.linklyze.link.model.DomainDO;
 import com.linklyze.link.service.DomainService;
 import com.linklyze.link.vo.DomainVO;
@@ -33,13 +33,13 @@ public class DomainController {
      * @return
      */
     @GetMapping("/list")
-    public Resp<List<DomainDO>> findAll() {
+    public Response<List<DomainDO>> findAll() {
         List<DomainDO> domainList = this.domainService.findAll();
         List<DomainVO> domainVOList = domainList.stream().map(domainDO -> {
             DomainVO domainVO = new DomainVO();
             BeanUtils.copyProperties(domainDO, domainVO);
             return domainVO;
         }).collect(Collectors.toList());
-        return Resp.success(domainList);
+        return Response.success(domainList);
     }
 }

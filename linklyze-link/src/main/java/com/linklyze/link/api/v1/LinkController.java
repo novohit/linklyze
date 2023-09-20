@@ -3,7 +3,7 @@ package com.linklyze.link.api.v1;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.linklyze.common.model.vo.PageResponse;
-import com.linklyze.common.model.vo.Resp;
+import com.linklyze.common.model.vo.Response;
 import com.linklyze.common.util.CommonUtil;
 import com.linklyze.link.api.v1.request.LinkCreateRequest;
 import com.linklyze.link.api.v1.request.LinkDeleteRequest;
@@ -52,9 +52,9 @@ public class LinkController {
      * @return
      */
     @PostMapping
-    public Resp<Void> create(@RequestBody @Validated LinkCreateRequest linkCreateRequest) {
+    public Response<Void> create(@RequestBody @Validated LinkCreateRequest linkCreateRequest) {
         this.linkService.create(linkCreateRequest);
-        return Resp.success();
+        return Response.success();
     }
 
     /**
@@ -64,7 +64,7 @@ public class LinkController {
      * @return
      */
     @PostMapping("/page")
-    public Resp<PageResponse<LinkVO>> page(@RequestBody @Validated PageRequest pageRequest) {
+    public Response<PageResponse<LinkVO>> page(@RequestBody @Validated PageRequest pageRequest) {
         Page<LinkMappingDO> page = this.linkService.page(pageRequest);
         List<LinkMappingDO> records = page.getRecords();
 
@@ -78,7 +78,7 @@ public class LinkController {
 
 
         PageResponse<LinkVO> pageResponse = new PageResponse<>(page.getCurrent(), page.getSize(), page.getTotal(), page.getPages(), linkVOList);
-        return Resp.success(pageResponse);
+        return Response.success(pageResponse);
     }
 
 
@@ -89,9 +89,9 @@ public class LinkController {
      * @return
      */
     @PutMapping
-    public Resp<Void> update(@RequestBody @Validated LinkUpdateRequest linkUpdateRequest) {
+    public Response<Void> update(@RequestBody @Validated LinkUpdateRequest linkUpdateRequest) {
         this.linkService.update(linkUpdateRequest);
-        return Resp.success();
+        return Response.success();
     }
 
     /**
@@ -101,9 +101,9 @@ public class LinkController {
      * @return
      */
     @DeleteMapping
-    public Resp<Void> delete(@RequestBody @Validated LinkDeleteRequest linkDeleteRequest) {
+    public Response<Void> delete(@RequestBody @Validated LinkDeleteRequest linkDeleteRequest) {
         this.linkService.delete(linkDeleteRequest);
-        return Resp.success();
+        return Response.success();
     }
 
     /**
@@ -114,9 +114,9 @@ public class LinkController {
      * @return
      */
     @GetMapping("/test-lock")
-    public Resp<Long> testCreate(@RequestParam("code") String code, @RequestParam("account_no") Long accountNo) {
+    public Response<Long> testCreate(@RequestParam("code") String code, @RequestParam("account_no") Long accountNo) {
         Long res = this.redisTemplate.execute(lockRedisScript, Collections.singletonList(code), accountNo, 100);
-        return Resp.success(res);
+        return Response.success(res);
     }
 
 }

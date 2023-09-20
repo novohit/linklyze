@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(value = JsonInclude.Include.NON_NULL) //如果json的data为null 不返回给前端
-public class Resp<T> {
+public class Response<T> {
 
     /**
      * 状态码 0 表示成功
@@ -52,8 +52,8 @@ public class Resp<T> {
      *
      * @return
      */
-    public static <T> Resp<T> success() {
-        return new Resp<>(BizCodeEnum.SUCCESS.getCode(), null, BizCodeEnum.SUCCESS.getMessage());
+    public static <T> Response<T> success() {
+        return new Response<>(BizCodeEnum.SUCCESS.getCode(), null, BizCodeEnum.SUCCESS.getMessage());
     }
 
     /**
@@ -62,8 +62,8 @@ public class Resp<T> {
      * @param data
      * @return
      */
-    public static <T> Resp<T> success(T data) {
-        return new Resp<>(BizCodeEnum.SUCCESS.getCode(), data, BizCodeEnum.SUCCESS.getMessage());
+    public static <T> Response<T> success(T data) {
+        return new Response<>(BizCodeEnum.SUCCESS.getCode(), data, BizCodeEnum.SUCCESS.getMessage());
     }
 
     /**
@@ -72,8 +72,8 @@ public class Resp<T> {
      * @param msg
      * @return
      */
-    public static <T> Resp<T> error(String msg) {
-        return new Resp<>(BizCodeEnum.SERVER_ERROR.getCode(), null, msg);
+    public static <T> Response<T> error(String msg) {
+        return new Response<>(BizCodeEnum.SERVER_ERROR.getCode(), null, msg);
     }
 
 
@@ -84,8 +84,8 @@ public class Resp<T> {
      * @param msg
      * @return
      */
-    public static <T> Resp<T> buildCodeAndMsg(int code, String msg) {
-        return new Resp<>(code, null, msg);
+    public static <T> Response<T> buildCodeAndMsg(int code, String msg) {
+        return new Response<>(code, null, msg);
     }
 
     /**
@@ -94,7 +94,7 @@ public class Resp<T> {
      * @param codeEnum
      * @return
      */
-    public static <T> Resp<T> buildResult(BizCodeEnum codeEnum) {
-        return Resp.buildCodeAndMsg(codeEnum.getCode(), codeEnum.getMessage());
+    public static <T> Response<T> buildResult(BizCodeEnum codeEnum) {
+        return Response.buildCodeAndMsg(codeEnum.getCode(), codeEnum.getMessage());
     }
 }

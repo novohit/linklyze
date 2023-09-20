@@ -2,7 +2,7 @@ package com.linklyze.account.api.v1;
 
 import com.linklyze.account.api.v1.request.SendCodeRequest;
 import com.linklyze.account.service.NotifyService;
-import com.linklyze.common.model.vo.Resp;
+import com.linklyze.common.model.vo.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -28,10 +28,10 @@ public class NotifyController {
      * @return
      */
     @PostMapping("/send-code")
-    public Resp<Void> sendCode(@RequestBody @Validated SendCodeRequest sendCodeRequest) {
+    public Response<Void> sendCode(@RequestBody @Validated SendCodeRequest sendCodeRequest) {
         //this.notifyService.testSend();
         this.notifyService.send(sendCodeRequest);
-        return Resp.success();
+        return Response.success();
     }
 
     /**
@@ -40,13 +40,13 @@ public class NotifyController {
      * @return
      */
     @GetMapping("/captcha")
-    public Resp<Map<String, Object>> getCaptcha() {
+    public Response<Map<String, Object>> getCaptcha() {
         Map<String, Object> map = this.notifyService.getCaptcha();
-        return Resp.success(map);
+        return Response.success(map);
     }
 
     @GetMapping("/test")
-    public Resp<Void> test(@RequestParam(required = false) String name, @RequestParam(required = false) String age) {
-        return Resp.success();
+    public Response<Void> test(@RequestParam(required = false) String name, @RequestParam(required = false) String age) {
+        return Response.success();
     }
 }

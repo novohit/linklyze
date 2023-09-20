@@ -1,7 +1,7 @@
 package com.linklyze.link.api.v1;
 
 
-import com.linklyze.common.model.vo.Resp;
+import com.linklyze.common.model.vo.Response;
 import com.linklyze.link.api.v1.request.GroupCreateRequest;
 import com.linklyze.link.api.v1.request.GroupUpdateRequest;
 import com.linklyze.link.model.LinkGroupDO;
@@ -34,9 +34,9 @@ public class LinkGroupController {
      * @return
      */
     @PostMapping
-    public Resp<Void> create(@RequestBody @Validated GroupCreateRequest createRequest) {
+    public Response<Void> create(@RequestBody @Validated GroupCreateRequest createRequest) {
         this.linkGroupService.create(createRequest);
-        return Resp.success();
+        return Response.success();
     }
 
     /**
@@ -46,9 +46,9 @@ public class LinkGroupController {
      * @return
      */
     @DeleteMapping("/{group_id}")
-    public Resp<Void> delete(@PathVariable("group_id") @Positive Long groupId) {
+    public Response<Void> delete(@PathVariable("group_id") @Positive Long groupId) {
         this.linkGroupService.delete(groupId);
-        return Resp.success();
+        return Response.success();
     }
 
     /**
@@ -58,9 +58,9 @@ public class LinkGroupController {
      * @return
      */
     @PutMapping
-    public Resp<Void> update(@RequestBody @Validated GroupUpdateRequest updateRequest) {
+    public Response<Void> update(@RequestBody @Validated GroupUpdateRequest updateRequest) {
         this.linkGroupService.update(updateRequest);
-        return Resp.success();
+        return Response.success();
     }
 
     /**
@@ -70,9 +70,9 @@ public class LinkGroupController {
      * @return
      */
     @GetMapping("/{group_id}")
-    public Resp<LinkGroupDO> findOne(@PathVariable("group_id") @Positive Long groupId) {
+    public Response<LinkGroupDO> findOne(@PathVariable("group_id") @Positive Long groupId) {
         LinkGroupDO group = this.linkGroupService.findOne(groupId);
-        return Resp.success(group);
+        return Response.success(group);
     }
 
     /**
@@ -81,8 +81,8 @@ public class LinkGroupController {
      * @return
      */
     @GetMapping("/list")
-    public Resp<List<LinkGroupDO>> findAll() {
+    public Response<List<LinkGroupDO>> findAll() {
         List<LinkGroupDO> groupList = this.linkGroupService.findAll();
-        return Resp.success(groupList);
+        return Response.success(groupList);
     }
 }

@@ -1,11 +1,9 @@
 package com.linklyze.account.api.v1;
 
 
-import com.linklyze.account.model.TrafficDO;
 import com.linklyze.account.model.TrafficPackageDO;
 import com.linklyze.account.service.TrafficPackageService;
-import com.linklyze.account.service.TrafficService;
-import com.linklyze.common.model.vo.Resp;
+import com.linklyze.common.model.vo.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,9 +33,9 @@ public class TrafficPackageController {
      * @return
      */
     @GetMapping("/list")
-    public Resp<List<TrafficPackageDO>> list() {
+    public Response<List<TrafficPackageDO>> list() {
         List<TrafficPackageDO> list = this.trafficPackageService.list();
-        return Resp.success(list);
+        return Response.success(list);
     }
 
     /**
@@ -47,8 +45,8 @@ public class TrafficPackageController {
      * @return
      */
     @GetMapping("/detail/{id}")
-    public Resp<TrafficPackageDO> detail(@PathVariable("id") Long id) {
+    public Response<TrafficPackageDO> detail(@PathVariable("id") Long id) {
         TrafficPackageDO detail = this.trafficPackageService.getById(id);
-        return Resp.success(detail);
+        return Response.success(detail);
     }
 }

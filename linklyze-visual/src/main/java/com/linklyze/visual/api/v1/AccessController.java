@@ -3,7 +3,7 @@ package com.linklyze.visual.api.v1;
 import com.linklyze.common.constant.Constants;
 import com.linklyze.common.enums.TrendIntervalType;
 import com.linklyze.common.model.vo.PageResponse;
-import com.linklyze.common.model.vo.Resp;
+import com.linklyze.common.model.vo.Response;
 import com.linklyze.common.util.TimeUtil;
 import com.linklyze.visual.api.v1.request.DateRequest;
 import com.linklyze.visual.api.v1.request.PageRequest;
@@ -44,13 +44,13 @@ public class AccessController {
      * @param pageRequest
      */
     @PostMapping("/page")
-    public Resp<PageResponse<DwsWideInfo>> page(@RequestBody @Validated PageRequest pageRequest) {
+    public Response<PageResponse<DwsWideInfo>> page(@RequestBody @Validated PageRequest pageRequest) {
         int total = pageRequest.getPage() * pageRequest.getSize();
         if (total > Constants.VISUAL_MAX_LIMIT) {
-            return Resp.error("只允许查询最近1000条数据");
+            return Response.error("只允许查询最近1000条数据");
         }
         PageResponse<DwsWideInfo> page = this.accessService.page(pageRequest);
-        return Resp.success(page);
+        return Response.success(page);
     }
 
     /**
@@ -59,9 +59,9 @@ public class AccessController {
      * @return
      */
     @PostMapping("/region")
-    public Resp<List<RegionStatsVO>> region(@RequestBody @Validated DateRequest dateRequest) {
+    public Response<List<RegionStatsVO>> region(@RequestBody @Validated DateRequest dateRequest) {
         List<RegionStatsVO> regionStatsVOList = this.accessService.region(dateRequest);
-        return Resp.success(regionStatsVOList);
+        return Response.success(regionStatsVOList);
     }
 
     /**
@@ -70,9 +70,9 @@ public class AccessController {
      * @return
      */
     @PostMapping("/type")
-    public Resp<StatsListVO> type(@RequestBody @Validated DateRequest dateRequest) {
+    public Response<StatsListVO> type(@RequestBody @Validated DateRequest dateRequest) {
         StatsListVO statsListVO = this.accessService.type(dateRequest);
-        return Resp.success(statsListVO);
+        return Response.success(statsListVO);
     }
 
     /**
@@ -82,14 +82,14 @@ public class AccessController {
      * @return
      */
     @PostMapping("/trend")
-    public Resp<List<TrendGroupByDO>> trend(@RequestBody @Validated DateRequest dateRequest) {
+    public Response<List<TrendGroupByDO>> trend(@RequestBody @Validated DateRequest dateRequest) {
         List<TrendGroupByDO> trendList = this.accessService.trend(dateRequest);
         List<TrendGroupByDO> res = trendList.stream().peek(trendGroupByDO -> {
             if (trendGroupByDO.getType() == TrendIntervalType.DAY) {
                 trendGroupByDO.setInterval(TimeUtil.format(trendGroupByDO.getInterval(), TimeUtil.YYMMDD_PATTERN, TimeUtil.YY_MM_DD_PATTERN));
             }
         }).collect(Collectors.toList());
-        return Resp.success(res);
+        return Response.success(res);
     }
 
 
@@ -100,8 +100,8 @@ public class AccessController {
      * @return
      */
     @PostMapping("/referer")
-    public Resp<List<RefererGroupByDO>> refererTopN(@RequestBody @Validated DateRequest dateRequest) {
+    public Response<List<RefererGroupByDO>> refererTopN(@RequestBody @Validated DateRequest dateRequest) {
         List<RefererGroupByDO> refererTopN = this.accessService.refererTopN(dateRequest);
-        return Resp.success(refererTopN);
+        return Response.success(refererTopN);
     }
 }
