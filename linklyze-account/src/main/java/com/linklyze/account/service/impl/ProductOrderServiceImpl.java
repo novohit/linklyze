@@ -50,6 +50,14 @@ public class ProductOrderServiceImpl extends ServiceImpl<ProductOrderMapper, Pro
 
     @Override
     public Page<ProductOrderDO> page(ProductOrderPageRequest pageRequest) {
-        return null;
+        Long accountNo = LocalUserThreadHolder.getLocalUserNo();
+        Page<ProductOrderDO> request = new Page<>(pageRequest.getPage(), pageRequest.getSize());
+        Page<ProductOrderDO> response = this.productOrderMapper
+                .selectPage(request,
+                        new QueryWrapper<ProductOrderDO>().lambda()
+                                .eq(ProductOrderDO::getAccountNo, accountNo)
+                                .eq(ProductOrderDO::getState, pageRequest.getState())
+                                .orderByDesc(ProductOrderDO::getCreateTime));
+        return response;
     }
 }
