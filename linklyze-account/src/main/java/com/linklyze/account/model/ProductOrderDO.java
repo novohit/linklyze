@@ -1,18 +1,17 @@
 package com.linklyze.account.model;
 
-import java.math.BigDecimal;
-
+import com.baomidou.mybatisplus.annotation.EnumValue;
 import com.baomidou.mybatisplus.annotation.TableName;
-
-import java.time.LocalDateTime;
-
+import com.linklyze.common.enums.PayStateEnum;
 import com.linklyze.common.model.BaseModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.experimental.Accessors;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 /**
  * @author novo
@@ -60,7 +59,7 @@ public class ProductOrderDO extends BaseModel {
     /**
      * NEW未支付订单,PAY已经支付订单,CANCEL超时取消订单
      */
-    private String state;
+    private PayStateEnum state;
 
     /**
      * 订单完成时间

@@ -1,6 +1,7 @@
 package com.linklyze.link.model;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.linklyze.common.enums.DomainType;
 import com.linklyze.common.model.BaseModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -25,7 +26,7 @@ public class DomainDO extends BaseModel {
     /**
      * 域名类型，自定义custom, 内置offical
      */
-    private String domainType;
+    private DomainType domainType;
 
     private String value;
 

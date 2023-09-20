@@ -84,7 +84,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkDO> implements 
             return null;
         }
         // 校验短链码的状态和是否过期
-        if (linkDO.getState().equals(LinkStateEnum.LOCK.name())) {
+        if (linkDO.getState().equals(LinkStateEnum.LOCK)) {
             log.info("link is lock:[{}]", linkDO);
             return null;
         }
@@ -403,9 +403,9 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkDO> implements 
         mappingDO.setCode(code);
         // TODO 数据库字段类型修改
         mappingDO.setLongHash(String.valueOf(hash32));
-        mappingDO.setState(LinkStateEnum.ACTIVE.name());
+        mappingDO.setState(LinkStateEnum.ACTIVE);
         // TODO 查询短链level
-        mappingDO.setLinkLevel(LinkLevelType.BRONZE.name());
+        mappingDO.setLinkLevel(LinkLevelType.BRONZE);
         mappingDO.setLogo(CommonUtil.getLogoUrl(prefixUrl));
         return mappingDO;
     }
@@ -426,9 +426,9 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, LinkDO> implements 
         linkDO.setCode(code);
         // TODO 数据库字段类型修改
         linkDO.setLongHash(String.valueOf(hash32));
-        linkDO.setState(LinkStateEnum.ACTIVE.name());
+        linkDO.setState(LinkStateEnum.ACTIVE);
         // TODO 查询短链level
-        linkDO.setLinkLevel(LinkLevelType.BRONZE.name());
+        linkDO.setLinkLevel(LinkLevelType.BRONZE);
         linkDO.setLogo(CommonUtil.getLogoUrl(prefixUrl));
         return linkDO;
     }

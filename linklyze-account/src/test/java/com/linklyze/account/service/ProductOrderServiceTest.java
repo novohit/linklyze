@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.linklyze.account.AccountApplication;
 import com.linklyze.account.api.v1.request.ProductOrderPageRequest;
 import com.linklyze.account.model.ProductOrderDO;
+import com.linklyze.common.enums.PayStateEnum;
 import com.linklyze.common.util.CommonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
@@ -36,7 +37,7 @@ class ProductOrderServiceTest {
                     .accountNo(10L + i)
                     .outTradeNo(CommonUtil.generateUUID())
                     .payAmount(BigDecimal.valueOf(99L))
-                    .state("NEW")
+                    .state(PayStateEnum.PAID)
                     .productId(1L)
                     .build();
 

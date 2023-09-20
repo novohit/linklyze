@@ -42,13 +42,13 @@ public class DomainManagerImpl implements DomainManager {
     @Override
     public List<DomainDO> findOfficialAll() {
         return this.domainMapper
-                .selectList(new QueryWrapper<DomainDO>().lambda().eq(DomainDO::getDomainType, DomainType.OFFICIAL.name()));
+                .selectList(new QueryWrapper<DomainDO>().lambda().eq(DomainDO::getDomainType, DomainType.OFFICIAL));
     }
 
     @Override
     public List<DomainDO> findCustomAll(Long accountNo) {
         return this.domainMapper
-                .selectList(new QueryWrapper<DomainDO>().lambda().eq(DomainDO::getDomainType, DomainType.OFFICIAL.name()).eq(DomainDO::getAccountNo, accountNo));
+                .selectList(new QueryWrapper<DomainDO>().lambda().eq(DomainDO::getDomainType, DomainType.OFFICIAL).eq(DomainDO::getAccountNo, accountNo));
     }
 
     @Override

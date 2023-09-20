@@ -1,6 +1,8 @@
 package com.linklyze.link.model;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.linklyze.common.enums.LinkLevelType;
+import com.linklyze.common.enums.LinkStateEnum;
 import com.linklyze.common.model.BaseModel;
 
 import java.util.Date;
@@ -63,12 +65,12 @@ public class LinkMappingDO extends BaseModel {
     /**
      * 短链状态 lock：锁定 active：可用
      */
-    private String state;
+    private LinkStateEnum state;
 
     /**
      * 产品level FIRST青铜SECOND黄金THIRD钻石
      */
-    private String linkLevel;
+    private LinkLevelType linkLevel;
 
     /**
      * logo
