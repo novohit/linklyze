@@ -28,7 +28,7 @@ public class WebConfiguration implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         //  LoginInterceptor这里不能直接new
         //  因为LoginInterceptor里我们用到了容器中的AccountService
-        if (System.getenv("UN_AUTH").equals("true")) {
+        if ("true".equals(System.getenv("UN_AUTH"))) {
             log.info("调试模式 关闭鉴权 >>>>>>");
             return;
         }
