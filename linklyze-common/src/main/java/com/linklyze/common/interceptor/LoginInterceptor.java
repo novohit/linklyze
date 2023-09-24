@@ -26,41 +26,12 @@ import java.util.HashMap;
 @Slf4j
 public class LoginInterceptor implements HandlerInterceptor {
 
-    public final static String AUTHORIZATION_HEADER = "Authorization";
-
-    public final static String BEARER = "Bearer";
-
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         log.info("============================= LoginInterceptor Start ======================================");
         log.info(request.getRequestURI());
         log.info("IP        : {}", request.getRemoteAddr());
         log.info("Real-IP        : {}", request.getHeader("X-Real-IP"));
-//        String authorization = request.getHeader(AUTHORIZATION_HEADER);
-//        // token为空
-//        if (!StringUtils.hasText(authorization)) {
-//            log.info("token为空");
-//            throw new BizException(BizCodeEnum.ACCOUNT_UNLOGIN, HttpStatus.UNAUTHORIZED);
-//        }
-//        // token格式不正确
-//        if (!authorization.startsWith(BEARER)) {
-//            log.info("token格式错误");
-//            throw new BizException(BizCodeEnum.ACCOUNT_UNLOGIN, HttpStatus.UNAUTHORIZED);
-//        }
-//        String[] tokens = authorization.split(" ");
-//        // 避免数组越界
-//        if (tokens.length != 2) {
-//            log.info("token格式错误");
-//            throw new BizException(BizCodeEnum.ACCOUNT_UNLOGIN, HttpStatus.UNAUTHORIZED);
-//        }
-//        String token = tokens[1];
-//        log.info("token:[{}]", token);
-//        // 校验
-//        Claims claims = TokenUtil.verifyToken(token);
-//        if (claims == null) {
-//            throw new BizException(BizCodeEnum.ACCOUNT_UNLOGIN, HttpStatus.UNAUTHORIZED);
-//        }
-//        HashMap map = claims.get("account", HashMap.class);
         String user = request.getHeader("user");
         // 下游没有用户信息的说明是不需要鉴权的接口
         if (StringUtils.hasText(user)) {
@@ -89,7 +60,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-        // TODO 记得释放资源，避免内存泄露
+        // 记得释放资源，避免内存泄露
         LocalUserThreadHolder.clear();
         HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
     }
