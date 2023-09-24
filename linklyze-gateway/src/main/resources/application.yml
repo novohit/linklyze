@@ -29,4 +29,4 @@ spring:
         - id: linklyze-link
           uri: lb://linklyze-link
           predicates:
-            - Path=/link/**
+            - Path=/api/link/**,/api/group/**,/*

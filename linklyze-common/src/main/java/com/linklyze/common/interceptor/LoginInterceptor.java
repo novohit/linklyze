@@ -36,44 +36,48 @@ public class LoginInterceptor implements HandlerInterceptor {
         log.info(request.getRequestURI());
         log.info("IP        : {}", request.getRemoteAddr());
         log.info("Real-IP        : {}", request.getHeader("X-Real-IP"));
-        String authorization = request.getHeader(AUTHORIZATION_HEADER);
-        // token为空
-        if (!StringUtils.hasText(authorization)) {
-            log.info("token为空");
-            throw new BizException(BizCodeEnum.ACCOUNT_UNLOGIN, HttpStatus.UNAUTHORIZED);
+//        String authorization = request.getHeader(AUTHORIZATION_HEADER);
+//        // token为空
+//        if (!StringUtils.hasText(authorization)) {
+//            log.info("token为空");
+//            throw new BizException(BizCodeEnum.ACCOUNT_UNLOGIN, HttpStatus.UNAUTHORIZED);
+//        }
+//        // token格式不正确
+//        if (!authorization.startsWith(BEARER)) {
+//            log.info("token格式错误");
+//            throw new BizException(BizCodeEnum.ACCOUNT_UNLOGIN, HttpStatus.UNAUTHORIZED);
+//        }
+//        String[] tokens = authorization.split(" ");
+//        // 避免数组越界
+//        if (tokens.length != 2) {
+//            log.info("token格式错误");
+//            throw new BizException(BizCodeEnum.ACCOUNT_UNLOGIN, HttpStatus.UNAUTHORIZED);
+//        }
+//        String token = tokens[1];
+//        log.info("token:[{}]", token);
+//        // 校验
+//        Claims claims = TokenUtil.verifyToken(token);
+//        if (claims == null) {
+//            throw new BizException(BizCodeEnum.ACCOUNT_UNLOGIN, HttpStatus.UNAUTHORIZED);
+//        }
+//        HashMap map = claims.get("account", HashMap.class);
+        String user = request.getHeader("user");
+        // 下游没有用户信息的说明是不需要鉴权的接口
+        if (StringUtils.hasText(user)) {
+            LocalUser localUser = JSON.parseObject(user, LocalUser.class);
+            log.info("登录用户 account:[{}]", localUser);
+            if (localUser == null) {
+                throw new BizException(BizCodeEnum.ACCOUNT_UNLOGIN, HttpStatus.UNAUTHORIZED);
+            }
+            // TODO 用户等级
+            localUser.setScope(1);
+            /**
+             * 用户信息传递：
+             * 方式一：Request Attribute 传递
+             * 方式二：ThreadLocal 传递
+             */
+            LocalUserThreadHolder.setLocalUser(localUser);
         }
-        // token格式不正确
-        if (!authorization.startsWith(BEARER)) {
-            log.info("token格式错误");
-            throw new BizException(BizCodeEnum.ACCOUNT_UNLOGIN, HttpStatus.UNAUTHORIZED);
-        }
-        String[] tokens = authorization.split(" ");
-        // 避免数组越界
-        if (tokens.length != 2) {
-            log.info("token格式错误");
-            throw new BizException(BizCodeEnum.ACCOUNT_UNLOGIN, HttpStatus.UNAUTHORIZED);
-        }
-        String token = tokens[1];
-        log.info("token:[{}]", token);
-        // 校验
-        Claims claims = TokenUtil.verifyToken(token);
-        if (claims == null) {
-            throw new BizException(BizCodeEnum.ACCOUNT_UNLOGIN, HttpStatus.UNAUTHORIZED);
-        }
-        HashMap map = claims.get("account", HashMap.class);
-        LocalUser localUser = JSON.parseObject(JSON.toJSONString(map), LocalUser.class);
-        log.info("登录用户 account:[{}]", localUser);
-        if (localUser == null) {
-            throw new BizException(BizCodeEnum.ACCOUNT_UNLOGIN, HttpStatus.UNAUTHORIZED);
-        }
-        // TODO 用户等级
-        localUser.setScope(1);
-        /**
-         * 用户信息传递：
-         * 方式一：Request Attribute 传递
-         * 方式二：ThreadLocal 传递
-         */
-        LocalUserThreadHolder.setLocalUser(localUser);
         log.info("============================= LoginInterceptor End ========================================");
         return true;
     }

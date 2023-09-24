@@ -1,6 +1,9 @@
 package com.linklyze.gateway.config;
 
+import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.linklyze.common.enums.BizCodeEnum;
 import com.linklyze.common.util.TokenUtil;
 import io.jsonwebtoken.Claims;
@@ -19,8 +22,10 @@ import reactor.core.publisher.Mono;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author novo
@@ -82,7 +87,14 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
             log.info("token不合法");
             return error(exchange);
         }
+
+        HashMap map = claims.get("account", HashMap.class);
+        String json = JSON.toJSONString(map);
+        // 传递用户信息至下游
+        exchange.mutate()
+                .request(builder -> builder.header("user", json));
         return chain.filter(exchange);
+
     }
 
     private Mono<Void> error(ServerWebExchange exchange) {
@@ -98,13 +110,17 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
     }
 
     private List<String> getExcludePath() {
-        return Arrays.asList("/account/*/register",
-                "/account/*/login",
-                "/notify/*/captcha",
-                "/notify/*/send-code",
-                "/**/test*").stream()
+        List<String> exclude = Stream.of(
+                        "/account/*/register",
+                        "/account/*/login",
+                        "/notify/*/captcha",
+                        "/notify/*/send-code",
+                        "/**/test*"
+                )
                 .map(uri -> "/api" + uri)
                 .collect(Collectors.toList());
+        exclude.add("/*");
+        return exclude;
     }
 
     @Override
