@@ -23,12 +23,14 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/account/v1")
 public class AccountController {
 
-    @Autowired
-    private FileService fileService;
+    private final FileService fileService;
 
-    @Autowired
-    private AccountService accountService;
+    private final AccountService accountService;
 
+    public AccountController(FileService fileService, AccountService accountService) {
+        this.fileService = fileService;
+        this.accountService = accountService;
+    }
 
     /**
      * 上传头像
