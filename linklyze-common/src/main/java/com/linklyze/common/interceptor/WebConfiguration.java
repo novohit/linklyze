@@ -25,23 +25,9 @@ public class WebConfiguration implements WebMvcConfigurer {
         return new LoginInterceptor();
     }
 
-
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        //  LoginInterceptor这里不能直接new
-        //  因为LoginInterceptor里我们用到了容器中的AccountService
-        if ("true".equals(System.getenv("UN_AUTH"))) {
-            log.info("调试模式 关闭鉴权 >>>>>>");
-            return;
-        }
-//        registry.addInterceptor(loginInterceptor())
-//                // servlet.context-path会自动添加上去
-//                .excludePathPatterns("/api/account/*/register",
-//                        "/api/account/*/login",
-//                        "/api/notify/*/captcha",
-//                        "/api/notify/*/send-code",
-//                        "/api/**/test*", "/**/test*", "/*");
-        // 鉴权转移到 gateway 服务层拦截所有
+        // 鉴权转移到 gateway web层拦截所有
         registry.addInterceptor(loginInterceptor());
     }
 

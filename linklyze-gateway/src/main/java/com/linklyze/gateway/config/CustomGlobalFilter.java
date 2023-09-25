@@ -13,6 +13,7 @@ import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
@@ -53,17 +54,19 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
      */
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        log.info("Gateway CustomGlobalFilter...");
-        String uri = exchange.getRequest().getURI().getPath();
-        log.info("uri:[{}]", uri);
+        ServerHttpRequest request = exchange.getRequest();
+        String uri = request.getURI().getPath();
+        log.info("URI: {}", uri);
+        log.info("X-Real-IP : {}", request.getHeaders().getFirst(("X-Real-IP")));
+
         List<String> excludePaths = this.getExcludePath();
         for (String pattern : excludePaths) {
-            // log.info("pattern:[{}]", pattern);
             if (pathMatcher.match(pattern, uri)) {
                 return chain.filter(exchange);
             }
         }
-        String authorization = exchange.getRequest().getHeaders().getFirst(AUTHORIZATION_HEADER);
+
+        String authorization = request.getHeaders().getFirst(AUTHORIZATION_HEADER);
         // token为空
         if (!StringUtils.hasText(authorization)) {
             log.info("token为空");
@@ -92,9 +95,11 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
         String json = JSON.toJSONString(map);
         // 传递用户信息至下游
         exchange.mutate()
-                .request(builder -> builder.header("user", json));
+                .request(builder -> {
+                    builder.headers(httpHeaders -> httpHeaders.addAll(request.getHeaders()));
+                    builder.header("user", json);
+                });
         return chain.filter(exchange);
-
     }
 
     private Mono<Void> error(ServerWebExchange exchange) {

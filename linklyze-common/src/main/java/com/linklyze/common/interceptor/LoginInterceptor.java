@@ -28,10 +28,6 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        log.info("============================= LoginInterceptor Start ======================================");
-        log.info(request.getRequestURI());
-        log.info("IP        : {}", request.getRemoteAddr());
-        log.info("Real-IP        : {}", request.getHeader("X-Real-IP"));
         String user = request.getHeader("user");
         // 下游没有用户信息的说明是不需要鉴权的接口
         if (StringUtils.hasText(user)) {
@@ -49,7 +45,6 @@ public class LoginInterceptor implements HandlerInterceptor {
              */
             LocalUserThreadHolder.setLocalUser(localUser);
         }
-        log.info("============================= LoginInterceptor End ========================================");
         return true;
     }
 
