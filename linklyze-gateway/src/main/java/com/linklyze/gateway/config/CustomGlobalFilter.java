@@ -42,6 +42,8 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
 
     public final static String BEARER = "Bearer";
 
+    private final static String HEADER_IP = "X-Real-IP";
+
 
     /**
      * Gateway全局过滤器和过滤器工厂中Default Filters区别：
@@ -57,7 +59,7 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
         ServerHttpRequest request = exchange.getRequest();
         String uri = request.getURI().getPath();
         log.info("URI: {}", uri);
-        log.info("X-Real-IP : {}", request.getHeaders().getFirst(("X-Real-IP")));
+        log.info("X-Real-IP : {}", request.getHeaders().getFirst((HEADER_IP)));
 
         List<String> excludePaths = this.getExcludePath();
         for (String pattern : excludePaths) {
@@ -96,7 +98,7 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
         // 传递用户信息至下游
         exchange.mutate()
                 .request(builder -> {
-                    builder.headers(httpHeaders -> httpHeaders.addAll(request.getHeaders()));
+                    builder.header(HEADER_IP, request.getHeaders().getFirst(HEADER_IP));
                     builder.header("user", json);
                 });
         return chain.filter(exchange);
