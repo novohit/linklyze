@@ -2,6 +2,7 @@ package com.linklyze.account.api.v1;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.linklyze.account.api.v1.request.PlaceOrderRequest;
 import com.linklyze.account.api.v1.request.ProductOrderPageRequest;
 import com.linklyze.account.api.v1.response.ProductOrderResponse;
 import com.linklyze.account.model.ProductOrderDO;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,5 +49,10 @@ public class ProductOrderController {
 
         PageResponse<ProductOrderResponse> pageResponse = new PageResponse<>(page.getCurrent(), page.getSize(), page.getTotal(), page.getPages(), responseList);
         return Response.success(pageResponse);
+    }
+
+    @PostMapping("/place")
+    public void placeOrder(@RequestBody @Validated PlaceOrderRequest request, HttpServletResponse response) {
+        productOrderService.placeOrder(request);
     }
 }

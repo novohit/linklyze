@@ -1,14 +1,10 @@
 package com.linklyze.account.model;
 
-import com.baomidou.mybatisplus.annotation.EnumValue;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.linklyze.common.enums.PayStateEnum;
+import com.linklyze.common.enums.PayType;
 import com.linklyze.common.model.BaseModel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -79,7 +75,7 @@ public class ProductOrderDO extends BaseModel {
     /**
      * 支付类型，微信-银行卡-支付宝
      */
-    private String payType;
+    private PayType payType;
 
     /**
      * 账号昵称

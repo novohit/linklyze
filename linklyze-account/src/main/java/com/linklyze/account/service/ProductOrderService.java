@@ -2,6 +2,7 @@ package com.linklyze.account.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.linklyze.account.api.v1.request.PlaceOrderRequest;
 import com.linklyze.account.api.v1.request.ProductOrderPageRequest;
 import com.linklyze.account.model.ProductOrderDO;
 
@@ -19,4 +20,5 @@ public interface ProductOrderService extends IService<ProductOrderDO> {
 
     Page<ProductOrderDO> page(ProductOrderPageRequest pageRequest);
 
+    void placeOrder(PlaceOrderRequest request);
 }
