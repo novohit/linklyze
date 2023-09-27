@@ -15,6 +15,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.linklyze.account.service.strategy.PayStrategyFactory;
 import com.linklyze.common.LocalUserThreadHolder;
 import com.linklyze.common.constant.Constants;
+import com.linklyze.common.enums.PayStateEnum;
 import com.linklyze.common.exception.BizException;
 import com.linklyze.account.service.strategy.PayRequest;
 import com.linklyze.common.util.CommonUtil;
@@ -98,6 +99,9 @@ public class ProductOrderServiceImpl extends ServiceImpl<ProductOrderMapper, Pro
     public String placeOrder(PlaceOrderRequest request) {
         Long accountNo = LocalUserThreadHolder.getLocalUserNo();
         TrafficPackageDO trafficPackageDO = trafficPackageMapper.selectById(request.getProductId());
+        if (trafficPackageDO == null) {
+            throw new BizException("流量包套餐不存在");
+        }
         // 计算价格
         checkPrice(request, trafficPackageDO);
         // 订单入库
@@ -125,6 +129,9 @@ public class ProductOrderServiceImpl extends ServiceImpl<ProductOrderMapper, Pro
         productOrderDO.setAccountNo(accountNo);
         productOrderDO.setProductSnapshot(JsonUtil.obj2Json(trafficPackageDO));
         productOrderDO.setOutTradeNo(orderOutTradeNo);
+        productOrderDO.setProductTitle(trafficPackageDO.getTitle());
+        productOrderDO.setProductAmount(trafficPackageDO.getAmount());
+        productOrderDO.setState(PayStateEnum.NEW);
         productOrderMapper.insert(productOrderDO);
     }
 

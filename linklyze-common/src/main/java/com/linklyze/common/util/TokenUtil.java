@@ -23,7 +23,7 @@ public class TokenUtil {
     private static final String ISSUER = "WYU";
 
     // 2h
-    private static final Integer accessExpiredTime = 60 * 60 * 2;
+    private static final Integer accessExpiredTime = 60 * 60 * 1112;
 
     private static Integer refreshExpiredTime;
 
