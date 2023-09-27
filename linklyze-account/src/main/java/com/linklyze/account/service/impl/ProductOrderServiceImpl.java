@@ -6,17 +6,18 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.linklyze.account.api.v1.request.PlaceOrderRequest;
 import com.linklyze.account.api.v1.request.ProductOrderPageRequest;
-import com.linklyze.account.mapper.TrafficMapper;
 import com.linklyze.account.mapper.TrafficPackageMapper;
 import com.linklyze.account.model.ProductOrderDO;
 import com.linklyze.account.mapper.ProductOrderMapper;
 import com.linklyze.account.model.TrafficPackageDO;
 import com.linklyze.account.service.ProductOrderService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.linklyze.account.service.strategy.PayResponse;
+import com.linklyze.account.service.strategy.PayStrategyFactory;
 import com.linklyze.common.LocalUserThreadHolder;
 import com.linklyze.common.constant.Constants;
 import com.linklyze.common.exception.BizException;
-import com.linklyze.common.model.bo.PayParam;
+import com.linklyze.account.service.strategy.PayRequest;
 import com.linklyze.common.util.CommonUtil;
 import com.linklyze.common.util.JsonUtil;
 import org.springframework.beans.BeanUtils;
@@ -36,9 +37,14 @@ public class ProductOrderServiceImpl extends ServiceImpl<ProductOrderMapper, Pro
 
     private final TrafficPackageMapper trafficPackageMapper;
 
-    public ProductOrderServiceImpl(ProductOrderMapper productOrderMapper, TrafficPackageMapper trafficPackageMapper) {
+    private final PayStrategyFactory payStrategyFactory;
+
+    public ProductOrderServiceImpl(ProductOrderMapper productOrderMapper,
+                                   TrafficPackageMapper trafficPackageMapper,
+                                   PayStrategyFactory payStrategyFactory) {
         this.productOrderMapper = productOrderMapper;
         this.trafficPackageMapper = trafficPackageMapper;
+        this.payStrategyFactory = payStrategyFactory;
     }
 
     @Override
@@ -85,11 +91,12 @@ public class ProductOrderServiceImpl extends ServiceImpl<ProductOrderMapper, Pro
      * 1. 防止表单重复提交 TODO
      * 2. 计算价格
      * 3. 订单入库
+     *
      * @param request
      */
     @Override
     @Transactional
-    public void placeOrder(PlaceOrderRequest request) {
+    public String placeOrder(PlaceOrderRequest request) {
         Long accountNo = LocalUserThreadHolder.getLocalUserNo();
         TrafficPackageDO trafficPackageDO = trafficPackageMapper.selectById(request.getProductId());
         // 计算价格
@@ -98,7 +105,7 @@ public class ProductOrderServiceImpl extends ServiceImpl<ProductOrderMapper, Pro
         String orderOutTradeNo = CommonUtil.getStringNumRandom(32);
         saveOrderToDB(orderOutTradeNo, request, trafficPackageDO);
         // 调起支付
-        PayParam payParam = PayParam.builder()
+        PayRequest payRequest = PayRequest.builder()
                 .orderOutTradeNo(orderOutTradeNo)
                 .accountNo(accountNo)
                 .payAmount(request.getPayAmount())
@@ -107,7 +114,9 @@ public class ProductOrderServiceImpl extends ServiceImpl<ProductOrderMapper, Pro
                 .description(trafficPackageDO.getDetail())
                 .timeOut(Constants.PLACE_ORDER_TIME_OUT)
                 .build();
-
+        return payStrategyFactory.chooseStrategy(request.getPayType())
+                .pay(payRequest)
+                .getBody();
     }
 
     private void saveOrderToDB(String orderOutTradeNo, PlaceOrderRequest request, TrafficPackageDO trafficPackageDO) {

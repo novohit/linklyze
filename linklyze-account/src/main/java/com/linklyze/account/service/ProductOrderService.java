@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.linklyze.account.api.v1.request.PlaceOrderRequest;
 import com.linklyze.account.api.v1.request.ProductOrderPageRequest;
 import com.linklyze.account.model.ProductOrderDO;
+import com.linklyze.account.service.strategy.PayResponse;
 
 /**
  * @author novo
@@ -20,5 +21,5 @@ public interface ProductOrderService extends IService<ProductOrderDO> {
 
     Page<ProductOrderDO> page(ProductOrderPageRequest pageRequest);
 
-    void placeOrder(PlaceOrderRequest request);
+    String placeOrder(PlaceOrderRequest request);
 }

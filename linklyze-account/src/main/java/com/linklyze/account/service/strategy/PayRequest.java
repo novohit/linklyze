@@ -1,4 +1,4 @@
-package com.linklyze.common.model.bo;
+package com.linklyze.account.service.strategy;
 
 import com.linklyze.common.enums.PayType;
 import lombok.Builder;
@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 
 @Data
 @Builder
-public class PayParam {
+public class PayRequest {
 
     /**
      * 订单流水号

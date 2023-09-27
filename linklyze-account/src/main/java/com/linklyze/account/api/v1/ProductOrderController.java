@@ -14,6 +14,7 @@ import com.linklyze.account.api.v1.request.ProductOrderPageRequest;
 import com.linklyze.account.api.v1.response.ProductOrderResponse;
 import com.linklyze.account.model.ProductOrderDO;
 import com.linklyze.account.service.ProductOrderService;
+import com.linklyze.account.service.strategy.PayResponse;
 import com.linklyze.common.config.AliPayProperties;
 import com.linklyze.common.exception.BizException;
 import com.linklyze.common.model.vo.PageResponse;
@@ -58,8 +59,8 @@ public class ProductOrderController {
     }
 
     @PostMapping("/place")
-    public void placeOrder(@RequestBody @Validated PlaceOrderRequest request, HttpServletResponse response) {
-        productOrderService.placeOrder(request);
+    public String placeOrder(@RequestBody @Validated PlaceOrderRequest request) {
+        return productOrderService.placeOrder(request);
     }
 
     @Autowired
