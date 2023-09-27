@@ -43,7 +43,7 @@ public class AliPayStrategy implements PayStrategy {
             model.setBody(payRequest.getDescription());
             model.setTimeoutExpress("60m");
             model.setOutTradeNo(payRequest.getOrderOutTradeNo());
-            model.setTotalAmount(payRequest.getPayAmount().toString());
+            model.setTotalAmount(payRequest.getActualPayAmount().toString());
             model.setProductCode("FAST_INSTANT_TRADE_PAY");
             request.setNotifyUrl(aliPayProperties.getNotifyUrl());
             request.setBizModel(model);
@@ -52,7 +52,7 @@ public class AliPayStrategy implements PayStrategy {
                     payRequest.getOrderOutTradeNo(),
                     payRequest.getAccountNo(),
                     payRequest.getDescription(),
-                    payRequest.getPayAmount(),
+                    payRequest.getActualPayAmount(),
                     JSON.toJSONString(response));
             if (!response.isSuccess()) {
                 throw new BizException("调用支付宝发起支付异常");

@@ -36,7 +36,7 @@ class ProductOrderServiceTest {
                     .nickname("novohit")
                     .accountNo(10L + i)
                     .outTradeNo(CommonUtil.generateUUID())
-                    .payAmount(BigDecimal.valueOf(99L))
+                    .actualPayAmount(BigDecimal.valueOf(99L))
                     .state(PayStateEnum.PAID)
                     .productId(1L)
                     .build();

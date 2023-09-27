@@ -12,7 +12,6 @@ import com.linklyze.account.mapper.ProductOrderMapper;
 import com.linklyze.account.model.TrafficPackageDO;
 import com.linklyze.account.service.ProductOrderService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.linklyze.account.service.strategy.PayResponse;
 import com.linklyze.account.service.strategy.PayStrategyFactory;
 import com.linklyze.common.LocalUserThreadHolder;
 import com.linklyze.common.constant.Constants;
@@ -108,7 +107,7 @@ public class ProductOrderServiceImpl extends ServiceImpl<ProductOrderMapper, Pro
         PayRequest payRequest = PayRequest.builder()
                 .orderOutTradeNo(orderOutTradeNo)
                 .accountNo(accountNo)
-                .payAmount(request.getPayAmount())
+                .actualPayAmount(request.getActualPayAmount())
                 .payType(request.getPayType())
                 .title(trafficPackageDO.getTitle())
                 .description(trafficPackageDO.getDetail())
@@ -131,7 +130,7 @@ public class ProductOrderServiceImpl extends ServiceImpl<ProductOrderMapper, Pro
 
     private void checkPrice(PlaceOrderRequest request, TrafficPackageDO trafficPackageDO) {
         BigDecimal serverTotal = BigDecimal.valueOf(request.getBuyNum()).multiply(trafficPackageDO.getAmount());
-        if (serverTotal.compareTo(request.getPayAmount()) != 0) {
+        if (serverTotal.compareTo(request.getActualPayAmount()) != 0) {
             throw new BizException("价格已经变动，请重新下单");
         }
     }

@@ -18,7 +18,7 @@ public class PayRequest {
     /**
      * 订单实际⽀付价格
      */
-    private BigDecimal payAmount;
+    private BigDecimal actualPayAmount;
 
     /**
      * 支付类型，微信-银行卡-支付宝
