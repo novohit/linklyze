@@ -33,7 +33,7 @@ public class AliPayStrategy implements PayStrategy {
 
     @Override
     public PayType mark() {
-        return PayType.ALI_PAY;
+        return PayType.ALI_PAY_PC;
     }
 
     @Override
@@ -54,8 +54,9 @@ public class AliPayStrategy implements PayStrategy {
             request.setNotifyUrl(aliPayProperties.getNotifyUrl());
             request.setBizModel(model);
             AlipayTradePagePayResponse response = alipayClient.pageExecute(request);
-            log.info("发起支付宝支付，订单号：{}，账户号：{}，订单详情：{}，订单金额：{} \n调用支付返回：\n\n{}\n",
+            log.info("发起订单支付，订单号：{}，支付方式：{}，账户号：{}，订单详情：{}，订单金额：{} \n调用支付返回：\n\n{}\n",
                     payRequest.getOrderOutTradeNo(),
+                    PayType.ALI_PAY_PC,
                     payRequest.getAccountNo(),
                     payRequest.getDescription(),
                     payRequest.getActualPayAmount(),
@@ -80,7 +81,7 @@ public class AliPayStrategy implements PayStrategy {
     }
 
     @Override
-    public String callback(HttpServletRequest request, PayCallbackHandler callbackHandler) {
+    public PayCallBackResponse callback(HttpServletRequest request, PayCallbackHandler callbackHandler) {
         Map<String, String> paramMap = new HashMap<>();
 
         Enumeration<String> parameterNames = request.getParameterNames();
@@ -94,13 +95,13 @@ public class AliPayStrategy implements PayStrategy {
                     aliPayProperties.getAlipayPublicKey(),
                     aliPayProperties.getCharset(),
                     aliPayProperties.getSignType());
-            if (signVerified) {
-                callbackHandler.handle(paramMap);
+            if (!signVerified) {
+                throw new BizException("支付回调验签失败");
             }
+            return callbackHandler.handle(paramMap);
         } catch (AlipayApiException e) {
             e.printStackTrace();
-            throw new BizException("支付失败");
+            throw new BizException("支付回调验签失败");
         }
-        return null;
     }
 }

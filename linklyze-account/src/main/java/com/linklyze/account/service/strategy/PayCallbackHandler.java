@@ -5,5 +5,5 @@ import java.util.Map;
 @FunctionalInterface
 public interface PayCallbackHandler {
 
-    void handle(Map<String, String> paramMap);
+    PayCallBackResponse handle(Map<String, String> paramMap);
 }

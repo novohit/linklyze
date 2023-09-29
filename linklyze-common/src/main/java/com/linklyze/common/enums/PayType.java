@@ -4,7 +4,7 @@ public enum PayType {
 
     WECHAT,
 
-    ALI_PAY,
+    ALI_PAY_PC,
 
     BANK,
 

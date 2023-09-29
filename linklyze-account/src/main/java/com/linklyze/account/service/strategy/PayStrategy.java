@@ -19,6 +19,6 @@ public interface PayStrategy {
 
     PayResponse refund(PayRequest payRequest);
 
-    String callback(HttpServletRequest request, PayCallbackHandler callbackHandler);
+    PayCallBackResponse callback(HttpServletRequest request, PayCallbackHandler callbackHandler);
 
 }
