@@ -122,6 +122,7 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
                         "/account/*/login",
                         "/notify/*/captcha",
                         "/notify/*/send-code",
+                        "/pay/callback/**",
                         "/**/test*"
                 )
                 .map(uri -> "/api" + uri)

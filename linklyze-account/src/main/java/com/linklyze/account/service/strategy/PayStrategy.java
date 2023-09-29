@@ -2,6 +2,8 @@ package com.linklyze.account.service.strategy;
 
 import com.linklyze.common.enums.PayType;
 
+import javax.servlet.http.HttpServletRequest;
+
 public interface PayStrategy {
 
     /**
@@ -16,5 +18,7 @@ public interface PayStrategy {
     PayResponse cancel(PayRequest payRequest);
 
     PayResponse refund(PayRequest payRequest);
+
+    String callback(HttpServletRequest request, PayCallbackHandler callbackHandler);
 
 }

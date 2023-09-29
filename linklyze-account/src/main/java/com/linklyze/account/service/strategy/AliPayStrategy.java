@@ -6,6 +6,7 @@ import com.alipay.api.AlipayClient;
 import com.alipay.api.AlipayConfig;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.domain.AlipayTradePagePayModel;
+import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradePagePayRequest;
 import com.alipay.api.response.AlipayTradePagePayResponse;
 import com.linklyze.common.config.AliPayProperties;
@@ -14,6 +15,11 @@ import com.linklyze.common.exception.BizException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 @Slf4j
@@ -70,6 +76,31 @@ public class AliPayStrategy implements PayStrategy {
 
     @Override
     public PayResponse refund(PayRequest payRequest) {
+        return null;
+    }
+
+    @Override
+    public String callback(HttpServletRequest request, PayCallbackHandler callbackHandler) {
+        Map<String, String> paramMap = new HashMap<>();
+
+        Enumeration<String> parameterNames = request.getParameterNames();
+        while (parameterNames.hasMoreElements()) {
+            String paramName = parameterNames.nextElement();
+            String paramValue = request.getParameter(paramName);
+            paramMap.put(paramName, paramValue);
+        }
+        try {
+            boolean signVerified = AlipaySignature.rsaCheckV1(paramMap,
+                    aliPayProperties.getAlipayPublicKey(),
+                    aliPayProperties.getCharset(),
+                    aliPayProperties.getSignType());
+            if (signVerified) {
+                callbackHandler.handle(paramMap);
+            }
+        } catch (AlipayApiException e) {
+            e.printStackTrace();
+            throw new BizException("支付失败");
+        }
         return null;
     }
 }
