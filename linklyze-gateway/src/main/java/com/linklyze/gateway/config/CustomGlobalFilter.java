@@ -5,6 +5,7 @@ import com.alibaba.fastjson2.JSONObject;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.linklyze.common.enums.BizCodeEnum;
+import com.linklyze.common.util.JsonUtil;
 import com.linklyze.common.util.TokenUtil;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
@@ -94,7 +95,7 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
         }
 
         HashMap map = claims.get("account", HashMap.class);
-        String json = JSON.toJSONString(map);
+        String json = JsonUtil.obj2Json(map);
         // 传递用户信息至下游
         exchange.mutate()
                 .request(builder -> {

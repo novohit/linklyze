@@ -22,8 +22,12 @@ spring:
           # 路由断言 判断请求是否符合当前路由规则的条件 不符合访问404
           # https://docs.spring.io/spring-cloud-gateway/docs/current/reference/html/#gateway-request-predicates-factories
           predicates:
-            - Path=/api/account/**,/api/notify/**,/api/product-order/**,/api/traffic-package/**,/api/pay/**
+            - Path=/api/account/**,/api/notify/**
         - id: linklyze-link
           uri: lb://linklyze-link
           predicates:
             - Path=/api/link/**,/api/group/**,/api/domain/**,/*
+        - id: linklyze-order
+          uri: lb://linklyze-order
+          predicates:
+            - Path=/api/product-order/**,/api/traffic-package/**,/api/pay/**

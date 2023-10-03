@@ -16,6 +16,7 @@
         <module>linklyze-link</module>
         <module>linklyze-stream</module>
         <module>linklyze-visual</module>
+        <module>linklyze-order</module>
     </modules>
 
     <properties>
