@@ -6,6 +6,7 @@ import com.linklyze.account.api.v1.request.PlaceOrderRequest;
 import com.linklyze.account.api.v1.request.ProductOrderPageRequest;
 import com.linklyze.account.model.ProductOrderDO;
 import com.linklyze.account.service.strategy.PayResponse;
+import com.linklyze.common.model.bo.CustomMessage;
 
 /**
  * @author novo
@@ -22,4 +23,6 @@ public interface ProductOrderService extends IService<ProductOrderDO> {
     Page<ProductOrderDO> page(ProductOrderPageRequest pageRequest);
 
     String placeOrder(PlaceOrderRequest request);
+
+    void changeOrderState(CustomMessage customMessage);
 }

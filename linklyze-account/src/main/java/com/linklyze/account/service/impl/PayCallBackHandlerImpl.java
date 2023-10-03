@@ -39,26 +39,27 @@ public class PayCallBackHandlerImpl implements PayCallbackHandler {
         String totalAmount = paramMap.get("total_amount");
         String subject = paramMap.get("subject");
         String body = paramMap.get("body");
-        String accountNo = paramMap.get("account_no");
+        Long accountNo = Long.valueOf(paramMap.get("passback_params"));
         CustomMessage message = CustomMessage.builder()
-                .accountNo(Long.valueOf(accountNo))
+                .accountNo(accountNo)
+                .bizId(outTradeNo)
                 .content(JsonUtil.obj2Json(paramMap))
                 .messageId(IDUtil.fastUUID())
-                .eventType(MessageEventType.ORDER_PAY_SUCCESS)
+                .eventType(MessageEventType.ORDER_PAID)
                 .build();
         // 上游第三方支付回调消息不是幂等的，有可能发送多次消息，需要下游在业务或数据库上保证幂等性
         Boolean success = redisTemplate.opsForValue().setIfAbsent(outTradeNo, "SUCCESS", 12, TimeUnit.HOURS);
         if (Boolean.TRUE.equals(success)) {
             // 异步修改订单状态和下发流量包
-            log.info("向MQ发送消息,message:[{}]", message);
-            this.rabbitTemplate.convertAndSend(RabbitMQConfig.ORDER_EVENT_EXCHANGE, RabbitMQConfig.ORDER_PAY_SUCCESS_ROUTING_KEY, message);
             log.info(
-                    "订单支付成功，订单号：{}，支付方式：{}，订单详情：{}，订单金额：{}",
+                    "订单支付成功并发送异步消息，订单号：{}，支付方式：{}，订单详情：{}，订单金额：{}，\n message：{}",
                     outTradeNo,
                     PayType.ALI_PAY_PC,
                     subject,
-                    totalAmount
+                    totalAmount,
+                    message
             );
+            this.rabbitTemplate.convertAndSend(RabbitMQConfig.ORDER_EVENT_EXCHANGE, RabbitMQConfig.ORDER_PAY_SUCCESS_ROUTING_KEY, message);
             return new PayCallBackResponse("success");
         } else {
             log.error(

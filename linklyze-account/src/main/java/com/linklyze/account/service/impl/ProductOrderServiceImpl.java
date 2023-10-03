@@ -15,22 +15,28 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.linklyze.account.service.strategy.PayStrategyFactory;
 import com.linklyze.common.LocalUserThreadHolder;
 import com.linklyze.common.constant.Constants;
+import com.linklyze.common.enums.MessageEventType;
 import com.linklyze.common.enums.PayStateEnum;
+import com.linklyze.common.enums.PayType;
 import com.linklyze.common.exception.BizException;
 import com.linklyze.account.service.strategy.PayRequest;
+import com.linklyze.common.model.bo.CustomMessage;
 import com.linklyze.common.util.CommonUtil;
 import com.linklyze.common.util.JsonUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 /**
  * @author novo
  * @since 2023-09-19
  */
 @Service
+@Slf4j
 public class ProductOrderServiceImpl extends ServiceImpl<ProductOrderMapper, ProductOrderDO> implements ProductOrderService {
 
     private final ProductOrderMapper productOrderMapper;
@@ -120,6 +126,37 @@ public class ProductOrderServiceImpl extends ServiceImpl<ProductOrderMapper, Pro
         return payStrategyFactory.chooseStrategy(request.getPayType())
                 .pay(payRequest)
                 .getBody();
+    }
+
+    @Override
+    public void changeOrderState(CustomMessage message) {
+        Long accountNo = message.getAccountNo();
+        if (MessageEventType.ORDER_PAID.equals(message.getEventType())) {
+            // 支付成功
+            String outTradeNo = message.getBizId();
+            int rows = productOrderMapper.update(null, new UpdateWrapper<ProductOrderDO>()
+                    .lambda()
+                    .eq(ProductOrderDO::getAccountNo, accountNo)
+                    .eq(ProductOrderDO::getOutTradeNo, outTradeNo)
+                    .eq(ProductOrderDO::getState, PayStateEnum.NEW)
+                    .set(ProductOrderDO::getPayTime, LocalDateTime.now())
+                    .set(ProductOrderDO::getState, PayStateEnum.PAID));
+            if (rows > 0) {
+                log.info(
+                        "订单状态更新成功 NEW->PAID，订单号：{}",
+                        outTradeNo
+                );
+            } else {
+                log.error(
+                        "订单状态更新失败 NEW->PAID，订单号：{}",
+                        outTradeNo
+                );
+            }
+        } else if (MessageEventType.ORDER_CANCEL.equals(message.getEventType())) {
+            // 订单超时取消
+        } else {
+
+        }
     }
 
     private void saveOrderToDB(String orderOutTradeNo, PlaceOrderRequest request, TrafficPackageDO trafficPackageDO) {

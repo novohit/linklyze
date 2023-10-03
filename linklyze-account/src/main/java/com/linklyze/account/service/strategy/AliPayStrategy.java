@@ -9,6 +9,7 @@ import com.alipay.api.domain.AlipayTradePagePayModel;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradePagePayRequest;
 import com.alipay.api.response.AlipayTradePagePayResponse;
+import com.linklyze.common.LocalUserThreadHolder;
 import com.linklyze.common.config.AliPayProperties;
 import com.linklyze.common.enums.PayType;
 import com.linklyze.common.exception.BizException;
@@ -51,6 +52,7 @@ public class AliPayStrategy implements PayStrategy {
             model.setOutTradeNo(payRequest.getOrderOutTradeNo());
             model.setTotalAmount(payRequest.getActualPayAmount().toString());
             model.setProductCode("FAST_INSTANT_TRADE_PAY");
+            model.setPassbackParams(LocalUserThreadHolder.getLocalUserNo().toString());
             request.setNotifyUrl(aliPayProperties.getNotifyUrl());
             request.setBizModel(model);
             AlipayTradePagePayResponse response = alipayClient.pageExecute(request);

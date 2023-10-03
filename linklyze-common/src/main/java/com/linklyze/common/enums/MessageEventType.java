@@ -18,7 +18,9 @@ public enum MessageEventType {
 
     LINK_MAPPING_DELETE,
 
-    ORDER_PAY_SUCCESS,
+    ORDER_PAID,
+
+    ORDER_CANCEL,
 
     ;
 }
