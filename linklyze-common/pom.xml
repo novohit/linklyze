@@ -29,7 +29,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
-            <optional>true</optional>
+            <!-- <optional>true</optional> 不注释掉子模块无法引用到此依赖 -->
         </dependency>
 
         <!--SpringCloud组件-->
