@@ -5,6 +5,7 @@ import com.linklyze.order.service.ProductOrderService;
 import com.linklyze.common.enums.BizCodeEnum;
 import com.linklyze.common.exception.BizException;
 import com.linklyze.common.model.bo.CustomMessage;
+import com.linklyze.order.service.TrafficService;
 import com.rabbitmq.client.Channel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
@@ -21,8 +22,11 @@ public class OrderEventConsumer {
 
     private final ProductOrderService productOrderService;
 
-    public OrderEventConsumer(ProductOrderService productOrderService) {
+    private final TrafficService trafficService;
+
+    public OrderEventConsumer(ProductOrderService productOrderService, TrafficService trafficService) {
         this.productOrderService = productOrderService;
+        this.trafficService = trafficService;
     }
 
     @RabbitListener(queues = {RabbitMQConfig.ORDER_STATE_UPDATE_QUEUE})
@@ -41,7 +45,7 @@ public class OrderEventConsumer {
         log.info("消费者监听到账户流量更新事件");
         try {
             long deliveryTag = message.getMessageProperties().getDeliveryTag();
-            // TODO
+            trafficService.changeTraffic(customMessage);
         } catch (Exception e) {
             throw new BizException(BizCodeEnum.MQ_CONSUME_EXCEPTION);
         }

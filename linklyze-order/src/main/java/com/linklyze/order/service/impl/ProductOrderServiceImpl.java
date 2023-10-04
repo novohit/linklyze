@@ -57,9 +57,14 @@ public class ProductOrderServiceImpl extends ServiceImpl<ProductOrderMapper, Pro
         return this.productOrderMapper.insert(productOrderDO);
     }
 
+    /**
+     * 这里的 accountNo 要为参数传入，因为会被消费者调用
+     * @param accountNo
+     * @param outTradeNo
+     * @return
+     */
     @Override
-    public ProductOrderDO findByOutTradeNo(String outTradeNo) {
-        Long accountNo = LocalUserThreadHolder.getLocalUserNo();
+    public ProductOrderDO findByOutTradeNo(Long accountNo, String outTradeNo) {
         return this.productOrderMapper.selectOne(new QueryWrapper<ProductOrderDO>()
                 .lambda()
                 .eq(ProductOrderDO::getAccountNo, accountNo)

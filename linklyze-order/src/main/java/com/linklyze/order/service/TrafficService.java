@@ -1,5 +1,6 @@
 package com.linklyze.order.service;
 
+import com.linklyze.common.model.bo.CustomMessage;
 import com.linklyze.order.model.TrafficDO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -10,4 +11,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface TrafficService extends IService<TrafficDO> {
 
+    void changeTraffic(CustomMessage customMessage);
 }

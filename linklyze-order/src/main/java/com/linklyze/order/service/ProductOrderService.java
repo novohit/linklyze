@@ -15,7 +15,7 @@ public interface ProductOrderService extends IService<ProductOrderDO> {
 
     int create(ProductOrderDO productOrderDO);
 
-    ProductOrderDO findByOutTradeNo(String outTradeNo);
+    ProductOrderDO findByOutTradeNo(Long accountNo, String outTradeNo);
 
     int updateState(String outTradeNo, String newState, String oldState);
 

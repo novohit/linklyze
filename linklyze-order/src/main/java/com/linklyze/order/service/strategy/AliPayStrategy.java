@@ -56,7 +56,7 @@ public class AliPayStrategy implements PayStrategy {
             request.setNotifyUrl(aliPayProperties.getNotifyUrl());
             request.setBizModel(model);
             AlipayTradePagePayResponse response = alipayClient.pageExecute(request);
-            log.info("发起订单支付，订单号：{}，支付方式：{}，账户号：{}，订单详情：{}，订单金额：{} \n调用支付返回：\n\n{}\n",
+            log.info("发起订单支付，订单号：{}，支付方式：{}，账号：{}，订单详情：{}，订单金额：{} \n调用支付返回：\n\n{}\n",
                     payRequest.getOrderOutTradeNo(),
                     PayType.ALI_PAY_PC,
                     payRequest.getAccountNo(),

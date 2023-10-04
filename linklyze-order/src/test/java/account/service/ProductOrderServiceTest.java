@@ -1,11 +1,12 @@
-package com.linklyze.account.service;
+package account.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.linklyze.account.AccountApplication;
-import com.linklyze.account.api.v1.request.ProductOrderPageRequest;
-import com.linklyze.account.model.ProductOrderDO;
+import com.linklyze.order.OrderApplication;
+import com.linklyze.order.api.request.ProductOrderPageRequest;
+import com.linklyze.order.model.ProductOrderDO;
 import com.linklyze.common.enums.PayStateEnum;
 import com.linklyze.common.util.CommonUtil;
+import com.linklyze.order.service.ProductOrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -18,7 +19,7 @@ import java.math.BigDecimal;
  * @author novo
  * @since 2023-09-20
  */
-@SpringBootTest(classes = AccountApplication.class)
+@SpringBootTest(classes = OrderApplication.class)
 @Slf4j
 class ProductOrderServiceTest {
 

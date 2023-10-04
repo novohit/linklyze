@@ -2,6 +2,7 @@ package com.linklyze.order.model;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.linklyze.common.model.BaseModel;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -14,7 +15,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Accessors(chain = true)
+@Builder
 @TableName("traffic")
 public class TrafficDO extends BaseModel {
 
